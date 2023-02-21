@@ -11,6 +11,7 @@ let map = new mapboxgl.Map({
   center: [-74.5, 40], // starting position [lng, lat]
   zoom: 9, // starting zoom
 });
+// used map object on.resize
 console.log(map);
 map.on("resize", function () {
   map.resize();
