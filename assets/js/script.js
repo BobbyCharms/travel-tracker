@@ -25,7 +25,7 @@ fullMap.addEventListener("click", function(event) {
     event.preventDefault()
   });
   
-  
+
 
 // USER INTERACTIONS
 
