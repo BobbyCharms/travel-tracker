@@ -21,8 +21,3 @@ let map = new mapboxgl.Map({
 // INITIALIZATION
 dateTimeEl.textContent = "Today, " + dayjs().format('dddd, MMMM D, YYYY');
 
-map.addControl(new mapboxgl.NavigationControl());
-new mapboxgl.Marker()
-.setLngLat([-74.5, 40])
-.addTo(map);
-
