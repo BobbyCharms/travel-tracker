@@ -14,6 +14,7 @@ let map = new mapboxgl.Map({
 
 // FUNCTIONS
 
+  
 
 // USER INTERACTIONS
 
