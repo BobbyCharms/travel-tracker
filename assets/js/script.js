@@ -1,6 +1,7 @@
 // DEPENDENCIES (DOM Elements)
 let dateTimeEl = document.querySelector("#date-time");
 let mapEl = document.querySelector("#map");
+let searchButtonEl = document.querySelector("#search-button")
 
 
 // DATA / STATE / GLOBAL VARIABLES
@@ -13,11 +14,16 @@ let map = new mapboxgl.Map({
 });
 
 // FUNCTIONS
+function searchButtonListener(){
 
+}
 
 // USER INTERACTIONS
-
+//user can see today's date
+dateTimeEl.textContent = "Today, " + dayjs().format('dddd, MMMM D, YYYY');
+//user can search for a location 
+searchButtonEl.addEventListener("click", searchButtonListener);
 
 // INITIALIZATION
-dateTimeEl.textContent = "Today, " + dayjs().format('dddd, MMMM D, YYYY');
+
 
