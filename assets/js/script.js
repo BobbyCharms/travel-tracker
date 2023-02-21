@@ -13,7 +13,18 @@ let map = new mapboxgl.Map({
 });
 
 // FUNCTIONS
-
+// Add an event listener to the full screen button
+document.querySelector("#full-screen-button").addEventListener("click", function() {
+    // Get the #map element and set its style properties
+    let mapEl = document.querySelector("#map");
+    mapEl.style.position = "fixed";
+    mapEl.style.top = "0";
+    mapEl.style.left = "0";
+    mapEl.style.width = "100%";
+    mapEl.style.height = "100%";
+    mapEl.style.zIndex = "9999";
+  });
+  
   
 
 // USER INTERACTIONS
