@@ -1,7 +1,8 @@
 // DEPENDENCIES (DOM Elements)
 let dateTimeEl = document.querySelector("#date-time");
 let mapEl = document.querySelector("#map");
-let searchButtonEl = document.querySelector("#search-button")
+let searchButtonEl = document.querySelector("#search-button");
+let searchInputEl = document.querySelector(".input");
 
 
 // DATA / STATE / GLOBAL VARIABLES
@@ -14,8 +15,11 @@ let map = new mapboxgl.Map({
 });
 
 // FUNCTIONS
-function searchButtonListener(){
-
+function searchButtonListener(event){
+    event.preventDefault();
+    
+    let searchValue = searchInputEl.value;
+    
 }
 
 // USER INTERACTIONS
