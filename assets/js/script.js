@@ -1,9 +1,6 @@
 // DEPENDENCIES (DOM Elements)
 let dateTimeEl = document.querySelector("#date-time");
 let mapEl = document.querySelector("#map");
-
-
-
 let fullMap = document.querySelector("#full-screen-button");
 let origin = document.querySelector("#origin")
 let destination = document.querySelector("#destination")
