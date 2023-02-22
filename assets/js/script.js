@@ -19,10 +19,23 @@ let map = new mapboxgl.Map({
 //FUNCTIONS ========================================================================================
 function searchButtonListener(event){
     event.preventDefault();
-    
+    //get user input
     let searchValue = searchInputEl.value;
-    
+    //create the link
+    let apiLink = "https://api.mapbox.com/geocoding/v5/mapbox.places/" + searchValue + ".json?access_token=" + mapboxgl.accessToken;
+
+    //fetch the link
+    fetch(apiLink)
+    .then((response) => response.json())
+    .then((data) => {
+      //move the map to the new location
+      map.flyTo({
+        center: data.features[0].center,
+        speed: 0.7
+      });
+    });
 }
+
 
 // USER INTERACTIONS ===============================================================================
 //user can see today's date
