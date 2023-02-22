@@ -25,6 +25,22 @@ map.on("resize", function () {
 // map.on("load", function () {
 //   map.resize();
 // });
+
+// Flight API 
+const options = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': 'b79d22c47emsh77d61c8e22f2ab4p12dd88jsn0c73dfc004be',
+		'X-RapidAPI-Host': 'aerodatabox.p.rapidapi.com'
+	}
+};
+
+fetch('https://aerodatabox.p.rapidapi.com/airports/%7BcodeType%7D/LHR/distance-time/LAX', options)
+	.then(response => response.json())
+	.then(response => console.log(response))
+	.catch(err => console.error(err));
+
+
 // FUNCTIONS
 // Add event listener to the full screen button
 fullMap.addEventListener("click", function(event) {
