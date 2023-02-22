@@ -1,13 +1,12 @@
 // DEPENDENCIES (DOM Elements)
-let origin = document.querySelector("#origin")
-let destination = document.querySelector("#destination")
 let dateTimeEl = document.querySelector("#date-time");
 let mapEl = document.querySelector("#map");
 
 
 
 let fullMap = document.querySelector("#full-screen-button");
-
+let origin = document.querySelector("#origin")
+let destination = document.querySelector("#destination")
 
 
 // DATA / STATE / GLOBAL VARIABLES
