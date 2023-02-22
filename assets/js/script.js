@@ -4,7 +4,8 @@ let mapEl = document.querySelector("#map");
 let searchButtonEl = document.querySelector("#search-button");
 let searchInputEl = document.querySelector(".input");
 
-
+let defLon=-74.5
+let defLat=40
 let origin = document.querySelector("#origin")
 let destination = document.querySelector("#destination")
 // DATA / STATE / GLOBAL VARIABLES
@@ -13,10 +14,10 @@ mapboxgl.accessToken =
 let map = new mapboxgl.Map({
   container: mapEl, // container ID
   style: "mapbox://styles/mapbox/streets-v12", // style URL
-  center: [-74.5, 40], // starting position [lng, lat]
+  center: [defLon, defLat], // starting position [lng, lat]
   zoom: 9, // starting zoom
 });
-
+console.log(map)
 
 
 //FUNCTIONS ========================================================================================
@@ -79,7 +80,7 @@ const optionsLoc = {
     maximumAge: 0
   };
   
-  function success(pos) {
+function success(pos) {
     const crd = pos.coords;
     console.log('Your current position is:');
     console.log(`Latitude : ${crd.latitude}`);
@@ -88,10 +89,33 @@ const optionsLoc = {
     console.log(`Longitude: ${crd.longitude}`);
     currentLon = crd.longitude;
     console.log(currentLon)
-  }
+    changeCenter(currentLon,currentLat)
+}
   
-  function error(err) {
+function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
-  }
-  
-  navigator.geolocation.getCurrentPosition(success, error, optionsLoc);
+}
+
+navigator.geolocation.getCurrentPosition(success, error, optionsLoc);
+
+function changeCenter(lon,lat){
+    map = new mapboxgl.Map({
+        container: mapEl, // container ID
+        style: "mapbox://styles/mapbox/streets-v12", // style URL
+        center: [lon, lat], // starting position [lng, lat]
+        zoom: 9, // starting zoom
+      });
+}
+
+
+/*function changeCenter(lat,lon){
+
+let apiLink = "https://api.mapbox.com/geocoding/v5/mapbox.places/" + searchValue + ".json?access_token=" + mapboxgl.accessToken;
+fetch(apiLink)
+    .then((response) => response.json())
+    .then((data) => {
+      //move the map to the new location
+      map.flyTo({
+        center: data.features[0].center,
+        speed: 0.7
+      })})}*/
