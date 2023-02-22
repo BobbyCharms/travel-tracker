@@ -35,7 +35,7 @@ const options = {
 	}
 };
 
-fetch('https://aerodatabox.p.rapidapi.com/airports/%7BcodeType%7D/LHR/distance-time/LAX', options)
+fetch('https://aerodatabox.p.rapidapi.com/airports/iata/LHR/distance-time/LAX', options)
 	.then(response => response.json())
 	.then(response => console.log(response))
 	.catch(err => console.error(err));
