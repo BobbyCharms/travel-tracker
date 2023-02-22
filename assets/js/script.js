@@ -3,10 +3,10 @@ let dateTimeEl = document.querySelector("#date-time");
 let mapEl = document.querySelector("#map");
 let searchButtonEl = document.querySelector("#search-button");
 let searchInputEl = document.querySelector(".input");
+let flightSearch = document.querySelector("#flight-search"); // targets the search button in the flights widget
+let origin = document.querySelector("#origin") // targets the origin input in the flights widget
+let destination = document.querySelector("#destination")  // targets the destination input in the flights widget
 
-
-let origin = document.querySelector("#origin")
-let destination = document.querySelector("#destination")
 // DATA / STATE / GLOBAL VARIABLES
 mapboxgl.accessToken =
   "pk.eyJ1IjoibGFlcnQ5OCIsImEiOiJjbGVkNW1yM2UwMG43M3JwY2dsMjUxYjkyIn0.oODAD95bzzjfRE-Y4DhVLw";
