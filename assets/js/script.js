@@ -2,7 +2,6 @@
 let dateTimeEl = document.querySelector("#date-time");
 let mapEl = document.querySelector("#map");
 
-
 let fullMap = document.querySelector("#full-screen-button");
 
 
@@ -16,6 +15,8 @@ let map = new mapboxgl.Map({
   center: [-74.5, 40], // starting position [lng, lat]
   zoom: 9, // starting zoom
 });
+import { ZoomControl } from 'mapbox-gl-controls';
+map.addControl(new ZoomControl(), 'top-right');
 console.log(map);
 map.on("resize", function () {
   map.resize();
@@ -41,3 +42,5 @@ fullMap.addEventListener("click", function(event) {
 
 // INITIALIZATION
 dateTimeEl.textContent = "Today, " + dayjs().format("dddd, MMMM D, YYYY");
+
+map.addControl(new mapboxgl.FullscreenControl());
