@@ -43,7 +43,8 @@ function searchButtonListener(event){
       getAirportList();
       map.flyTo({
         center: data.features[0].center,
-        speed: 0.7
+        speed: 0.7,
+        zoom: 7
       });
     });
 }
@@ -85,7 +86,20 @@ function buildAirportButtons(){
   }
 }
 
-function airportButtonListener(){
+function airportButtonListener(event){
+  event.preventDefault();
+  //get location of the airport on the airportList
+  let position = (event.target.getAttribute("id")).split("-");
+  position = parseInt(position[1]);
+  //get coordinates of the airport
+  let currentCoordinates = [airportList[position].location.lon, airportList[position].location.lat];
+
+  //animate the map to airport position
+  map.flyTo({
+    center: currentCoordinates,
+    speed: 0.7,
+    zoom: 10
+  });
 
 }
 
