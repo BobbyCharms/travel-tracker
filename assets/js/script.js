@@ -54,7 +54,7 @@ map.on("resize", function () {
 
 
 map.addControl(new mapboxgl.FullscreenControl());
-=======
+
 // Flight API 
 const options = {
 	method: 'GET',
@@ -69,10 +69,29 @@ fetch('https://aerodatabox.p.rapidapi.com/airports/iata/LHR/distance-time/LAX', 
 	.then(response => console.log(response))
 	.catch(err => console.error(err));
 
-
+let currentLon;
+let currentLat;
   
-
 // INITIALIZATION ==================================================================================
-
-
-
+const optionsLoc = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+  };
+  
+  function success(pos) {
+    const crd = pos.coords;
+    console.log('Your current position is:');
+    console.log(`Latitude : ${crd.latitude}`);
+    currentLat=crd.latitude;
+    console.log(currentLat)
+    console.log(`Longitude: ${crd.longitude}`);
+    currentLon = crd.longitude;
+    console.log(currentLon)
+  }
+  
+  function error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+  }
+  
+  navigator.geolocation.getCurrentPosition(success, error, optionsLoc);
