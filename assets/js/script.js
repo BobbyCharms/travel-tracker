@@ -3,9 +3,7 @@ let dateTimeEl = document.querySelector("#date-time");
 let mapEl = document.querySelector("#map");
 let searchButtonEl = document.querySelector("#search-button");
 let searchInputEl = document.querySelector(".input");
-let flightSearch = document.querySelector("#flight-search"); // targets the search button in the flights widget
-let origin = document.querySelector("#origin") // targets the origin input in the flights widget
-let destination = document.querySelector("#destination")  // targets the destination input in the flights widget
+
 
 // DATA / STATE / GLOBAL VARIABLES
 mapboxgl.accessToken =
@@ -16,6 +14,7 @@ let map = new mapboxgl.Map({
   center: [-74.5, 40], // starting position [lng, lat]
   zoom: 9, // starting zoom
 });
+let currentLocation; 
 
 
 
@@ -32,6 +31,8 @@ function searchButtonListener(event){
     .then((response) => response.json())
     .then((data) => {
       //move the map to the new location
+      currentLocation = data.features[0].center
+      getAirportList()
       map.flyTo({
         center: data.features[0].center,
         speed: 0.7
@@ -39,6 +40,20 @@ function searchButtonListener(event){
     });
 }
 
+function getAirportList(){
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': 'b79d22c47emsh77d61c8e22f2ab4p12dd88jsn0c73dfc004be',
+      'X-RapidAPI-Host': 'aerodatabox.p.rapidapi.com'
+    }
+  };
+  
+  fetch('https://aerodatabox.p.rapidapi.com/airports/search/location/' + currentLocation[1] + '/' + currentLocation[0] + '/km/200/10', options)
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(err => console.error(err));
+}
 
 // USER INTERACTIONS ===============================================================================
 //user can see today's date
@@ -54,20 +69,8 @@ map.on("resize", function () {
 
 
 map.addControl(new mapboxgl.FullscreenControl());
-=======
-// Flight API 
-const options = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': 'b79d22c47emsh77d61c8e22f2ab4p12dd88jsn0c73dfc004be',
-		'X-RapidAPI-Host': 'aerodatabox.p.rapidapi.com'
-	}
-};
 
-fetch('https://aerodatabox.p.rapidapi.com/airports/iata/LHR/distance-time/LAX', options)
-	.then(response => response.json())
-	.then(response => console.log(response))
-	.catch(err => console.error(err));
+
 
 
   
