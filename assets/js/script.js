@@ -20,8 +20,12 @@ console.log(map);
 map.on("resize", function () {
   map.resize();
 });
+
+// user can zoom in/out of the map using button
 const nav = new mapboxgl.NavigationControl();
 map.addControl(nav, 'top-left');
+
+// user can allow the app to locate them
 map.addControl(
   new mapboxgl.GeolocateControl({
   positionOptions: {
