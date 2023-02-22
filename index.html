@@ -7,7 +7,11 @@
     <title>Travel Tracker</title>
     <!-- Uncomment this line to use the reset included  -->
     <!-- <link rel="stylesheet" href="./assets/css/reset.css" /> -->
-
+<link
+      rel="icon"
+      href="./assets/images/TT.png"
+      type="image/icon type"
+    />
     
  
     <!-- Add CSS Framework Link Here  -->
@@ -21,6 +25,7 @@
 
     <link rel="stylesheet" href="./assets/css/style.css" />
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css' rel='stylesheet' />
+
         <!-- Load fonts here -->
   </head>
   <body class="has-backgroud-info" style="background-color:rgb(253, 235, 163)">
@@ -60,7 +65,7 @@
                     <input class="input" type="text" placeholder="for ex: 'Paris, France'">
                   </div>
                 </div>
-                <button class="button is-primary">Begin your journey!</button>
+                <button id="search-button" class="button is-primary">Begin your journey!</button>
                 <button id="full-screen-button" class="button is-primary">Full Screen Map</button>
               </form>
             </div>
@@ -92,6 +97,7 @@
     </main>
 
     </div>
+
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
