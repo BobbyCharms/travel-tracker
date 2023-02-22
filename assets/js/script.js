@@ -3,15 +3,15 @@ let dateTimeEl = document.querySelector("#date-time");
 let mapEl = document.querySelector("#map");
 let searchButtonEl = document.querySelector("#search-button");
 let searchInputEl = document.querySelector(".input");
-let origin = document.querySelector("#origin")
-let destination = document.querySelector("#destination")
+let origin = document.querySelector("#origin");
+let destination = document.querySelector("#destination");
+let flightFieldEl = document.querySelector("#flights");
 
 
 // DATA / STATE / GLOBAL VARIABLES
 let currentLon;
 let currentLat;
 let userLocation;
-getCoor();
 mapboxgl.accessToken =
   "pk.eyJ1IjoibGFlcnQ5OCIsImEiOiJjbGVkNW1yM2UwMG43M3JwY2dsMjUxYjkyIn0.oODAD95bzzjfRE-Y4DhVLw";
   let map = new mapboxgl.Map({
@@ -20,10 +20,13 @@ mapboxgl.accessToken =
   center: [-74.5,40], // starting position [lng, lat]
   zoom: 9, // starting zoom
 });
-let currentLocation; 
+let currentLocation = [0,0]; 
+let airportList = [];
 
 
 //FUNCTIONS ========================================================================================
+//when user clicks search, the button will redirect the map to the new location
+//airport section will be updated with the near by airports
 function searchButtonListener(event){
     event.preventDefault();
     //get user input
@@ -37,14 +40,16 @@ function searchButtonListener(event){
     .then((data) => {
       //move the map to the new location
       currentLocation = data.features[0].center
-      getAirportList()
+      getAirportList();
       map.flyTo({
         center: data.features[0].center,
-        speed: 0.7
+        speed: 0.7,
+        zoom: 7
       });
     });
 }
 
+//using the current coordinates, populate the airportList with the near by airports
 function getAirportList(){
   const options = {
     method: 'GET',
@@ -56,9 +61,72 @@ function getAirportList(){
   
   fetch('https://aerodatabox.p.rapidapi.com/airports/search/location/' + currentLocation[1] + '/' + currentLocation[0] + '/km/200/10', options)
     .then(response => response.json())
-    .then(data => console.log(data))
+    .then(data => {
+      airportList = data.items;
+      buildAirportButtons();
+    })
     .catch(err => console.error(err));
 }
+
+function buildAirportButtons(){
+  flightFieldEl.innerHTML = "";
+  flightFieldEl.setAttribute = ("class", "section mt-5");
+  console.log(airportList);
+  for(let i = 0; i < airportList.length; i++){
+    console.log(airportList[i]);
+    //create a button element with the name of the current airport
+    let newButton = document.createElement("button");
+    newButton.innerHTML = airportList[i].shortName;
+    //button element should have id named "AP-" + i  -> i being the current position on the list
+    newButton.setAttribute("id", ("Ap-" + i));
+    newButton.setAttribute("class", "airport-button");
+    newButton.addEventListener('click', airportButtonListener);
+    flightFieldEl.append(newButton);
+    
+  }
+}
+
+function airportButtonListener(event){
+  event.preventDefault();
+  //get location of the airport on the airportList
+  let position = (event.target.getAttribute("id")).split("-");
+  position = parseInt(position[1]);
+  //get coordinates of the airport
+  let currentCoordinates = [airportList[position].location.lon, airportList[position].location.lat];
+
+  //animate the map to airport position
+  map.flyTo({
+    center: currentCoordinates,
+    speed: 0.7,
+    zoom: 10
+  });
+
+}
+
+function getCoor(){
+    const optionsLoc = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+    };
+    function success(pos) {
+        const crd = pos.coords;
+        console.log('Your current position is:');
+        console.log(`Latitude : ${crd.latitude}`);
+        currentLat=crd.latitude;
+        console.log(`Longitude: ${crd.longitude}`);
+        currentLon = crd.longitude;
+        userLocation = [currentLon, currentLat]
+        map.setCenter(userLocation)
+        return userLocation;
+    }
+    function error(err) {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+    navigator.geolocation.getCurrentPosition(success, error, optionsLoc);
+}
+
+
 
 // USER INTERACTIONS ===============================================================================
 //user can see today's date
@@ -89,25 +157,4 @@ const options = {
 
 // INITIALIZATION ==================================================================================
 //finding users coordinates
-function getCoor(){
-    const optionsLoc = {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0
-    };
-    function success(pos) {
-        const crd = pos.coords;
-        console.log('Your current position is:');
-        console.log(`Latitude : ${crd.latitude}`);
-        currentLat=crd.latitude;
-        console.log(`Longitude: ${crd.longitude}`);
-        currentLon = crd.longitude;
-        userLocation = [currentLon, currentLat]
-        map.setCenter(userLocation)
-        return userLocation;
-    }
-    function error(err) {
-        console.warn(`ERROR(${err.code}): ${err.message}`);
-    }
-    navigator.geolocation.getCurrentPosition(success, error, optionsLoc);
-}
+getCoor();
