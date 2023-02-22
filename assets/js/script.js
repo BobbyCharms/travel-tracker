@@ -3,25 +3,23 @@ let dateTimeEl = document.querySelector("#date-time");
 let mapEl = document.querySelector("#map");
 let searchButtonEl = document.querySelector("#search-button");
 let searchInputEl = document.querySelector(".input");
+let origin = document.querySelector("#origin")
+let destination = document.querySelector("#destination")
 
 
+// DATA / STATE / GLOBAL VARIABLES
 let currentLon;
 let currentLat;
 let userLocation;
 getCoor();
-let origin = document.querySelector("#origin")
-let destination = document.querySelector("#destination")
-// DATA / STATE / GLOBAL VARIABLES
 mapboxgl.accessToken =
   "pk.eyJ1IjoibGFlcnQ5OCIsImEiOiJjbGVkNW1yM2UwMG43M3JwY2dsMjUxYjkyIn0.oODAD95bzzjfRE-Y4DhVLw";
-//function mapGen(longitude,latitude){
   let map = new mapboxgl.Map({
   container: mapEl, // container ID
   style: "mapbox://styles/mapbox/streets-v12", // style URL
   center: [-74.5,40], // starting position [lng, lat]
   zoom: 9, // starting zoom
 });
-console.log(map)
 
 
 //FUNCTIONS ========================================================================================
