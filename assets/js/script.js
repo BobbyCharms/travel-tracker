@@ -18,7 +18,6 @@ let map = new mapboxgl.Map({
 });
 
 
-
 //FUNCTIONS ========================================================================================
 function searchButtonListener(event){
     event.preventDefault();
@@ -52,9 +51,33 @@ map.on("resize", function () {
   map.resize();
 });
 
-
+// Full screen map button
 map.addControl(new mapboxgl.FullscreenControl());
-=======
+
+
+// Add markers array
+const markers = [];
+
+// Adding new markers
+map.on('click', function(e) {
+  const marker = new mapboxgl.Marker()
+    .setLngLat(e.lngLat)
+    .addTo(map);
+
+
+// Remove markers
+  marker.getElement().addEventListener('click', function() {
+    const index = markers.indexOf(marker);
+    if (index !== -1) {
+      markers.splice(index, 1);
+    }
+    marker.remove();
+  });
+}); 
+
+
+
+
 // Flight API 
 const options = {
 	method: 'GET',
