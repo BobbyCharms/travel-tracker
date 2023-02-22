@@ -3,20 +3,23 @@ let dateTimeEl = document.querySelector("#date-time");
 let mapEl = document.querySelector("#map");
 let searchButtonEl = document.querySelector("#search-button");
 let searchInputEl = document.querySelector(".input");
-
-
 let origin = document.querySelector("#origin")
 let destination = document.querySelector("#destination")
+
+
 // DATA / STATE / GLOBAL VARIABLES
+let currentLon;
+let currentLat;
+let userLocation;
+getCoor();
 mapboxgl.accessToken =
   "pk.eyJ1IjoibGFlcnQ5OCIsImEiOiJjbGVkNW1yM2UwMG43M3JwY2dsMjUxYjkyIn0.oODAD95bzzjfRE-Y4DhVLw";
-let map = new mapboxgl.Map({
+  let map = new mapboxgl.Map({
   container: mapEl, // container ID
   style: "mapbox://styles/mapbox/streets-v12", // style URL
-  center: [-74.5, 40], // starting position [lng, lat]
+  center: [-74.5,40], // starting position [lng, lat]
   zoom: 9, // starting zoom
 });
-
 
 
 //FUNCTIONS ========================================================================================
@@ -54,7 +57,7 @@ map.on("resize", function () {
 
 
 map.addControl(new mapboxgl.FullscreenControl());
-=======
+
 // Flight API 
 const options = {
 	method: 'GET',
@@ -70,9 +73,27 @@ fetch('https://aerodatabox.p.rapidapi.com/airports/iata/LHR/distance-time/LAX', 
 	.catch(err => console.error(err));
 
 
-  
-
 // INITIALIZATION ==================================================================================
-
-
-
+//finding users coordinates
+function getCoor(){
+    const optionsLoc = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+    };
+    function success(pos) {
+        const crd = pos.coords;
+        console.log('Your current position is:');
+        console.log(`Latitude : ${crd.latitude}`);
+        currentLat=crd.latitude;
+        console.log(`Longitude: ${crd.longitude}`);
+        currentLon = crd.longitude;
+        userLocation = [currentLon, currentLat]
+        map.setCenter(userLocation)
+        return userLocation;
+    }
+    function error(err) {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+    navigator.geolocation.getCurrentPosition(success, error, optionsLoc);
+}
