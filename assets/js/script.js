@@ -7,6 +7,9 @@ let origin = document.querySelector("#origin");
 let destination = document.querySelector("#destination");
 let flightFieldEl = document.querySelector("#flights");
 
+let visitedMarkerEl = document.querySelector("#visited-marker");
+let travelMarkerEl = document.querySelector("#travel-marker");
+
 getCity();
 // DATA / STATE / GLOBAL VARIABLES
 let currentLon;
