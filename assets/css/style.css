@@ -8,6 +8,22 @@
   padding-bottom: 40px ;
 }
 
+.marker {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.visited-marker{
+  background-image: url('../images/visited.png');
+  background-size: cover;
+}
+
+.travel-marker{
+  background-image: url('../images/travel.png');
+  background-size: cover;
+}
 /* Map Toolbox Buttons */
 .color-toggle {
   background-color: #00d1b2;

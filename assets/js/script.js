@@ -6,6 +6,9 @@ let searchInputEl = document.querySelector(".input");
 let origin = document.querySelector("#origin");
 let destination = document.querySelector("#destination");
 let flightFieldEl = document.querySelector("#flights");
+let visitedMarkerEl = document.querySelector("#visited-marker");
+let travelMarkerEl = document.querySelector("#travel-marker");
+let buttonsColorEl = document.querySelectorAll('.color-toggle');
 
 getCity();
 // DATA / STATE / GLOBAL VARIABLES
@@ -22,6 +25,19 @@ mapboxgl.accessToken =
 });
 let currentLocation = [0,0]; 
 let airportList = [];
+//data for where the markers will be stored
+let visitedLocations = {
+  type: 'FeatureCollection',
+  features: []
+};
+
+let travelLocations = {
+  type: 'FeatureCollection',
+  features: []
+};
+//toggle variable to know which button is pressed 
+let visitedToggle = false;
+let travelToggle = false;
 
 
 //FUNCTIONS ========================================================================================
@@ -54,7 +70,7 @@ function getAirportList(){
   const options = {
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': 'b79d22c47emsh77d61c8e22f2ab4p12dd88jsn0c73dfc004be',
+      'X-RapidAPI-Key': '3ead1a2e48msh5551ba3bcc4058bp138489jsn17a9c4d55510',
       'X-RapidAPI-Host': 'aerodatabox.p.rapidapi.com'
     }
   };
@@ -62,8 +78,11 @@ function getAirportList(){
   fetch('https://aerodatabox.p.rapidapi.com/airports/search/location/' + currentLocation[1] + '/' + currentLocation[0] + '/km/200/10', options)
     .then(response => response.json())
     .then(data => {
-      airportList = data.items;
-      buildAirportButtons();
+      airportList = data.items || [];
+      if(airportList.length !== 0){
+        buildAirportButtons();
+      }
+      
     })
     .catch(err => console.error(err));
 }
@@ -153,6 +172,71 @@ function getCity(lon,lat){
   })
 }
 
+//adding a marker in the map
+function addMarker(event){
+  event.preventDefault();
+  //if visitedToggle is active then we place a visited pin
+  //create the object which will represent the pin's location
+  if(visitedToggle){
+    let newObject = {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [event.lngLat.lng, event.lngLat.lat]
+      },
+    };  
+    //push the object to the features array of the visitedLocations object
+    visitedLocations.features.push(newObject);
+    //create anew div element for the pin
+    let el = document.createElement('div');
+    //create classes for the div element so it is styled correctly
+    el.className = 'marker visited-marker';
+    //add the new element to the map so it displays 
+    new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
+    //save to local storage
+    window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
+  } else if(travelToggle){ //if travel toggle is active then we place a travel pin 
+    //these are the same steps as above but for the travel pin 
+    let newObject = {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [event.lngLat.lng, event.lngLat.lat] 
+      },
+    };  
+
+    travelLocations.features.push(newObject);
+    let el = document.createElement('div');
+    el.className = 'marker travel-marker';
+    new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
+
+    //save to local storage
+    window.localStorage.setItem("travelObject", JSON.stringify(travelLocations));
+  }
+}
+//add event listeners for the map buttons, they will toggle the accessability of the addMarker function
+function visitedListener(){
+  //if other buttons are active, make them inactive 
+  travelToggle = false;
+  visitedToggle = !visitedToggle;
+  //make this button active
+  visitedMarkerEl.classList.toggle('active');
+  travelMarkerEl.setAttribute('class', 'color-toggle');
+
+  
+
+}
+function travelListener(){
+  //if other buttons are active, make them inactive 
+  visitedToggle = false;
+  visitedMarkerEl.setAttribute('class', 'color-toggle');
+  //make this button active
+  travelToggle = !travelToggle;
+  travelMarkerEl.classList.toggle('active');
+  
+
+}
+
 // USER INTERACTIONS ===============================================================================
 //user can see today's date
 dateTimeEl.textContent = "Today, " + dayjs().format('dddd, MMMM D, YYYY');
@@ -185,16 +269,6 @@ map.addControl(
 // Map full screen button
 map.addControl(new mapboxgl.FullscreenControl());
 
-// Get all the buttons with the "color-toggle" class
-const buttons = document.querySelectorAll('.color-toggle');
-
-// Add a click event listener to each button
-buttons.forEach(button => {
-  button.addEventListener('click', () => {
-    // Toggle the "active" class on the button
-    button.classList.toggle('active');
-  });
-});
 
 // Flight API 
 const options = {
@@ -205,11 +279,42 @@ const options = {
 	}
 };
 
+//user can click on the map button's to add a marker 
+visitedMarkerEl.addEventListener('click', visitedListener);
+travelMarkerEl.addEventListener('click', travelListener);
+map.on('click', addMarker);
+
 
 
 
 // INITIALIZATION ==================================================================================
 //finding users coordinates
 getCoor();
+
+//reassign values to the variables which hold the pins only if there is data in the local storage
+if(localStorage.getItem("visitedObject") !== null){
+  visitedLocations = JSON.parse(localStorage.getItem("visitedObject"));
+}
+if(localStorage.getItem("travelObject") !== null){
+  travelLocations = JSON.parse(localStorage.getItem("travelObject"));
+}
+
+//display the pins on the map
+for (const feature of visitedLocations.features) {
+  // create a HTML element for each feature
+  const el = document.createElement('div');
+  el.className = 'marker visited-marker';
+
+  // make a marker for each feature and add to the map
+  new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
+}
+for (const feature of travelLocations.features) {
+  // create a HTML element for each feature
+  const el = document.createElement('div');
+  el.className = 'marker travel-marker';
+
+  // make a marker for each feature and add to the map
+  new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
+}
 
 
