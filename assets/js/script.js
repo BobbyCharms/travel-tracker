@@ -182,7 +182,7 @@ map.addControl(
   })
 );
 
-
+// Map full screen button
 map.addControl(new mapboxgl.FullscreenControl());
 
 // Flight API 
