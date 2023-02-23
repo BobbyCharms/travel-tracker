@@ -7,7 +7,6 @@ let origin = document.querySelector("#origin");
 let destination = document.querySelector("#destination");
 let flightFieldEl = document.querySelector("#flights");
 
-getCity();
 // DATA / STATE / GLOBAL VARIABLES
 let currentLon;
 let currentLat;
@@ -127,11 +126,8 @@ function getCoor(){
     }
     navigator.geolocation.getCurrentPosition(success, error, optionsLoc);
 }
-getCity();
 //When a pin is dropped a property is added to the object with the city name, state, and country
-function getCity(lon,lat){
-  var lon = -0.1180;
-  var lat=51.5098;
+function getCity(lon,lat,obj){
   var baseUrl="http://api.openweathermap.org/geo/1.0/reverse?";
   var longlatAdd="lat=" + lat + "&lon=" + lon;
   var limitAdd = "&limi=" + 2;
@@ -149,7 +145,8 @@ function getCity(lon,lat){
     cityNat = data[0].country;
     cityProp = cityName + ", " + cityState  + ", " + cityNat;
     console.log(cityProp);
-    //(HOLDER)markerobject["locDesc"]: cityProp;
+    obj.locationDesc= cityProp;
+    console.log(obj);
   })
 }
 
@@ -183,6 +180,7 @@ const options = {
 // INITIALIZATION ==================================================================================
 //finding users coordinates
 getCoor();
+
 let addMarkerEl = document.querySelector("#marker-button");
 let addMarkerWishlistEl = document.querySelector("#marker-button-wishlist");
 let visitedLocations = {
@@ -205,6 +203,7 @@ function addMarker(event){
         coordinates: [event.lngLat.lng, event.lngLat.lat]
       },
     };
+    console.log(newObject)
     visitedLocations.features.push(newObject);
     let el = document.createElement('div');
     el.className = 'marker visited-marker';
@@ -219,6 +218,7 @@ function addMarker(event){
         coordinates: [event.lngLat.lng, event.lngLat.lat]
       },
     };
+    getCity(event.lngLat.lng, event.lngLat.lat,newObject)
     wishlistLocations.features.push(newObject);
     let el = document.createElement('div');
     el.className = 'marker wishlist-marker';
