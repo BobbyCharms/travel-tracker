@@ -6,6 +6,7 @@ let searchInputEl = document.querySelector(".input");
 let origin = document.querySelector("#origin");
 let destination = document.querySelector("#destination");
 let flightFieldEl = document.querySelector("#flights");
+let remMarkerEl = document.querySelector("#marker-remover-button");
 
 // DATA / STATE / GLOBAL VARIABLES
 let currentLon;
@@ -180,7 +181,7 @@ const options = {
 // INITIALIZATION ==================================================================================
 //finding users coordinates
 getCoor();
-
+let caller = 0;
 let addMarkerEl = document.querySelector("#marker-button");
 let addMarkerWishlistEl = document.querySelector("#marker-button-wishlist");
 let visitedLocations = {
@@ -204,9 +205,15 @@ function addMarker(event){
       },
     };
     console.log(newObject)
+    getCity(event.lngLat.lng, event.lngLat.lat,newObject);
+    newObject.caller = caller;
+    caller++; 
     visitedLocations.features.push(newObject);
+    console.log(visitedLocations)
     let el = document.createElement('div');
     el.className = 'marker visited-marker';
+    el.setAttribute("id",caller);
+    console.log(el)
     new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
     //save to local storage
     //window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
@@ -219,7 +226,11 @@ function addMarker(event){
       },
     };
     getCity(event.lngLat.lng, event.lngLat.lat,newObject)
+    newObject.caller = caller;
+    caller++; 
     wishlistLocations.features.push(newObject);
+    console.log(wishlistLocations.features)
+    //[0].caller
     let el = document.createElement('div');
     el.className = 'marker wishlist-marker';
     new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
@@ -235,4 +246,7 @@ function wishlistListener(){
 }
 addMarkerEl.addEventListener('click', visitedListener);
 addMarkerWishlistEl.addEventListener('click', wishlistListener);
-map.on('click', addMarker);
+map.on('click', addMarker); 
+
+//Removal of pins
+//remMarkerEl.addEventListener('click', removeMarker);
