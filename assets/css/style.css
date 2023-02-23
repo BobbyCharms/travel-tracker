@@ -6,3 +6,17 @@
 #maps-section {
   height: 50vh;
 }
+.marker {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.visited-marker{
+  background-image: url('../images/TT.png');
+  background-size: cover;
+}
+.wishlist-marker{
+  background-image: url('../images/TTMOCK.jpg');
+  background-size: cover;
+}
