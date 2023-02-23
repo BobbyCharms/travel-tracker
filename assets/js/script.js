@@ -165,6 +165,23 @@ map.on("resize", function () {
   map.resize();
 });
 
+// user can zoom in/out of the map using button
+const nav = new mapboxgl.NavigationControl();
+map.addControl(nav, 'top-left');
+
+// user can allow the app to locate them
+map.addControl(
+  new mapboxgl.GeolocateControl({
+  positionOptions: {
+  enableHighAccuracy: true
+  },
+  // When active the map will receive updates to the device's location as it changes.
+  trackUserLocation: true,
+  // Draw an arrow next to the location dot to indicate which direction the device is heading.
+  showUserHeading: true
+  })
+);
+
 
 map.addControl(new mapboxgl.FullscreenControl());
 
@@ -183,4 +200,5 @@ const options = {
 // INITIALIZATION ==================================================================================
 //finding users coordinates
 getCoor();
+
 
