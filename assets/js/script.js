@@ -6,9 +6,9 @@ let searchInputEl = document.querySelector(".input");
 let origin = document.querySelector("#origin");
 let destination = document.querySelector("#destination");
 let flightFieldEl = document.querySelector("#flights");
-
 let visitedMarkerEl = document.querySelector("#visited-marker");
 let travelMarkerEl = document.querySelector("#travel-marker");
+let buttonsColorEl = document.querySelectorAll('.color-toggle');
 
 getCity();
 // DATA / STATE / GLOBAL VARIABLES
@@ -216,13 +216,24 @@ function addMarker(event){
 }
 //add event listeners for the map buttons, they will toggle the accessability of the addMarker function
 function visitedListener(){
+  //if other buttons are active, make them inactive 
   travelToggle = false;
   visitedToggle = !visitedToggle;
+  //make this button active
+  visitedMarkerEl.classList.toggle('active');
+  travelMarkerEl.setAttribute('class', 'color-toggle');
+
+  
 
 }
 function travelListener(){
+  //if other buttons are active, make them inactive 
   visitedToggle = false;
+  visitedMarkerEl.setAttribute('class', 'color-toggle');
+  //make this button active
   travelToggle = !travelToggle;
+  travelMarkerEl.classList.toggle('active');
+  
 
 }
 
@@ -255,23 +266,9 @@ map.addControl(
   })
 );
 
-<<<<<<< HEAD
-//user can open the map in full screen mode
-=======
 // Map full screen button
->>>>>>> 4b7bceac08e45c6d442651899eb3355ae1c27442
 map.addControl(new mapboxgl.FullscreenControl());
 
-// Get all the buttons with the "color-toggle" class
-const buttons = document.querySelectorAll('.color-toggle');
-
-// Add a click event listener to each button
-buttons.forEach(button => {
-  button.addEventListener('click', () => {
-    // Toggle the "active" class on the button
-    button.classList.toggle('active');
-  });
-});
 
 // Flight API 
 const options = {
