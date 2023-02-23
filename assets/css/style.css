@@ -10,8 +10,8 @@
 
 /* Map Toolbox Buttons */
 .color-toggle {
-  background-color: white;
-  color: black;
+  background-color: #00d1b2;
+  color: white;
 }
 
 .color-toggle.active {

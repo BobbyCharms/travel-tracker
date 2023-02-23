@@ -185,6 +185,17 @@ map.addControl(
 // Map full screen button
 map.addControl(new mapboxgl.FullscreenControl());
 
+// Get all the buttons with the "color-toggle" class
+const buttons = document.querySelectorAll('.color-toggle');
+
+// Add a click event listener to each button
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    // Toggle the "active" class on the button
+    button.classList.toggle('active');
+  });
+});
+
 // Flight API 
 const options = {
 	method: 'GET',
