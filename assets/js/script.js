@@ -282,6 +282,22 @@ if(localStorage.getItem("travelObject") !== null){
   travelLocations = JSON.parse(localStorage.getItem("travelObject"));
 }
 
+//display the pins on the map
+for (const feature of visitedLocations.features) {
+  // create a HTML element for each feature
+  const el = document.createElement('div');
+  el.className = 'marker visited-marker';
 
+  // make a marker for each feature and add to the map
+  new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
+}
+for (const feature of travelLocations.features) {
+  // create a HTML element for each feature
+  const el = document.createElement('div');
+  el.className = 'marker travel-marker';
+
+  // make a marker for each feature and add to the map
+  new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
+}
 
 
