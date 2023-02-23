@@ -194,7 +194,7 @@ function addMarker(event){
       type: 'Feature',
       geometry: {
         type: 'Point',
-        coordinates: [event.lngLat.lng, event.lngLat.lat]
+        coordinates: [event.lngLat.lng, event.lngLat.lat] 
       },
     };  
 
@@ -206,6 +206,16 @@ function addMarker(event){
     //save to local storage
     //window.localStorage.setItem("travelObject", JSON.stringify(travelLocations));
   }
+}
+
+function visitedListener(){
+  visitedToggle = !visitedToggle;
+
+}
+
+function wishlistListener(){
+  wishlistToggle = !wishlistToggle;
+
 }
 
 // USER INTERACTIONS ===============================================================================
