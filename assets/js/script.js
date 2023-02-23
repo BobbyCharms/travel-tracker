@@ -213,10 +213,12 @@ function addMarker(event){
 }
 //add event listeners for the map buttons, they will toggle the accessability of the addMarker function
 function visitedListener(){
+  travelToggle = false;
   visitedToggle = !visitedToggle;
 
 }
 function travelListener(){
+  visitedToggle = false;
   travelToggle = !travelToggle;
 
 }
