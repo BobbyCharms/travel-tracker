@@ -233,6 +233,9 @@ function addMarker(event){
     //[0].caller
     let el = document.createElement('div');
     el.className = 'marker wishlist-marker';
+    el.setAttribute("id",caller);
+    caller++;
+    el.addEventListener("click",remMarker);
     new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
     //save to local storage
     //window.localStorage.setItem("wishlistObject", JSON.stringify(wishlistLocations));
@@ -262,7 +265,17 @@ function remMarker() {
   if (remToggle)
     var identity = this.id
     console.log(identity)
-    console.log(visitedLocations.features[identity].caller)
     var chosen= document.getElementById(identity)
-    chosen.remove()
+    for (var x = 0;x<visitedLocations.features.length;x++){
+      console.log(visitedLocations.features)
+      if (visitedLocations.features[x].caller==identity){
+        visitedLocations.features.splice(x,1);
+        chosen.remove()
+        }
+        //console.log(visitedLocations.features)
+      if (wishlistLocations.features[x].caller==identity){
+      visitedLocations.features.splice(x,1);
+      chosen.remove()
+      }
+    }
 }
