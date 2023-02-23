@@ -55,25 +55,24 @@ map.on("resize", function () {
 map.addControl(new mapboxgl.FullscreenControl());
 
 
-// // Add markers array
-// const markers = [];
+//Add markers array
+const markers = [];
 
-// // Adding new markers
-// map.on('click', function(e) {
-//   const marker = new mapboxgl.Marker()
-//     .setLngLat(e.lngLat)
-//     .addTo(map);
+// Adding new markers
+map.on('click', function(e) {
+    const marker = new mapboxgl.Marker()
+    .setLngLat(e.lngLat)
+    .addTo(map);
 
 
-// // Remove markers
-//   marker.getElement().addEventListener('click', function() {
-//     const index = markers.indexOf(marker);
-//     if (index !== -1) {
-//       markers.splice(index, 1);
-//     }
-//     marker.remove();
-//   });
-// }); 
+// Remove markers
+    marker.getElement().addEventListener('dblclick', function() {
+         const index = markers.indexOf(marker);
+     if (index !== -1) {
+         markers.splice(index, 1);}
+    marker.remove();
+ });
+ }); 
 
 
 
