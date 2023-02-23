@@ -216,7 +216,7 @@ function visitedListener(){
   visitedToggle = !visitedToggle;
 
 }
-function wishlistListener(){
+function travelListener(){
   travelToggle = !travelToggle;
 
 }
@@ -250,7 +250,7 @@ map.addControl(
   })
 );
 
-
+//user can open the map in full screen mode
 map.addControl(new mapboxgl.FullscreenControl());
 
 // Flight API 
@@ -261,6 +261,11 @@ const options = {
 		'X-RapidAPI-Host': 'aerodatabox.p.rapidapi.com'
 	}
 };
+
+//user can click on the map button's to add a marker 
+visitedMarkerEl.addEventListener('click', visitedListener);
+travelMarkerEl.addEventListener('click', travelListener);
+map.on('click', addMarker);
 
 
 
