@@ -255,8 +255,23 @@ map.addControl(
   })
 );
 
+<<<<<<< HEAD
 //user can open the map in full screen mode
+=======
+// Map full screen button
+>>>>>>> 4b7bceac08e45c6d442651899eb3355ae1c27442
 map.addControl(new mapboxgl.FullscreenControl());
+
+// Get all the buttons with the "color-toggle" class
+const buttons = document.querySelectorAll('.color-toggle');
+
+// Add a click event listener to each button
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    // Toggle the "active" class on the button
+    button.classList.toggle('active');
+  });
+});
 
 // Flight API 
 const options = {
