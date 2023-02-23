@@ -191,7 +191,7 @@ function addMarker(event){
     //add the new element to the map so it displays 
     new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
     //save to local storage
-    //window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
+    window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
   } else if(travelToggle){ //if travel toggle is active then we place a travel pin 
     //these are the same steps as above but for the travel pin 
     let newObject = {
@@ -208,7 +208,7 @@ function addMarker(event){
     new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
 
     //save to local storage
-    //window.localStorage.setItem("travelObject", JSON.stringify(travelLocations));
+    window.localStorage.setItem("travelObject", JSON.stringify(travelLocations));
   }
 }
 //add event listeners for the map buttons, they will toggle the accessability of the addMarker function
@@ -273,5 +273,15 @@ map.on('click', addMarker);
 // INITIALIZATION ==================================================================================
 //finding users coordinates
 getCoor();
+
+//reassign values to the variables which hold the pins only if there is data in the local storage
+if(localStorage.getItem("visitedObject") !== null){
+  visitedLocations = JSON.parse(localStorage.getItem("visitedObject"));
+}
+if(localStorage.getItem("travelObject") !== null){
+  travelLocations = JSON.parse(localStorage.getItem("travelObject"));
+}
+
+
 
 
