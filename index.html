@@ -26,10 +26,10 @@
     <link rel="stylesheet" href="./assets/css/style.css" />
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css' rel='stylesheet' />
 
-        <!-- Load fonts here -->
+    <!-- Load fonts here -->
   </head>
   <body class="has-backgroud-info" style="background-color:rgb(253, 235, 163)">
-    <hero class="hero is-primary is-small" style="border:black solid 5px">
+    <hero class="hero is-primary is-small">
       <header class="hero-body">
         <figure class="image is-128x128 mr-5 is-flex is-align-items-center is-flex-wrap-wrap" style="float:left">
           <img class="is-rounded" src="assets/images/TT.png">
@@ -40,13 +40,13 @@
         <p class="subtitle" id="date-time">
           Date & Time will go here
         </p>
+        <nav class="navbar" role="navigation" aria-label="main navigation" style="float:right;">
+          <div class="navbar-brand " style="float:right" >
+            <a class="navbar-item" href="https://www.getyourguide.com/-l314?activeTab=base">Tour Guides</a>
+            <a class="navbar-item" href="https://www.airbnb.com/">AirBnb</a>
+          </div>
+        </nav>
       </header>
-      <nav class="navbar" role="navigation" aria-label="main navigation" style="float:right;">
-        <div class="navbar-brand " style="float:right" >
-          <a class="navbar-item" href="https://www.getyourguide.com/-l314?activeTab=base">Tour Guides</a>
-          <a class="navbar-item" href="https://www.airbnb.com/">airbnb</a>
-        </div>
-      </nav>
     </hero>
     <main class="section is-vcentered" >
       <section id="main-level" class="columns">
@@ -77,12 +77,17 @@
       </section>
       
       <!-- This is the Flights API Section -->
-       <section  id = "flights" class="section mt-5" style="display:inline-flexbox;  border-radius: 7px; box-shadow: 10px 5px 5px rgb(26, 92, 112); background-color:white">
+       <section  id = "flights" class="section mt-5" style="display:none;  border-radius: 7px; box-shadow: 10px 5px 5px rgb(26, 92, 112); background-color:white">
       </section>
     </main>
-
-    </div>
-
+    <!-- Page Footer -->
+    <footer class="footer">
+      <div class="content has-text-centered m-0 p-0">
+        <p>
+          <strong>A #1 Team Production</strong>
+        </p>
+      </div>
+    </footer>
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
