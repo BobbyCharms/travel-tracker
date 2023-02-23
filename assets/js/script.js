@@ -173,6 +173,7 @@ function getCity(lon,lat){
 function addMarker(event){
   event.preventDefault();
   //if visitedToggle is active then we place a visited pin
+  //create the object which will represent the pin's location
   if(visitedToggle){
     let newObject = {
       type: 'Feature',
@@ -181,15 +182,18 @@ function addMarker(event){
         coordinates: [event.lngLat.lng, event.lngLat.lat]
       },
     };  
-
+    //push the object to the features array of the visitedLocations object
     visitedLocations.features.push(newObject);
+    //create anew div element for the pin
     let el = document.createElement('div');
+    //create classes for the div element so it is styled correctly
     el.className = 'marker visited-marker';
+    //add the new element to the map so it displays 
     new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
     //save to local storage
     //window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
   } else if(travelToggle){ //if travel toggle is active then we place a travel pin 
-    
+    //these are the same steps as above but for the travel pin 
     let newObject = {
       type: 'Feature',
       geometry: {
@@ -207,14 +211,13 @@ function addMarker(event){
     //window.localStorage.setItem("travelObject", JSON.stringify(travelLocations));
   }
 }
-
+//add event listeners for the map buttons, they will toggle the accessability of the addMarker function
 function visitedListener(){
   visitedToggle = !visitedToggle;
 
 }
-
 function wishlistListener(){
-  wishlistToggle = !wishlistToggle;
+  travelToggle = !travelToggle;
 
 }
 
