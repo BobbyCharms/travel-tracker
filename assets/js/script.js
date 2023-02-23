@@ -264,18 +264,16 @@ remMarkerEl.addEventListener("click", function (event) {
 function remMarker() {
   if (remToggle)
     var identity = this.id
-    //console.log(identity)
     var chosen= document.getElementById(identity)
     for (var x = 0;x<visitedLocations.features.length;x++){
-      console.log(visitedLocations.features)
       if (visitedLocations.features[x].caller==identity){
-        visitedLocations.features.splice(x,1);
-        console.log(visitedLocations.features)}}
+        visitedLocations.features.splice(x,1)
+        chosen.remove()}}
     for (var y = 0;y<wishlistLocations.features.length;y++){
       console.log(wishlistLocations.features)
       if (wishlistLocations.features[y].caller==identity){
         wishlistLocations.features.splice(y,1);
-        console.log(wishlistLocations.features)
+        chosen.remove();
       }}
-    chosen.remove();
+    
   }
