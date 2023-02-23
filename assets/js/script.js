@@ -71,6 +71,7 @@ function getAirportList(){
 function buildAirportButtons(){
   flightFieldEl.innerHTML = "";
   flightFieldEl.setAttribute = ("class", "section mt-5");
+  flightFieldEl.style.display = "inline-flex";
   console.log(airportList);
   for(let i = 0; i < airportList.length; i++){
     console.log(airportList[i]);
@@ -93,7 +94,8 @@ function airportButtonListener(event){
   position = parseInt(position[1]);
   //get coordinates of the airport
   let currentCoordinates = [airportList[position].location.lon, airportList[position].location.lat];
-
+  
+  
   //animate the map to airport position
   map.flyTo({
     center: currentCoordinates,
