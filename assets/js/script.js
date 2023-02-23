@@ -207,12 +207,13 @@ function addMarker(event){
     console.log(newObject)
     getCity(event.lngLat.lng, event.lngLat.lat,newObject);
     newObject.caller = caller;
-    caller++; 
     visitedLocations.features.push(newObject);
     console.log(visitedLocations)
     let el = document.createElement('div');
     el.className = 'marker visited-marker';
     el.setAttribute("id",caller);
+    caller++; 
+    el.addEventListener("click",remMarker);
     console.log(el)
     new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
     //save to local storage
@@ -227,7 +228,6 @@ function addMarker(event){
     };
     getCity(event.lngLat.lng, event.lngLat.lat,newObject)
     newObject.caller = caller;
-    caller++; 
     wishlistLocations.features.push(newObject);
     console.log(wishlistLocations.features)
     //[0].caller
@@ -249,4 +249,20 @@ addMarkerWishlistEl.addEventListener('click', wishlistListener);
 map.on('click', addMarker); 
 
 //Removal of pins
-//remMarkerEl.addEventListener('click', removeMarker);
+let remToggle = false;
+remMarkerEl.addEventListener("click", function (event) {
+  event.preventDefault();
+  if (remToggle) {
+    remToggle = false;
+  } else {
+  remToggle=true;
+  }})
+
+function remMarker() {
+  if (remToggle)
+    var identity = this.id
+    console.log(identity)
+    console.log(visitedLocations.features[identity].caller)
+    var chosen= document.getElementById(identity)
+    chosen.remove()
+}
