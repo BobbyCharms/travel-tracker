@@ -188,8 +188,24 @@ function addMarker(event){
     new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
     //save to local storage
     //window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
-  } 
+  } else if(travelToggle){ //if travel toggle is active then we place a travel pin 
+    
+    let newObject = {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [event.lngLat.lng, event.lngLat.lat]
+      },
+    };  
 
+    travelLocations.features.push(newObject);
+    let el = document.createElement('div');
+    el.className = 'marker travel-marker';
+    new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
+
+    //save to local storage
+    //window.localStorage.setItem("travelObject", JSON.stringify(travelLocations));
+  }
 }
 
 // USER INTERACTIONS ===============================================================================
