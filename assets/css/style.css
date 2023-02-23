@@ -14,3 +14,14 @@
     margin-bottom: 5vh;
   }
 }
+
+/* Map Toolbox Buttons */
+.color-toggle {
+  background-color: #00d1b2;
+  color: white;
+}
+
+.color-toggle.active {
+  background-color: rgb(184, 241, 28);
+  color: rgb(11, 0, 0);
+}
