@@ -7,7 +7,7 @@ let origin = document.querySelector("#origin");
 let destination = document.querySelector("#destination");
 let flightFieldEl = document.querySelector("#flights");
 
-
+getCity();
 // DATA / STATE / GLOBAL VARIABLES
 let currentLon;
 let currentLat;
@@ -71,6 +71,7 @@ function getAirportList(){
 function buildAirportButtons(){
   flightFieldEl.innerHTML = "";
   flightFieldEl.setAttribute = ("class", "section mt-5");
+  flightFieldEl.style.display = "inline-flex";
   console.log(airportList);
   for(let i = 0; i < airportList.length; i++){
     console.log(airportList[i]);
@@ -93,7 +94,8 @@ function airportButtonListener(event){
   position = parseInt(position[1]);
   //get coordinates of the airport
   let currentCoordinates = [airportList[position].location.lon, airportList[position].location.lat];
-
+  
+  
   //animate the map to airport position
   map.flyTo({
     center: currentCoordinates,
@@ -125,8 +127,31 @@ function getCoor(){
     }
     navigator.geolocation.getCurrentPosition(success, error, optionsLoc);
 }
-
-
+getCity();
+//When a pin is dropped a property is added to the object with the city name, state, and country
+function getCity(lon,lat){
+  var lon = -0.1180;
+  var lat=51.5098;
+  var baseUrl="http://api.openweathermap.org/geo/1.0/reverse?";
+  var longlatAdd="lat=" + lat + "&lon=" + lon;
+  var limitAdd = "&limi=" + 2;
+  var apiAdd = "&appid=69d4e3163b70b25ade9ac546dae8169a";
+  var requestUrl = baseUrl + longlatAdd + limitAdd + apiAdd ;
+  console.log(requestUrl);
+  fetch(requestUrl)
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    console.log(data)
+    cityName = data[0].name;
+    cityState = data[0].state;
+    cityNat = data[0].country;
+    cityProp = cityName + ", " + cityState  + ", " + cityNat;
+    console.log(cityProp);
+    //(HOLDER)markerobject["locDesc"]: cityProp;
+  })
+}
 
 // USER INTERACTIONS ===============================================================================
 //user can see today's date
@@ -177,6 +202,3 @@ const options = {
 getCoor();
 
 
-
-// INITIALIZATION
-dateTimeEl.textContent = "Today, " + dayjs().format("dddd, MMMM D, YYYY");
