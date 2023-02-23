@@ -70,7 +70,7 @@ function getAirportList(){
   const options = {
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': 'b79d22c47emsh77d61c8e22f2ab4p12dd88jsn0c73dfc004be',
+      'X-RapidAPI-Key': '3ead1a2e48msh5551ba3bcc4058bp138489jsn17a9c4d55510',
       'X-RapidAPI-Host': 'aerodatabox.p.rapidapi.com'
     }
   };
@@ -78,8 +78,11 @@ function getAirportList(){
   fetch('https://aerodatabox.p.rapidapi.com/airports/search/location/' + currentLocation[1] + '/' + currentLocation[0] + '/km/200/10', options)
     .then(response => response.json())
     .then(data => {
-      airportList = data.items;
-      buildAirportButtons();
+      airportList = data.items || [];
+      if(airportList.length !== 0){
+        buildAirportButtons();
+      }
+      
     })
     .catch(err => console.error(err));
 }
