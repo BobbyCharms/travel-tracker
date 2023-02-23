@@ -7,3 +7,20 @@
   height: 50vh;
   padding-bottom: 40px ;
 }
+
+.marker {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.visited-marker{
+  background-image: url('../images/visited.png');
+  background-size: cover;
+}
+
+.wishlist-marker{
+  background-image: url('../images/travel.png');
+  background-size: cover;
+}
