@@ -7,7 +7,7 @@ let origin = document.querySelector("#origin");
 let destination = document.querySelector("#destination");
 let flightFieldEl = document.querySelector("#flights");
 
-
+getCity();
 // DATA / STATE / GLOBAL VARIABLES
 let currentLon;
 let currentLat;
@@ -127,8 +127,31 @@ function getCoor(){
     }
     navigator.geolocation.getCurrentPosition(success, error, optionsLoc);
 }
-
-
+getCity();
+//When a pin is dropped a property is added to the object with the city name, state, and country
+function getCity(lon,lat){
+  var lon = -0.1180;
+  var lat=51.5098;
+  var baseUrl="http://api.openweathermap.org/geo/1.0/reverse?";
+  var longlatAdd="lat=" + lat + "&lon=" + lon;
+  var limitAdd = "&limi=" + 2;
+  var apiAdd = "&appid=69d4e3163b70b25ade9ac546dae8169a";
+  var requestUrl = baseUrl + longlatAdd + limitAdd + apiAdd ;
+  console.log(requestUrl);
+  fetch(requestUrl)
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    console.log(data)
+    cityName = data[0].name;
+    cityState = data[0].state;
+    cityNat = data[0].country;
+    cityProp = cityName + ", " + cityState  + ", " + cityNat;
+    console.log(cityProp);
+    //(HOLDER)markerobject["locDesc"]: cityProp;
+  })
+}
 
 // USER INTERACTIONS ===============================================================================
 //user can see today's date
@@ -160,56 +183,3 @@ const options = {
 // INITIALIZATION ==================================================================================
 //finding users coordinates
 getCoor();
-let addMarkerEl = document.querySelector("#marker-button");
-let addMarkerWishlistEl = document.querySelector("#marker-button-wishlist");
-let visitedLocations = {
-  type: 'FeatureCollection',
-  features: []
-};
-let wishlistLocations = {
-  type: 'FeatureCollection',
-  features: []
-};
-let visitedToggle = false;
-let wishlistToggle = false;
-function addMarker(event){
-  event.preventDefault();
-  if(visitedToggle){
-    let newObject = {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [event.lngLat.lng, event.lngLat.lat]
-      },
-    };
-    visitedLocations.features.push(newObject);
-    let el = document.createElement('div');
-    el.className = 'marker visited-marker';
-    new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
-    //save to local storage
-    //window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
-  } else if(wishlistToggle){
-    let newObject = {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [event.lngLat.lng, event.lngLat.lat]
-      },
-    };
-    wishlistLocations.features.push(newObject);
-    let el = document.createElement('div');
-    el.className = 'marker wishlist-marker';
-    new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
-    //save to local storage
-    //window.localStorage.setItem("wishlistObject", JSON.stringify(wishlistLocations));
-  }
-}
-function visitedListener(){
-  visitedToggle = !visitedToggle;
-}
-function wishlistListener(){
-  wishlistToggle = !wishlistToggle;
-}
-addMarkerEl.addEventListener('click', visitedListener);
-addMarkerWishlistEl.addEventListener('click', wishlistListener);
-map.on('click', addMarker);
