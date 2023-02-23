@@ -25,6 +25,19 @@ mapboxgl.accessToken =
 });
 let currentLocation = [0,0]; 
 let airportList = [];
+//data for where the markers will be stored
+let visitedLocations = {
+  type: 'FeatureCollection',
+  features: []
+};
+
+let travelLocations = {
+  type: 'FeatureCollection',
+  features: []
+};
+//toggle variable to know which button is pressed 
+let visitedToggle = false;
+let travelToggle = false;
 
 
 //FUNCTIONS ========================================================================================
@@ -154,6 +167,29 @@ function getCity(lon,lat){
     console.log(cityProp);
     //(HOLDER)markerobject["locDesc"]: cityProp;
   })
+}
+
+//adding a marker in the map
+function addMarker(event){
+  event.preventDefault();
+  //if visitedToggle is active then we place a visited pin
+  if(visitedToggle){
+    let newObject = {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [event.lngLat.lng, event.lngLat.lat]
+      },
+    };  
+
+    visitedLocations.features.push(newObject);
+    let el = document.createElement('div');
+    el.className = 'marker visited-marker';
+    new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
+    //save to local storage
+    //window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
+  } 
+
 }
 
 // USER INTERACTIONS ===============================================================================
