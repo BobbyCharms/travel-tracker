@@ -183,3 +183,56 @@ const options = {
 // INITIALIZATION ==================================================================================
 //finding users coordinates
 getCoor();
+let addMarkerEl = document.querySelector("#marker-button");
+let addMarkerWishlistEl = document.querySelector("#marker-button-wishlist");
+let visitedLocations = {
+  type: 'FeatureCollection',
+  features: []
+};
+let wishlistLocations = {
+  type: 'FeatureCollection',
+  features: []
+};
+let visitedToggle = false;
+let wishlistToggle = false;
+function addMarker(event){
+  event.preventDefault();
+  if(visitedToggle){
+    let newObject = {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [event.lngLat.lng, event.lngLat.lat]
+      },
+    };
+    visitedLocations.features.push(newObject);
+    let el = document.createElement('div');
+    el.className = 'marker visited-marker';
+    new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
+    //save to local storage
+    //window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
+  } else if(wishlistToggle){
+    let newObject = {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [event.lngLat.lng, event.lngLat.lat]
+      },
+    };
+    wishlistLocations.features.push(newObject);
+    let el = document.createElement('div');
+    el.className = 'marker wishlist-marker';
+    new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
+    //save to local storage
+    //window.localStorage.setItem("wishlistObject", JSON.stringify(wishlistLocations));
+  }
+}
+function visitedListener(){
+  visitedToggle = !visitedToggle;
+}
+function wishlistListener(){
+  wishlistToggle = !wishlistToggle;
+}
+addMarkerEl.addEventListener('click', visitedListener);
+addMarkerWishlistEl.addEventListener('click', wishlistListener);
+map.on('click', addMarker);
