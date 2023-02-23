@@ -270,7 +270,6 @@ function remMarker() {
         visitedLocations.features.splice(x,1)
         chosen.remove()}}
     for (var y = 0;y<wishlistLocations.features.length;y++){
-      console.log(wishlistLocations.features)
       if (wishlistLocations.features[y].caller==identity){
         wishlistLocations.features.splice(y,1);
         chosen.remove();
