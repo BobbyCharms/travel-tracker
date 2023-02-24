@@ -49,6 +49,12 @@ button {
 
 /* Airport buttons */
 
+.section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .airport-button {
   background-color: #f0590785;
   margin: 10px;
