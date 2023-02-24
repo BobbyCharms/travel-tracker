@@ -92,3 +92,24 @@ button {
   align-items: center;
   display: flex;
 }
+
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.row{
+  display: flex;
+  flex-direction: row;
+}
+
+.travel-marker, .visited-marker{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #eee;
+  padding: 10px;
+  margin-right: 10px;
+}
