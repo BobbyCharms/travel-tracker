@@ -262,9 +262,9 @@ function remMarker() {
       if (visitedLocations.features[x].caller==identity){
         visitedLocations.features.splice(x,1)
         chosen.remove()}}
-    for (var y = 0;y<wishlistLocations.features.length;y++){
-      if (wishlistLocations.features[y].caller==identity){
-        wishlistLocations.features.splice(y,1);
+    for (var y = 0;y<visitedLocations.features.length;y++){
+      if (visitedLocations.features[y].caller==identity){
+        visitedLocations.features.splice(y,1);
         chosen.remove();
       }
     }
