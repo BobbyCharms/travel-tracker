@@ -34,3 +34,51 @@
   background-color: rgb(184, 241, 28);
   color: rgb(11, 0, 0);
 }
+
+/* label {
+  width: 125px;
+  height: 50px;
+  position: relative;
+  justify-content: end;
+  background: #ebebeb;
+  border-radius: 100px;
+  box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4), inset 0px -5px -15ps rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+}
+
+label:after{
+  content: "";
+  width: 45px;
+  height: 45px;
+  position: absolute;
+  top: 2.5px;
+  left: 2.5px;
+  background: linear-gradient(180deg, #ffcc89, #d8860b);
+  border-radius: 45px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+input {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+input:checked + label {
+  background: #242424;
+}
+
+input:checked + label:after {
+  left: 122px;
+  transform: translateX(-100%);
+  background: linear-gradient(180deg, #777, #3a3a3a);
+}
+
+label, label:after {
+  transition: 0.3s;
+}
+
+label:active::after{
+  width: 65px;
+} */
+

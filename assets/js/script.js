@@ -317,4 +317,3 @@ for (const feature of travelLocations.features) {
   new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
 }
 
-
