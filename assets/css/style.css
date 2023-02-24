@@ -92,3 +92,13 @@ button {
   align-items: center;
   display: flex;
 }
+
+/* pop ups for the pins */
+.mapboxgl-popup {
+  max-width: 200px;
+}
+
+.mapboxgl-popup-content {
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+}
