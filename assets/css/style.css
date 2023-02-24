@@ -45,7 +45,7 @@
   box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4), inset 0px -5px -15ps rgba(255, 255, 255, 0.4);
   cursor: pointer;
 }
-/* 
+
 label:after{
   content: "";
   width: 45px;
@@ -63,7 +63,7 @@ input {
   height: 0;
   visibility: hidden;
 }
-
+/*
 input:checked + label {
   background: #242424;
 }
@@ -80,4 +80,4 @@ label, label:after {
 
 label:active::after{
   width: 65px;
-} */ 
+} */
