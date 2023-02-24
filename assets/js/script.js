@@ -330,10 +330,11 @@ for (const feature of visitedLocations.features) {
   let descriptionList = feature.locationDesc.split(",");
 
   // make a marker for each feature and add to the map
-  new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).Popup({ offset: 25 }) // add popups
+  new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).setPopup(
+    new mapboxgl.Popup({ offset: 25 }) // add popups
   .setHTML(
     `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-  ).addTo(map);
+  )).addTo(map);
 }
 for (const feature of travelLocations.features) {
   // create a HTML element for each feature
@@ -342,8 +343,9 @@ for (const feature of travelLocations.features) {
   let descriptionList = feature.locationDesc.split(",");
 
   // make a marker for each feature and add to the map
-  new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).Popup({ offset: 25 }) // add popups
+  new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).setPopup(
+    new mapboxgl.Popup({ offset: 25 }) // add popups
   .setHTML(
     `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-  ).addTo(map);
+  )).addTo(map);
 }
