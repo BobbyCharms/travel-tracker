@@ -147,7 +147,7 @@ function getCoor() {
 }
 
 //When a pin is dropped a property is added to the object with the city name, state, and country
-function getCity(lon, lat, obj) {
+function getCity(lon, lat, obj, elem) {
   var baseUrl = "https://api.openweathermap.org/geo/1.0/reverse?";
   var longlatAdd = "lat=" + lat + "&lon=" + lon;
   var limitAdd = "&limi=" + 2;
@@ -168,8 +168,18 @@ function getCity(lon, lat, obj) {
     console.log(cityProp);
     obj.locationDesc= cityProp;
     console.log(obj);
+    //update local storage 
     window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
     window.localStorage.setItem("travelObject", JSON.stringify(travelLocations)); 
+    //add element to the map now since we have the city name
+    new mapboxgl.Marker(elem)
+    .setLngLat(newObject.geometry.coordinates).setPopup(
+      new mapboxgl.Popup({ offset: 25 }) // add popups
+        .setHTML(
+          `<h3>${cityName}</h3><p>${cityState + ", " + cityNat}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+        )
+    )
+    .addTo(map);
    })
 
 }
@@ -186,19 +196,17 @@ function addMarker(event) {
         coordinates: [event.lngLat.lng, event.lngLat.lat],
       },
     };
-    console.log(event.lngLat.lng);
-    console.log(event.lngLatlat);
-    getCity(event.lngLat.lng, event.lngLat.lat, newObject);
+    
     //push the object to the features array of the visitedLocations object
     visitedLocations.features.push(newObject);
     //create anew div element for the pin
     let el = document.createElement("div");
     //create classes for the div element so it is styled correctly
     el.className = "marker visited-marker";
-    //add the new element to the map so it displays
-    new mapboxgl.Marker(el)
-      .setLngLat(newObject.geometry.coordinates)
-      .addTo(map);
+
+    //add the new element to the map so it displays after we get the location name
+    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el);
+
     //save to local storage
     window.localStorage.setItem(
       "visitedObject",
@@ -218,9 +226,9 @@ function addMarker(event) {
     travelLocations.features.push(newObject);
     let el = document.createElement("div");
     el.className = "marker travel-marker";
-    new mapboxgl.Marker(el)
-      .setLngLat(newObject.geometry.coordinates)
-      .addTo(map);
+
+    //add the new element to the map so it displays after we get the location name
+    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el);
 
     //save to local storage
     window.localStorage.setItem(
@@ -228,6 +236,17 @@ function addMarker(event) {
       JSON.stringify(travelLocations)
     );
   }
+}
+
+function displayMarketOnMap(el){
+  new mapboxgl.Marker(el)
+  .setLngLat(newObject.geometry.coordinates).setPopup(
+    new mapboxgl.Popup({ offset: 25 }) // add popups
+      .setHTML(
+        `<h3>${newObject.properties.title}</h3><p>${newObject.properties.description}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+      )
+  )
+  .addTo(map);
 }
 //add event listeners for the map buttons, they will toggle the accessability of the addMarker function
 function visitedListener() {
