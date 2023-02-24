@@ -141,7 +141,7 @@ function getCoor(){
 }
 //When a pin is dropped a property is added to the object with the city name, state, and country
 function getCity(lon,lat,obj){
-  var baseUrl="http://api.openweathermap.org/geo/1.0/reverse?";
+  var baseUrl="https://api.openweathermap.org/geo/1.0/reverse?";
   var longlatAdd="lat=" + lat + "&lon=" + lon;
   var limitAdd = "&limi=" + 2;
   var apiAdd = "&appid=69d4e3163b70b25ade9ac546dae8169a";
@@ -350,16 +350,3 @@ for (const feature of travelLocations.features) {
   // make a marker for each feature and add to the map
   new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
 }
-
-
-l/*et visitedLocations = {
-  type: 'FeatureCollection',
-  features: []
-};
-let wishlistLocations = {
-  type: 'FeatureCollection',
-  features: []
-};
-let visitedToggle = false;
-let wishlistToggle = false;
-*/
