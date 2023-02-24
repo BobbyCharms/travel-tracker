@@ -10,7 +10,6 @@ let visitedMarkerEl = document.querySelector("#visited-marker");
 let travelMarkerEl = document.querySelector("#travel-marker");
 let buttonsColorEl = document.querySelectorAll('.color-toggle');
 
-getCity();
 // DATA / STATE / GLOBAL VARIABLES
 let currentLon;
 let currentLat;
@@ -146,12 +145,10 @@ function getCoor(){
     }
     navigator.geolocation.getCurrentPosition(success, error, optionsLoc);
 }
-getCity();
+
 //When a pin is dropped a property is added to the object with the city name, state, and country
-function getCity(lon,lat){
-  var lon = -0.1180;
-  var lat=51.5098;
-  var baseUrl="http://api.openweathermap.org/geo/1.0/reverse?";
+function getCity(lon,lat,obj){
+  var baseUrl="https://api.openweathermap.org/geo/1.0/reverse?";
   var longlatAdd="lat=" + lat + "&lon=" + lon;
   var limitAdd = "&limi=" + 2;
   var apiAdd = "&appid=69d4e3163b70b25ade9ac546dae8169a";
@@ -168,10 +165,10 @@ function getCity(lon,lat){
     cityNat = data[0].country;
     cityProp = cityName + ", " + cityState  + ", " + cityNat;
     console.log(cityProp);
-    //(HOLDER)markerobject["locDesc"]: cityProp;
+    obj.locationDesc= cityProp;
+    console.log(obj);
   })
 }
-
 //adding a marker in the map
 function addMarker(event){
   event.preventDefault();
@@ -185,6 +182,9 @@ function addMarker(event){
         coordinates: [event.lngLat.lng, event.lngLat.lat]
       },
     };  
+    console.log(event.lngLat.lng)
+    console.log(event.lngLatlat)
+    getCity(event.lngLat.lng, event.lngLat.lat,newObject);
     //push the object to the features array of the visitedLocations object
     visitedLocations.features.push(newObject);
     //create anew div element for the pin
@@ -204,7 +204,7 @@ function addMarker(event){
         coordinates: [event.lngLat.lng, event.lngLat.lat] 
       },
     };  
-
+    getCity(event.lngLat.lng, event.lngLat.lat,newObject);
     travelLocations.features.push(newObject);
     let el = document.createElement('div');
     el.className = 'marker travel-marker';
