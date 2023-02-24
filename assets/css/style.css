@@ -57,9 +57,9 @@ button {
 
 .airport-button {
   background-color: #f0590785;
-  margin: 10px;
-  width: 100px;
-  height: 60px;
+  margin: 12px;
+  width: 110px;
+  height: 70px;
   justify-content: center;
   align-items: center;
   display: flex;
