@@ -9,7 +9,8 @@ let flightFieldEl = document.querySelector("#flights");
 let visitedMarkerEl = document.querySelector("#visited-marker");
 let travelMarkerEl = document.querySelector("#travel-marker");
 let buttonsColorEl = document.querySelectorAll('.color-toggle');
-let remMarkerEl = document.querySelector("#marker-remover-button");
+let remMarkerEl = document.querySelector("#marker-remover");
+console.log(remMarkerEl)
 
 // DATA / STATE / GLOBAL VARIABLES
 let currentLon;
@@ -256,6 +257,7 @@ function remMarker() {
     visitedToggle = false;
     visitedMarkerEl.setAttribute('class', 'color-toggle');
     travelToggle = false;
+    remMarkerEl.classList.toggle('active');
     travelMarkerEl.setAttribute('class', 'color-toggle');
     remMarkerEl.classList.toggle('active');
     for (var x = 0;x<visitedLocations.features.length;x++){
