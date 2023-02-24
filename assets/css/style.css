@@ -50,8 +50,11 @@ button {
 /* Airport buttons */
 
 .airport-button {
-  background-color: #ae6a4685;
+  background-color: #f0590785;
   margin: 10px;
   width: 100px;
   height: 60px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; 
 }
