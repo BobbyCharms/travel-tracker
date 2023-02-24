@@ -57,11 +57,7 @@ function getAirportList() {
   const options = {
     method: "GET",
     headers: {
-<<<<<<< HEAD
-      "X-RapidAPI-Key": "b79d22c47emsh77d61c8e22f2ab4p12dd88jsn0c73dfc004be",
-=======
       "X-RapidAPI-Key": "3ead1a2e48msh5551ba3bcc4058bp138489jsn17a9c4d55510",
->>>>>>> favicon
       "X-RapidAPI-Host": "aerodatabox.p.rapidapi.com",
     },
   };
@@ -197,25 +193,8 @@ map.addControl(
   })
 );
 
-<<<<<<< HEAD
-// Map full screen button
 map.addControl(new mapboxgl.FullscreenControl());
 
-// Get all the buttons with the "color-toggle" class
-const buttons = document.querySelectorAll(".color-toggle");
-
-// Add a click event listener to each button
-buttons.forEach((button) => {
-  button.addEventListener("click", () => {
-    // Toggle the "active" class on the button
-    button.classList.toggle("active");
-  });
-});
-
-=======
-map.addControl(new mapboxgl.FullscreenControl());
-
->>>>>>> favicon
 // Flight API
 const options = {
   method: "GET",
