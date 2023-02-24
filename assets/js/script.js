@@ -322,20 +322,28 @@ if (localStorage.getItem("travelObject") !== null) {
   travelLocations = JSON.parse(localStorage.getItem("travelObject"));
 }
 
-//display the pins on the map
+//pins that are stored in the local storage, display them on the map
 for (const feature of visitedLocations.features) {
   // create a HTML element for each feature
   const el = document.createElement("div");
   el.className = "marker visited-marker";
+  let descriptionList = feature.locationDesc.split(",");
 
   // make a marker for each feature and add to the map
-  new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
+  new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).Popup({ offset: 25 }) // add popups
+  .setHTML(
+    `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+  ).addTo(map);
 }
 for (const feature of travelLocations.features) {
   // create a HTML element for each feature
   const el = document.createElement("div");
   el.className = "marker travel-marker";
+  let descriptionList = feature.locationDesc.split(",");
 
   // make a marker for each feature and add to the map
-  new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
+  new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).Popup({ offset: 25 }) // add popups
+  .setHTML(
+    `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+  ).addTo(map);
 }
