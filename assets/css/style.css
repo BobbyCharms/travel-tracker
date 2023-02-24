@@ -16,12 +16,12 @@
 }
 
 .visited-marker{
-  background-image: url('./images/visited.png');
+  background-image: url('../images/visited.png');
   background-size: cover;
 }
 
 .travel-marker{
-  background-image: url('./images/travel.png');
+  background-image: url('../images/travel.png');
   background-size: cover;
 }
 /* Map Toolbox Buttons */
