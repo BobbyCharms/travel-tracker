@@ -25,6 +25,10 @@
   background-size: cover;
 }
 /* Map Toolbox Buttons */
+button {
+  padding:1px 1px;
+}
+
 .color-toggle {
   background-color:#00d1b2;
   color: white;
@@ -36,7 +40,6 @@
   height: 100%;
   width: 100%;
   object-fit: cover;
-  padding: 1px 1px 1px 1px;
 }
 
 .color-toggle.active {
