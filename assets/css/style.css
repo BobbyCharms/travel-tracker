@@ -44,7 +44,7 @@
 }
 
 .visited-marker{
-  background-image: url('../images/visitedT.png');
+  background-image: url('../images/visitedred.png');
   background-size: cover;
 }
 
