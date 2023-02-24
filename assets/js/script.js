@@ -165,7 +165,9 @@ function getCity(lon,lat,obj){
     console.log(cityProp);
     obj.locationDesc= cityProp;
     console.log(obj);
-  })
+    window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
+    window.localStorage.setItem("travelObject", JSON.stringify(travelLocations)); 
+   })
 }
 //adding a marker in the map
 function addMarker(event){
