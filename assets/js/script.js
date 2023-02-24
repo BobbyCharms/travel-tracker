@@ -222,7 +222,6 @@ function addMarker(event) {
         coordinates: [event.lngLat.lng, event.lngLat.lat],
       },
     };
-    getCity(event.lngLat.lng, event.lngLat.lat, newObject);
     travelLocations.features.push(newObject);
     let el = document.createElement("div");
     el.className = "marker travel-marker";
