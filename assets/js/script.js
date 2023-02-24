@@ -9,6 +9,7 @@ let flightFieldEl = document.querySelector("#flights");
 let visitedMarkerEl = document.querySelector("#visited-marker");
 let travelMarkerEl = document.querySelector("#travel-marker");
 let buttonsColorEl = document.querySelectorAll(".color-toggle");
+let removeMarker = document.querySelector("#remove-marker")
 
 // DATA / STATE / GLOBAL VARIABLES
 let currentLon;
@@ -33,15 +34,17 @@ let visitedLocations = {
 let travelLocations = {
   type: "FeatureCollection",
   features: [],
+
 };
 //toggle variable to know which button is pressed
 let visitedToggle = false;
 let travelToggle = false;
+let removeToggle = false;
 
 //FUNCTIONS ========================================================================================
 //when user clicks search, the button will redirect the map to the new location
 //airport section will be updated with the near by airports
-function searchButtonListener(event) {
+/*function searchButtonListener(event) {
   event.preventDefault();
   //get user input
   let searchValue = searchInputEl.value;
@@ -147,7 +150,7 @@ function getCoor() {
   }
   navigator.geolocation.getCurrentPosition(success, error, optionsLoc);
 }
-
+*/
 //When a pin is dropped a property is added to the object with the city name, state, and country
 function getCity(lon, lat, obj) {
   var baseUrl = "https://api.openweathermap.org/geo/1.0/reverse?";
@@ -176,6 +179,7 @@ function getCity(lon, lat, obj) {
 
 }
 //adding a marker in the map
+let caller = 0;
 function addMarker(event) {
   event.preventDefault();
   //if visitedToggle is active then we place a visited pin
@@ -198,6 +202,10 @@ function addMarker(event) {
     //create classes for the div element so it is styled correctly
     el.className = "marker visited-marker";
     //add the new element to the map so it displays
+    caller = localStorage.getItem("caller");
+    el[caller].setAttribute("id", caller);
+    caller++;
+    window.localStorage.setItem("caller", caller)
     new mapboxgl.Marker(el)
       .setLngLat(newObject.geometry.coordinates)
       .addTo(map);
@@ -260,7 +268,7 @@ console.log(map);
 map.on("resize", function () {
   map.resize();
 });
-
+/*
 // user can zoom in/out of the map using button
 const nav = new mapboxgl.NavigationControl();
 map.addControl(nav, "top-left");
@@ -287,8 +295,7 @@ const options = {
     "X-RapidAPI-Key": "b79d22c47emsh77d61c8e22f2ab4p12dd88jsn0c73dfc004be",
     "X-RapidAPI-Host": "aerodatabox.p.rapidapi.com",
   },
-};
-
+};*/
 //user can click on the map button's to add a marker
 visitedMarkerEl.addEventListener("click", visitedListener);
 travelMarkerEl.addEventListener("click", travelListener);
