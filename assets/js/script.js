@@ -66,19 +66,17 @@ function searchButtonListener(event){
 
 //using the current coordinates, populate the airportList with the near by airports
 function getAirportList(){
-  const options = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Key': '3ead1a2e48msh5551ba3bcc4058bp138489jsn17a9c4d55510',
-      'X-RapidAPI-Host': 'aerodatabox.p.rapidapi.com'
-    }
-  };
+  const flightApiKey = "6634e3f9-7baf-4aac-a37d-48d8524a8d79"
   
-  fetch('https://aerodatabox.p.rapidapi.com/airports/search/location/' + currentLocation[1] + '/' + currentLocation[0] + '/km/200/10', options)
+  fetch(`https://airlabs.co/api/v9/nearby?lat=${currentLocation[1]}&lng=${currentLocation[0]}&distance=50&api_key=${flightApiKey}`)
     .then(response => response.json())
     .then(data => {
-      airportList = data.items || [];
-      if(airportList.length !== 0){
+      console.log(data)
+      airportList = data.response.airports || [];
+      if (airportList.length > 10) {
+        airportList.splice(10);
+        buildAirportButtons();
+      } else if (airportList.length !== 0){
         buildAirportButtons();
       }
       
@@ -95,7 +93,7 @@ function buildAirportButtons(){
     console.log(airportList[i]);
     //create a button element with the name of the current airport
     let newButton = document.createElement("button");
-    newButton.innerHTML = airportList[i].shortName;
+    newButton.innerHTML = airportList[i].name;
     //button element should have id named "AP-" + i  -> i being the current position on the list
     newButton.setAttribute("id", ("Ap-" + i));
     newButton.setAttribute("class", "airport-button");
@@ -111,7 +109,7 @@ function airportButtonListener(event){
   let position = (event.target.getAttribute("id")).split("-");
   position = parseInt(position[1]);
   //get coordinates of the airport
-  let currentCoordinates = [airportList[position].location.lon, airportList[position].location.lat];
+  let currentCoordinates = [airportList[position].lng, airportList[position].lat];
   
   
   //animate the map to airport position
