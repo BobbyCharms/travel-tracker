@@ -16,12 +16,12 @@
 }
 
 .visited-marker{
-  background-image: url('../images/visited.png');
+  background-image: url('../images/visitedT.png');
   background-size: cover;
 }
 
 .travel-marker{
-  background-image: url('../images/travel.png');
+  background-image: url('../images/travelT.png');
   background-size: cover;
 }
 /* Map Toolbox Buttons */
@@ -30,7 +30,7 @@ button {
 }
 
 .color-toggle {
-  background-color:#00d1b2;
+  background-color:#50d1e8;
   color: white;
   height: 30px;
   width: 30px;
@@ -43,7 +43,7 @@ button {
 }
 
 .color-toggle.active {
-  background-color: #d91cb3;
+  background-color: #f595e2;
   color: rgb(11, 0, 0);
 }
 
