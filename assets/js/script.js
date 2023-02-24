@@ -186,6 +186,7 @@ function addMarker(event){
     let el = document.createElement('div');
     //create classes for the div element so it is styled correctly
     el.className = 'marker visited-marker';
+    console.log(visitedLocations)
     //add the new element to the map so it displays 
     new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
     //save to local storage
@@ -217,9 +218,6 @@ function visitedListener(){
   //make this button active
   visitedMarkerEl.classList.toggle('active');
   travelMarkerEl.setAttribute('class', 'color-toggle');
-
-  
-
 }
 function travelListener(){
   //if other buttons are active, make them inactive 
@@ -228,8 +226,24 @@ function travelListener(){
   //make this button active
   travelToggle = !travelToggle;
   travelMarkerEl.classList.toggle('active');
-  
+}
 
+function clearAllListener(){
+  //JSON.parse(localStorage.getItem("travelObject"))
+  if (visitedLocations.features.length > 0 ||travelLocations.features.length>0){
+ // let allVisitedLocations = JSON.parse(localStorage.getItem("visitedObject"));
+  //let allTravelLocations = JSON.parse(localStorage.getItem("travelObject"));
+  localStorage.removeItem('visitedObject');
+  localStorage.removeItem('travelObject');
+  visitedLocations.length=0;
+  travelLocations.length=0;
+  /*window.localStorage.setItem("visitedObject", JSON.stringify());
+  window.localStorage.setItem("travelObject", JSON.stringify());
+  localStorage.removeItem('visitedObject');
+   localStorage.removeItem('travelObject');
+  visitedLocations.length=0;
+  travelLocations.length=0;*/
+  console.log("cleared");}
 }
 
 // USER INTERACTIONS ===============================================================================
@@ -277,6 +291,7 @@ const options = {
 //user can click on the map button's to add a marker 
 visitedMarkerEl.addEventListener('click', visitedListener);
 travelMarkerEl.addEventListener('click', travelListener);
+clearAllEl.addEventListener('click', clearAllListener);
 map.on('click', addMarker);
 
 
@@ -311,5 +326,3 @@ for (const feature of travelLocations.features) {
   // make a marker for each feature and add to the map
   new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
 }
-
-
