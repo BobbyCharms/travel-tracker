@@ -39,6 +39,7 @@ let travelLocations = {
 //toggle variable to know which button is pressed 
 let visitedToggle = false;
 let travelToggle = false;
+let remToggle = false;
 
 //FUNCTIONS ========================================================================================
 //when user clicks search, the button will redirect the map to the new location
@@ -165,6 +166,7 @@ function getCity(lon,lat,obj){
 }
 
 //adding a marker in the map
+els = [] ;
 let caller = 0;
 function addMarker(event){
   event.preventDefault();
@@ -190,7 +192,12 @@ function addMarker(event){
     //add the new element to the map so it displays 
     el.setAttribute("id",caller);
     caller++; 
-    el.addEventListener("click",remMarker);
+    els.push(el);
+    el.addEventListener("click",function(){
+      console.log("hey")
+      if (remToggle){remMarker()}
+    });
+    console.log(el)
     new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
      //save to local storage
      window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
@@ -207,13 +214,19 @@ function addMarker(event){
     getCity(event.lngLat.lng, event.lngLat.lat,newObject)
     newObject.caller = caller;
     travelLocations.features.push(newObject);
-    //console.log(wishlistLocations.features)
+    console.log(travelLocations.features);
     //[0].caller
     let el = document.createElement('div');
-    el.className = 'marker wishlist-marker';
+    el.className = 'marker travel-marker';
     el.setAttribute("id",caller);
+    els.push(el);
     caller++;
-    el.addEventListener("click",remMarker);
+    //el.addEventListener("click",remMarker);
+    el.addEventListener("click",function(){
+      console.log("hey")
+      if (remToggle){remMarker()}
+    });
+    console.log(el)
     new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
 
     //save to local storage
@@ -224,7 +237,6 @@ function addMarker(event){
 //add event listeners for the map buttons, they will toggle the accessability of the addMarker function
 function visitedListener(){
   travelToggle = false;
-  remToggle=false;
   visitedToggle = !visitedToggle;
    //make this button active
    visitedMarkerEl.classList.toggle('active');
@@ -234,43 +246,69 @@ function travelListener(){
   //if other buttons are active, make them inactive 
   visitedToggle = false;
   visitedMarkerEl.setAttribute('class', 'color-toggle');
-  remToggle = false;
-  remMarkerEl.setAttribute('class', 'color-toggle');
   //make this button active
   travelToggle = !travelToggle;
   travelMarkerEl.classList.toggle('active');
 }
 //Removal of markers
-let remToggle = false;
-remMarkerEl.addEventListener("click", function (event) {
+remMarkerEl.addEventListener("click", function(){
+  remToggle = !remToggle;
+  console.log(remToggle)
+  console.log(visitedLocations.features)
+  console.log(travelListener.features)
+  if (remToggle){remMarker()}
+})
+
+/*function remChecker(){
+  //console.log("hey")
   event.preventDefault();
-  if (remToggle) {
+  if (remToggle==false){
+    remToggle = true;
+    travelToggle=false;
+    visitedToggle=false;
+    remMarker();
+  } else {
+    remToggle=false;
+  }}
+  /*if (remToggle) {
     remToggle = false;
   } else {
   remToggle=true;
-  }})
-
+  }})*/
+remAll = document.querySelector("#remove-all");
+remAll.addEventListener("click",function(){
+  visitedLocations = [];
+  window.localStorage.setItem("visitedLocations",[])
+  travelLocations = [];
+  window.localStorage.setItem("travelLocations",[])
+})
+console.log(els)
 function remMarker() {
-  if (remToggle)
+  allEls=visitedLocations.features.concat(travelLocations.features);
+  //for (var z=0;z<els.length;z++){
+  //  els[z].addEventListener("click", removeMark)}}
+//function removeMark(){
+    console.log("hey")
     var identity = this.id;
-    var chosen= document.getElementById(identity)
-    visitedToggle = false;
-    visitedMarkerEl.setAttribute('class', 'color-toggle');
-    travelToggle = false;
-    remMarkerEl.classList.toggle('active');
-    travelMarkerEl.setAttribute('class', 'color-toggle');
-    remMarkerEl.classList.toggle('active');
-    for (var x = 0;x<visitedLocations.features.length;x++){
-      if (visitedLocations.features[x].caller==identity){
-        visitedLocations.features.splice(x,1)
-        chosen.remove()}}
+    var chosen= document.getElementById(identity);
+    //visitedToggle = false;
+    //visitedMarkerEl.setAttribute('class', 'color-toggle');
+    //travelToggle = false;
+    //travelMarkerEl.setAttribute('class', 'color-toggle');
+    for (var x = 0;x<travelLocations.features.length;x++){
+      if (travelLocations.features[x].caller==identity){
+        console.log(travelLocations.features);
+        travelLocations.features.splice(x,1);
+        chosen.remove();
+        console.log(travelLocations.features)}}
     for (var y = 0;y<visitedLocations.features.length;y++){
       if (visitedLocations.features[y].caller==identity){
+        console.log(visitedLocations.features);
         visitedLocations.features.splice(y,1);
+        console.log(visitedLocations.features);
         chosen.remove();
-      }
-    }
-  }
+        }}}
+
 // USER INTERACTIONS ===============================================================================
 //user can see today's date
 dateTimeEl.textContent = "Today, " + dayjs().format('dddd, MMMM D, YYYY');
@@ -312,17 +350,13 @@ const options = {
 		'X-RapidAPI-Key': 'b79d22c47emsh77d61c8e22f2ab4p12dd88jsn0c73dfc004be',
 		'X-RapidAPI-Host': 'aerodatabox.p.rapidapi.com'
 	}
-};
+}
 
 
 //user can click on the map button's to add a marker 
 visitedMarkerEl.addEventListener('click', visitedListener);
 travelMarkerEl.addEventListener('click', travelListener);
 map.on('click', addMarker);
-
-//addMarkerEl.addEventListener('click', visitedListener);
-//addMarkerWishlistEl.addEventListener('click', wishlistListener);
-
 // INITIALIZATION ==================================================================================
 //finding users coordinates
 getCoor();
