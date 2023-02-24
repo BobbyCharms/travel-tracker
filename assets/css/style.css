@@ -28,6 +28,8 @@
 .color-toggle {
   background-color: #00d1b2;
   color: white;
+  height: 30px;
+  width: 30px;
 }
 
 .color-toggle.active {
