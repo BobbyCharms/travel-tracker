@@ -110,7 +110,7 @@ function airportButtonListener(event){
   let position = (event.target.getAttribute("id")).split("-");
   position = parseInt(position[1]);
   //get coordinates of the airport
-  let currentCoordinates = [airportList[position].lon, airportList[position].lat];
+  let currentCoordinates = [airportList[position].lng, airportList[position].lat];
   
   
   //animate the map to airport position
