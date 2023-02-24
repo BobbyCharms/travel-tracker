@@ -46,3 +46,9 @@ button {
   background-color: #d91cb3;
   color: rgb(11, 0, 0);
 }
+
+/* Airport buttons */
+
+.airport-button {
+  background-color: #b92020; /* use the color of your choice */
+}
