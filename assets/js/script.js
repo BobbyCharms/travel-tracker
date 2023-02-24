@@ -214,7 +214,8 @@ function addMarker(event) {
     els.push(el);
     //el.addEventListener("click", markerFate);
     console.log(el)
-    new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
+    var marker = new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
+    markerArr.push(marker);
     //save to local storage
      window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
   } else if(travelToggle){ //if travel toggle is active then we place a travel pin 
@@ -408,7 +409,8 @@ for (var s=0;s<allTravel.length;s++) {
   caller++;
 }
 function removeAll (){
-  if (allVisited!==0 || allTravel!==null) {
+  console.log("hey")
+  if (allVisited.length!==0 || allTravel.length!==0) {
     for (var i = els.length - 1; i >= 0; i--) {
       els[i].remove();
     }
