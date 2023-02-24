@@ -73,25 +73,28 @@ function getAirportList(){
     .then(response => response.json())
     .then(data => {
       console.log(data)
-      airportList = data.items || [];
-      if(airportList.length !== 0){
-        buildAirportButtons(10);
+      airportList = data.response.airports || [];
+      if (airportList.length > 10) {
+        airportList.splice(10);
+        buildAirportButtons();
+      } else if (airportList.length !== 0){
+        buildAirportButtons();
       }
       
     })
     .catch(err => console.error(err));
 }
 
-function buildAirportButtons(num = airportList.length){
+function buildAirportButtons(){
   flightFieldEl.innerHTML = "";
   flightFieldEl.setAttribute = ("class", "section mt-5");
   flightFieldEl.style.display = "inline-flex";
   console.log(airportList);
-  for(let i = 0; i < num; i++){
+  for(let i = 0; i < airportList.length; i++){
     console.log(airportList[i]);
     //create a button element with the name of the current airport
     let newButton = document.createElement("button");
-    newButton.innerHTML = airportList[i].shortName;
+    newButton.innerHTML = airportList[i].name;
     //button element should have id named "AP-" + i  -> i being the current position on the list
     newButton.setAttribute("id", ("Ap-" + i));
     newButton.setAttribute("class", "airport-button");
@@ -107,7 +110,7 @@ function airportButtonListener(event){
   let position = (event.target.getAttribute("id")).split("-");
   position = parseInt(position[1]);
   //get coordinates of the airport
-  let currentCoordinates = [airportList[position].location.lon, airportList[position].location.lat];
+  let currentCoordinates = [airportList[position].lon, airportList[position].lat];
   
   
   //animate the map to airport position
