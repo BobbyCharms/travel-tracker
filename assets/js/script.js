@@ -9,7 +9,8 @@ let flightFieldEl = document.querySelector("#flights");
 let visitedMarkerEl = document.querySelector("#visited-marker");
 let travelMarkerEl = document.querySelector("#travel-marker");
 let buttonsColorEl = document.querySelectorAll('.color-toggle');
-let clearAllEl = document.querySelector("#clearAll")
+let clearAllEl = document.querySelector("#clearAll");
+let els;
 
 // DATA / STATE / GLOBAL VARIABLES
 let currentLon;
@@ -188,6 +189,7 @@ function addMarker(event){
     el.className = 'marker visited-marker';
     console.log(visitedLocations)
     //add the new element to the map so it displays 
+    els.push(el);
     new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
     //save to local storage
     window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
@@ -204,6 +206,9 @@ function addMarker(event){
     travelLocations.features.push(newObject);
     let el = document.createElement('div');
     el.className = 'marker travel-marker';
+    el.addEventListener("click", )
+    els.push(el);
+    
     new mapboxgl.Marker(el).setLngLat(newObject.geometry.coordinates).addTo(map);
 
     //save to local storage
@@ -237,6 +242,8 @@ function clearAllListener(){
   localStorage.removeItem('travelObject');
   visitedLocations.length=0;
   travelLocations.length=0;
+  new mapboxgl.Marker().addTo(map);
+  marker.remove(all);
   /*window.localStorage.setItem("visitedObject", JSON.stringify());
   window.localStorage.setItem("travelObject", JSON.stringify());
   localStorage.removeItem('visitedObject');
