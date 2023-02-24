@@ -67,32 +67,27 @@ function searchButtonListener(event){
 
 //using the current coordinates, populate the airportList with the near by airports
 function getAirportList(){
-  const options = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Key': '3ead1a2e48msh5551ba3bcc4058bp138489jsn17a9c4d55510',
-      'X-RapidAPI-Host': 'aerodatabox.p.rapidapi.com'
-    }
-  };
+  const flightApiKey = "6634e3f9-7baf-4aac-a37d-48d8524a8d79"
   
-  fetch('https://aerodatabox.p.rapidapi.com/airports/search/location/' + currentLocation[1] + '/' + currentLocation[0] + '/km/200/10', options)
+  fetch(`https://airlabs.co/api/v9/nearby?lat=${currentLocation[1]}&lng=${currentLocation[0]}&distance=50&api_key=${flightApiKey}`)
     .then(response => response.json())
     .then(data => {
+      console.log(data)
       airportList = data.items || [];
       if(airportList.length !== 0){
-        buildAirportButtons();
+        buildAirportButtons(10);
       }
       
     })
     .catch(err => console.error(err));
 }
 
-function buildAirportButtons(){
+function buildAirportButtons(num = airportList.length){
   flightFieldEl.innerHTML = "";
   flightFieldEl.setAttribute = ("class", "section mt-5");
   flightFieldEl.style.display = "inline-flex";
   console.log(airportList);
-  for(let i = 0; i < airportList.length; i++){
+  for(let i = 0; i < num; i++){
     console.log(airportList[i]);
     //create a button element with the name of the current airport
     let newButton = document.createElement("button");
