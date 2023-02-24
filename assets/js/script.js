@@ -62,7 +62,7 @@ function searchButtonListener(event) {
       map.flyTo({
         center: data.features[0].center,
         speed: 0.7,
-        zoom: 7,
+        zoom: 8,
       });
     });
 }
@@ -115,13 +115,11 @@ function airportButtonListener(event) {
 
   let currentCoordinates = [airportList[position].lng, airportList[position].lat];
   
-  
-
   //animate the map to airport position
   map.flyTo({
     center: currentCoordinates,
     speed: 0.7,
-    zoom: 10,
+    zoom: 12,
   });
 }
 
