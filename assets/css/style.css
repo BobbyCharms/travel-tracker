@@ -63,7 +63,7 @@ input {
   height: 0;
   visibility: hidden;
 }
-/*
+
 input:checked + label {
   background: #242424;
 }
@@ -77,7 +77,7 @@ input:checked + label:after {
 label, label:after {
   transition: 0.3s;
 }
-
+/*
 label:active::after{
   width: 65px;
 } */
