@@ -173,7 +173,7 @@ function getCity(lon, lat, obj, elem) {
     window.localStorage.setItem("travelObject", JSON.stringify(travelLocations)); 
     //add element to the map now since we have the city name
     new mapboxgl.Marker(elem)
-    .setLngLat(newObject.geometry.coordinates).setPopup(
+    .setLngLat(obj.geometry.coordinates).setPopup(
       new mapboxgl.Popup({ offset: 25 }) // add popups
         .setHTML(
           `<h3>${cityName}</h3><p>${cityState + ", " + cityNat}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
