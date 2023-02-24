@@ -6,8 +6,10 @@ let searchInputEl = document.querySelector(".input");
 let origin = document.querySelector("#origin");
 let destination = document.querySelector("#destination");
 let flightFieldEl = document.querySelector("#flights");
+let visitedMarkerEl = document.querySelector("#visited-marker");
+let travelMarkerEl = document.querySelector("#travel-marker");
+let buttonsColorEl = document.querySelectorAll(".color-toggle");
 
-getCity();
 // DATA / STATE / GLOBAL VARIABLES
 let currentLon;
 let currentLat;
@@ -22,6 +24,19 @@ let map = new mapboxgl.Map({
 });
 let currentLocation = [0, 0];
 let airportList = [];
+//data for where the markers will be stored
+let visitedLocations = {
+  type: "FeatureCollection",
+  features: [],
+};
+
+let travelLocations = {
+  type: "FeatureCollection",
+  features: [],
+};
+//toggle variable to know which button is pressed
+let visitedToggle = false;
+let travelToggle = false;
 
 //FUNCTIONS ========================================================================================
 //when user clicks search, the button will redirect the map to the new location
@@ -72,9 +87,10 @@ function getAirportList() {
   )
     .then((response) => response.json())
     .then((data) => {
-      airportList = data.items;
-      console.log(data);
-      buildAirportButtons();
+      airportList = data.items || [];
+      if (airportList.length !== 0) {
+        buildAirportButtons();
+      }
     })
     .catch((err) => console.error(err));
 }
@@ -138,12 +154,10 @@ function getCoor() {
   }
   navigator.geolocation.getCurrentPosition(success, error, optionsLoc);
 }
-getCity();
+
 //When a pin is dropped a property is added to the object with the city name, state, and country
-function getCity(lon, lat) {
-  var lon = -0.118;
-  var lat = 51.5098;
-  var baseUrl = "http://api.openweathermap.org/geo/1.0/reverse?";
+function getCity(lon, lat, obj) {
+  var baseUrl = "https://api.openweathermap.org/geo/1.0/reverse?";
   var longlatAdd = "lat=" + lat + "&lon=" + lon;
   var limitAdd = "&limi=" + 2;
   var apiAdd = "&appid=69d4e3163b70b25ade9ac546dae8169a";
@@ -160,8 +174,82 @@ function getCity(lon, lat) {
       cityNat = data[0].country;
       cityProp = cityName + ", " + cityState + ", " + cityNat;
       console.log(cityProp);
-      //(HOLDER)markerobject["locDesc"]: cityProp;
+      obj.locationDesc = cityProp;
+      console.log(obj);
     });
+}
+//adding a marker in the map
+function addMarker(event) {
+  event.preventDefault();
+  //if visitedToggle is active then we place a visited pin
+  //create the object which will represent the pin's location
+  if (visitedToggle) {
+    let newObject = {
+      type: "Feature",
+      geometry: {
+        type: "Point",
+        coordinates: [event.lngLat.lng, event.lngLat.lat],
+      },
+    };
+    console.log(event.lngLat.lng);
+    console.log(event.lngLatlat);
+    getCity(event.lngLat.lng, event.lngLat.lat, newObject);
+    //push the object to the features array of the visitedLocations object
+    visitedLocations.features.push(newObject);
+    //create anew div element for the pin
+    let el = document.createElement("div");
+    //create classes for the div element so it is styled correctly
+    el.className = "marker visited-marker";
+    //add the new element to the map so it displays
+    new mapboxgl.Marker(el)
+      .setLngLat(newObject.geometry.coordinates)
+      .addTo(map);
+    //save to local storage
+    window.localStorage.setItem(
+      "visitedObject",
+      JSON.stringify(visitedLocations)
+    );
+  } else if (travelToggle) {
+    //if travel toggle is active then we place a travel pin
+    //these are the same steps as above but for the travel pin
+    let newObject = {
+      type: "Feature",
+      geometry: {
+        type: "Point",
+        coordinates: [event.lngLat.lng, event.lngLat.lat],
+      },
+    };
+    getCity(event.lngLat.lng, event.lngLat.lat, newObject);
+    travelLocations.features.push(newObject);
+    let el = document.createElement("div");
+    el.className = "marker travel-marker";
+    new mapboxgl.Marker(el)
+      .setLngLat(newObject.geometry.coordinates)
+      .addTo(map);
+
+    //save to local storage
+    window.localStorage.setItem(
+      "travelObject",
+      JSON.stringify(travelLocations)
+    );
+  }
+}
+//add event listeners for the map buttons, they will toggle the accessability of the addMarker function
+function visitedListener() {
+  //if other buttons are active, make them inactive
+  travelToggle = false;
+  visitedToggle = !visitedToggle;
+  //make this button active
+  visitedMarkerEl.classList.toggle("active");
+  travelMarkerEl.setAttribute("class", "color-toggle");
+}
+function travelListener() {
+  //if other buttons are active, make them inactive
+  visitedToggle = false;
+  visitedMarkerEl.setAttribute("class", "color-toggle");
+  //make this button active
+  travelToggle = !travelToggle;
+  travelMarkerEl.classList.toggle("active");
 }
 
 // USER INTERACTIONS ===============================================================================
@@ -204,6 +292,37 @@ const options = {
   },
 };
 
+//user can click on the map button's to add a marker
+visitedMarkerEl.addEventListener("click", visitedListener);
+travelMarkerEl.addEventListener("click", travelListener);
+map.on("click", addMarker);
+
 // INITIALIZATION ==================================================================================
 //finding users coordinates
 getCoor();
+
+//reassign values to the variables which hold the pins only if there is data in the local storage
+if (localStorage.getItem("visitedObject") !== null) {
+  visitedLocations = JSON.parse(localStorage.getItem("visitedObject"));
+}
+if (localStorage.getItem("travelObject") !== null) {
+  travelLocations = JSON.parse(localStorage.getItem("travelObject"));
+}
+
+//display the pins on the map
+for (const feature of visitedLocations.features) {
+  // create a HTML element for each feature
+  const el = document.createElement("div");
+  el.className = "marker visited-marker";
+
+  // make a marker for each feature and add to the map
+  new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
+}
+for (const feature of travelLocations.features) {
+  // create a HTML element for each feature
+  const el = document.createElement("div");
+  el.className = "marker travel-marker";
+
+  // make a marker for each feature and add to the map
+  new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
+}
