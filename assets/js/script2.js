@@ -164,7 +164,6 @@ function getCity(lon,lat,obj){
 }
 
 //adding a marker in the map
-let caller = 0;
 function addMarker(event){
   event.preventDefault();
   //if visitedToggle is active then we place a visited pin
@@ -182,6 +181,7 @@ function addMarker(event){
     getCity(event.lngLat.lng, event.lngLat.lat,newObject);
     newObject.caller = caller;
     visitedLocations.features.push(newObject);
+    console.log(visitedLocations)
     //create anew div element for the pin
     let el = document.createElement('div');
     //create classes for the div element so it is styled correctly
@@ -219,56 +219,18 @@ function addMarker(event){
     window.localStorage.setItem("travelObject", JSON.stringify(travelLocations));
   }
 }
-
 //add event listeners for the map buttons, they will toggle the accessability of the addMarker function
 function visitedListener(){
-  travelToggle = false;
-  remToggle=false;
   visitedToggle = !visitedToggle;
-   //make this button active
-   visitedMarkerEl.classList.toggle('active');
-   travelMarkerEl.setAttribute('class', 'color-toggle');
 }
 function travelListener(){
   //if other buttons are active, make them inactive 
   visitedToggle = false;
   visitedMarkerEl.setAttribute('class', 'color-toggle');
-  remToggle = false;
-  remMarkerEl.setAttribute('class', 'color-toggle');
   //make this button active
   travelToggle = !travelToggle;
   travelMarkerEl.classList.toggle('active');
 }
-//Removal of markers
-let remToggle = false;
-remMarkerEl.addEventListener("click", function (event) {
-  event.preventDefault();
-  if (remToggle) {
-    remToggle = false;
-  } else {
-  remToggle=true;
-  }})
-
-function remMarker() {
-  if (remToggle)
-    var identity = this.id;
-    var chosen= document.getElementById(identity)
-    visitedToggle = false;
-    visitedMarkerEl.setAttribute('class', 'color-toggle');
-    travelToggle = false;
-    travelMarkerEl.setAttribute('class', 'color-toggle');
-    remMarkerEl.classList.toggle('active');
-    for (var x = 0;x<visitedLocations.features.length;x++){
-      if (visitedLocations.features[x].caller==identity){
-        visitedLocations.features.splice(x,1)
-        chosen.remove()}}
-    for (var y = 0;y<wishlistLocations.features.length;y++){
-      if (wishlistLocations.features[y].caller==identity){
-        wishlistLocations.features.splice(y,1);
-        chosen.remove();
-      }
-    }
-  }
 // USER INTERACTIONS ===============================================================================
 //user can see today's date
 dateTimeEl.textContent = "Today, " + dayjs().format('dddd, MMMM D, YYYY');
@@ -317,7 +279,6 @@ const options = {
 visitedMarkerEl.addEventListener('click', visitedListener);
 travelMarkerEl.addEventListener('click', travelListener);
 map.on('click', addMarker);
-
 //addMarkerEl.addEventListener('click', visitedListener);
 //addMarkerWishlistEl.addEventListener('click', wishlistListener);
 
@@ -351,7 +312,7 @@ for (const feature of travelLocations.features) {
   new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
 }
 
-
+let caller = 0;
 l/*et visitedLocations = {
   type: 'FeatureCollection',
   features: []
@@ -363,3 +324,4 @@ let wishlistLocations = {
 let visitedToggle = false;
 let wishlistToggle = false;
 */
+

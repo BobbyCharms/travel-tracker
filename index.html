@@ -16,6 +16,8 @@
  
     <!-- Add CSS Framework Link Here  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css"  />
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet">
+
     <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css"
@@ -73,6 +75,11 @@
          <!-- MAP added ID on line 70 and changed section on line 69 -->
         <section class="column" id="maps-section" style="box-shadow: 10px 5px 5px rgb(26, 92, 112); border: solid 2px rgb(1, 11, 102); background-color:rgb(239, 241, 241)">
           <div id="map"></div>
+          <div id="button-container"style="position: relative; top: 10px; left: 10px;">
+            <button id="visited-marker" class="color-toggle">Visited</button>
+            <button id="travel-marker" class="color-toggle">Travel</button>
+            <button class="color-toggle">Button 3</button>
+          </div>
         </section>
       </section>
       <button id="marker-button">Visited Places</button>
@@ -93,9 +100,9 @@
     </footer>
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
-    ></script>
-    <script src="./assets/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
+    <script src="./assets/js/script2.js"></script>
   </body>
 </html>
         
