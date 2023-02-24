@@ -81,3 +81,12 @@ label, label:after {
 label:active::after{
   width: 65px;
 }
+
+.background {
+  width: 100vw;
+  height: 100vh;
+  background: #fff;
+  z-index: -1;
+  position: absolute;
+  transition: 0.3s;
+}
