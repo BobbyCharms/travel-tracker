@@ -25,7 +25,7 @@ let map = new mapboxgl.Map({
   zoom: 9, // starting zoom
 });
 let currentLocation = [0, 0];
-let airportList = [];
+/*let airportList = [];
 //data for where the markers will be stored
 let visitedLocations = {
   type: "FeatureCollection",
@@ -124,7 +124,7 @@ function airportButtonListener(event) {
     zoom: 12,
   });
 }
-
+*/
 function getCoor() {
   const optionsLoc = {
     enableHighAccuracy: true,
@@ -133,10 +133,7 @@ function getCoor() {
   };
   function success(pos) {
     const crd = pos.coords;
-    console.log("Your current position is:");
-    console.log(`Latitude : ${crd.latitude}`);
     currentLat = crd.latitude;
-    console.log(`Longitude: ${crd.longitude}`);
     currentLon = crd.longitude;
     userLocation = [currentLon, currentLat];
     map.setCenter(userLocation);
@@ -184,6 +181,7 @@ function getCity(lon, lat, obj, elem) {
     .addTo(map);
     //apprend new marker to markerList
     markerList.push(newMarker);
+    console.log(markerList)
   })
 
 }
@@ -272,6 +270,7 @@ function removeListener () {
   //for every marker in the list, remove it
   for (let d =0;d<markerList.length;d++){
     markerList[d].remove();
+    console.log(markerList);
     //update to local Storage
   }
   visitedLocations = {
@@ -290,7 +289,7 @@ function removeListener () {
 //user can see today's date
 dateTimeEl.textContent = "Today, " + dayjs().format("dddd, MMMM D, YYYY");
 //user can search for a location
-searchButtonEl.addEventListener("click", searchButtonListener);
+//searchButtonEl.addEventListener("click", searchButtonListener);
 
 //when user views website on mobile the map will re-adjust
 console.log(map);
@@ -358,6 +357,7 @@ for (const feature of visitedLocations.features) {
     `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
   )).addTo(map);
   markerList.push(newMarker);
+  console.log(markerList)
 }
 for (const feature of travelLocations.features) {
   // create a HTML element for each feature
@@ -372,4 +372,5 @@ for (const feature of travelLocations.features) {
     `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
   )).addTo(map);
   markerList.push(newMarker);
+  console.log(markerList)
 }
