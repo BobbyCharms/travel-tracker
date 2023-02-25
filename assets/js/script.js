@@ -283,6 +283,8 @@ function removeListener () {
     type: "FeatureCollection",
     features: [],
   };
+  window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
+  window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
 }
 // USER INTERACTIONS ===============================================================================
 //user can see today's date
