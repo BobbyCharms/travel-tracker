@@ -13,10 +13,18 @@
   float: right;
 }
 
-@media only screen and (min-width: 320px) and (max-width: 768px) {
+/* @media only screen and (min-width: 320px) and (max-width: 768px) {
   #explainer-card {
     margin-right: 0px !important;
     margin-bottom: 5vh;
+  }
+  #bottom-content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .travel-container {
+    margin-bottom: 15px;
   }
 }
 
@@ -33,7 +41,7 @@
   .subtitle {
     text-align: center;
   }
-}
+} */
 
 .marker {
   width: 50px;
@@ -61,6 +69,7 @@ button {
   color: white;
   height: 30px;
   width: 30px;
+  cursor: pointer;
 }
 
 .color-toggle img {
@@ -90,6 +99,12 @@ button {
   justify-content: center;
   align-items: center;
   display: flex;
+  cursor: pointer;
+}
+
+.airport-button:hover {
+  background-color: white;
+  color: #4caf50;
 }
 
 /* pop ups for the pins */
@@ -150,6 +165,7 @@ button {
   transition: all 0.3s ease;
   margin-top: 10px;
   box-shadow: rgb(26, 92, 112) 10px 5px 5px;
+  width: 100%;
 }
 
 .button-1:hover {
@@ -192,4 +208,38 @@ footer img {
 
 #content-card {
   font-family: "Spectral", serif;
+}
+
+#bottom-content {
+  align-items: flex-start;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 768px) {
+  #explainer-card {
+    margin-right: 0px !important;
+    margin-bottom: 5vh;
+  }
+  #bottom-content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .travel-container {
+    margin-bottom: 15px;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .navbar,
+  .navbar-brand {
+    float: none;
+    margin-left: auto;
+  }
+  .navbar-brand {
+    justify-content: center;
+    width: 100%;
+  }
+  .subtitle {
+    text-align: center;
+  }
 }
