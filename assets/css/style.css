@@ -187,9 +187,9 @@ footer img {
 }
 
 .card-header-title {
-  font-family: "Spectral", serif;
+  font-family: "Audiowide", cursive;
 }
 
-.content {
+#content-card {
   font-family: "Spectral", serif;
 }
