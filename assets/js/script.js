@@ -261,13 +261,16 @@ function travelListener() {
   travelToggle = !travelToggle;
   travelMarkerEl.classList.toggle("active");
 }
-function removeAllListener () {
+function removeListener () {
   removeToggle = !removeToggle;
   removeMarkerEl.classList.toggle("active");
   visitedToggle = false;
   travelToggle = false;
   visitedMarkerEl.setAttribute("class", "color-toggle");
   travelMarkerEl.setAttribute("class", "color-toggle");
+  for (let d =0;d<markerList.length;d++){
+    markerList[d].remove();
+  }
 }
 // USER INTERACTIONS ===============================================================================
 //user can see today's date
@@ -312,7 +315,7 @@ const options = {
 //user can click on the map button's to add a marker
 visitedMarkerEl.addEventListener("click", visitedListener);
 travelMarkerEl.addEventListener("click", travelListener);
-removeMarkerEl.addEventListener("click",removeAllListener);
+removeMarkerEl.addEventListener("click", removeListener);
 map.on("click", addMarker);
 
 // INITIALIZATION ==================================================================================
