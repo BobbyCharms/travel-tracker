@@ -182,6 +182,7 @@ function getCity(lon, lat, obj, elem) {
         )
     )
     .addTo(map);
+    //apprend new marker to markerList
     markerList.push(newMarker);
   })
 
@@ -268,8 +269,11 @@ function removeListener () {
   travelToggle = false;
   visitedMarkerEl.setAttribute("class", "color-toggle");
   travelMarkerEl.setAttribute("class", "color-toggle");
+  //for every marker in the list, remove it
   for (let d =0;d<markerList.length;d++){
     markerList[d].remove();
+    //update to local Storage
+    
   }
 }
 // USER INTERACTIONS ===============================================================================
