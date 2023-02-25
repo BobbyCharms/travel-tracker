@@ -173,3 +173,10 @@ button {
     width: 2em;
   }
 
+#travel-tracker{
+    font-family: 'Rubik Moonrocks', cursive;
+  }
+
+#date-time{
+  font-family: 'DM Mono', monospace;
+}
