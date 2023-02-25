@@ -135,7 +135,7 @@ button {
   padding: 10px;
   background-color: transparent;
   color: rgb(34, 33, 33);
-  border: 2px solid white;
+  border: 2px solid rgb(192, 190, 190);
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -158,5 +158,8 @@ button {
   margin-bottom: 1.5rem;
 }
 
-
+  footer img {
+    height: 2em;
+    width: 2em;
+  }
 
