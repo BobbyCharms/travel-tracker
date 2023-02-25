@@ -180,3 +180,10 @@ button {
 #date-time{
   font-family: 'DM Mono', monospace;
 }
+
+.navbar-item{
+  font-family: 'DM Mono', monospace;
+  border-radius: 7px;
+   border: 2px solid white;
+  box-shadow:5px 5px 5px;
+}
