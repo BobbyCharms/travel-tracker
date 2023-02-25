@@ -273,8 +273,16 @@ function removeListener () {
   for (let d =0;d<markerList.length;d++){
     markerList[d].remove();
     //update to local Storage
-    
   }
+  visitedLocations = {
+    type: "FeatureCollection",
+    features: [],
+  };
+  
+  travelLocations = {
+    type: "FeatureCollection",
+    features: [],
+  };
 }
 // USER INTERACTIONS ===============================================================================
 //user can see today's date
