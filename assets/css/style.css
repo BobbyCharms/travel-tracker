@@ -140,6 +140,7 @@ button {
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 10px;
+  box-shadow: rgb(26, 92, 112) 10px 5px 5px;
 
 }
 
@@ -156,4 +157,6 @@ button {
   margin-top: 1.5rem !important;
   margin-bottom: 1.5rem;
 }
+
+
 
