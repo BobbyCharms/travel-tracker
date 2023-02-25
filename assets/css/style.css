@@ -25,7 +25,6 @@
   .navbar-brand {
     float: none;
     margin-left: auto;
-    
   }
   .navbar-brand {
     justify-content: center;
@@ -43,22 +42,22 @@
   cursor: pointer;
 }
 
-.visited-marker{
-  background-image: url('../images/visitedred.png');
+.visited-marker {
+  background-image: url("../images/visitedred.png");
   background-size: cover;
 }
 
-.travel-marker{
-  background-image: url('../images/travelT.png');
+.travel-marker {
+  background-image: url("../images/travelT.png");
   background-size: cover;
 }
 /* Map Toolbox Buttons */
 button {
-  padding:1px 1px;
+  padding: 1px 1px;
 }
 
 .color-toggle {
-  background-color:#50d1e8;
+  background-color: #50d1e8;
   color: white;
   height: 30px;
   width: 30px;
@@ -100,35 +99,35 @@ button {
 
 .mapboxgl-popup-content {
   text-align: center;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
-.location-button{
+.location-button {
   background-image: url("../images/travelT.png");
   background-size: contain;
 }
 
-.visited-button{
+.visited-button {
   background-image: url("../images/visitedT.png");
   background-size: contain;
 }
 
-.container{
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px; 
+  padding: 20px;
 }
 
-.row{
+.row {
   display: flex;
   flex-direction: row;
-  justify-content: center; 
+  justify-content: center;
   box-shadow: 7px;
-  
 }
 
-.travel-container, .visited-container{
+.travel-container,
+.visited-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -138,10 +137,10 @@ button {
   margin-right: 10px;
   border-radius: 7px;
   box-shadow: rgb(26, 92, 112) 10px 5px 5px;
- 
 }
 
-.button-1 , .button-2{
+.button-1,
+.button-2 {
   padding: 10px;
   background-color: transparent;
   color: rgb(34, 33, 33);
@@ -151,39 +150,46 @@ button {
   transition: all 0.3s ease;
   margin-top: 10px;
   box-shadow: rgb(26, 92, 112) 10px 5px 5px;
-
 }
 
-.button-1:hover{
+.button-1:hover {
   background-color: white;
   color: #4caf50;
 }
-.button-2:hover{
+.button-2:hover {
   background-color: white;
   color: #4caf50;
 }
 
-.mt-5{
+.mt-5 {
   margin-top: 1.5rem !important;
   margin-bottom: 1.5rem;
 }
 
-  footer img {
-    height: 2em;
-    width: 2em;
-  }
-
-#travel-tracker{
-    font-family: 'Rubik Moonrocks', cursive;
-  }
-
-#date-time{
-  font-family: 'DM Mono', monospace;
+footer img {
+  height: 2em;
+  width: 2em;
 }
 
-.navbar-item{
-  font-family: 'DM Mono', monospace;
+#travel-tracker {
+  font-family: "Rubik Moonrocks", cursive;
+}
+
+#date-time {
+  font-family: "DM Mono", monospace;
+}
+
+.navbar-item {
+  font-family: "DM Mono", monospace;
   border-radius: 7px;
-   border: 2px solid white;
-  box-shadow:5px 5px 5px;
+  border: 2px solid white;
+  box-shadow: 5px 5px 5px;
+}
+
+.card-header-title {
+  font-family: "Spectral", serif;
+}
+
+.content {
+  font-family: "Spectral", serif;
 }
