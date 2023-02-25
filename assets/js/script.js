@@ -9,11 +9,13 @@ let flightFieldEl = document.querySelector("#flights");
 let visitedMarkerEl = document.querySelector("#visited-marker");
 let travelMarkerEl = document.querySelector("#travel-marker");
 let buttonsColorEl = document.querySelectorAll(".color-toggle");
+let removeMarkerEl = document.querySelector("#remove-marker")
 
 // DATA / STATE / GLOBAL VARIABLES
 let currentLon;
 let currentLat;
 let userLocation;
+let markerList=[];
 mapboxgl.accessToken =
   "pk.eyJ1IjoibGFlcnQ5OCIsImEiOiJjbGVkNW1yM2UwMG43M3JwY2dsMjUxYjkyIn0.oODAD95bzzjfRE-Y4DhVLw";
 let map = new mapboxgl.Map({
@@ -37,7 +39,7 @@ let travelLocations = {
 //toggle variable to know which button is pressed
 let visitedToggle = false;
 let travelToggle = false;
-
+let removeToggle=false;
 //FUNCTIONS ========================================================================================
 //when user clicks search, the button will redirect the map to the new location
 //airport section will be updated with the near by airports
@@ -62,7 +64,7 @@ function searchButtonListener(event) {
       map.flyTo({
         center: data.features[0].center,
         speed: 0.7,
-        zoom: 7,
+        zoom: 8,
       });
     });
 }
@@ -115,13 +117,11 @@ function airportButtonListener(event) {
 
   let currentCoordinates = [airportList[position].lng, airportList[position].lat];
   
-  
-
   //animate the map to airport position
   map.flyTo({
     center: currentCoordinates,
     speed: 0.7,
-    zoom: 10,
+    zoom: 12,
   });
 }
 
@@ -149,7 +149,7 @@ function getCoor() {
 }
 
 //When a pin is dropped a property is added to the object with the city name, state, and country
-function getCity(lon, lat, obj) {
+function getCity(lon, lat, obj, elem) {
   var baseUrl = "https://api.openweathermap.org/geo/1.0/reverse?";
   var longlatAdd = "lat=" + lat + "&lon=" + lon;
   var limitAdd = "&limi=" + 2;
@@ -170,9 +170,21 @@ function getCity(lon, lat, obj) {
     console.log(cityProp);
     obj.locationDesc= cityProp;
     console.log(obj);
+    //update local storage 
     window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
     window.localStorage.setItem("travelObject", JSON.stringify(travelLocations)); 
-   })
+    //add element to the map now since we have the city name
+    let newMarker=new mapboxgl.Marker(elem)
+    .setLngLat(obj.geometry.coordinates).setPopup(
+      new mapboxgl.Popup({ offset: 25 }) // add popups
+        .setHTML(
+          `<h3>${cityName}</h3><p>${cityState + ", " + cityNat}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+        )
+    )
+    .addTo(map);
+    //apprend new marker to markerList
+    markerList.push(newMarker);
+  })
 
 }
 //adding a marker in the map
@@ -188,19 +200,17 @@ function addMarker(event) {
         coordinates: [event.lngLat.lng, event.lngLat.lat],
       },
     };
-    console.log(event.lngLat.lng);
-    console.log(event.lngLatlat);
-    getCity(event.lngLat.lng, event.lngLat.lat, newObject);
+    
     //push the object to the features array of the visitedLocations object
     visitedLocations.features.push(newObject);
     //create anew div element for the pin
     let el = document.createElement("div");
     //create classes for the div element so it is styled correctly
     el.className = "marker visited-marker";
-    //add the new element to the map so it displays
-    new mapboxgl.Marker(el)
-      .setLngLat(newObject.geometry.coordinates)
-      .addTo(map);
+
+    //add the new element to the map so it displays after we get the location name
+    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el);
+
     //save to local storage
     window.localStorage.setItem(
       "visitedObject",
@@ -216,13 +226,12 @@ function addMarker(event) {
         coordinates: [event.lngLat.lng, event.lngLat.lat],
       },
     };
-    getCity(event.lngLat.lng, event.lngLat.lat, newObject);
     travelLocations.features.push(newObject);
     let el = document.createElement("div");
     el.className = "marker travel-marker";
-    new mapboxgl.Marker(el)
-      .setLngLat(newObject.geometry.coordinates)
-      .addTo(map);
+
+    //add the new element to the map so it displays after we get the location name
+    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el);
 
     //save to local storage
     window.localStorage.setItem(
@@ -231,9 +240,12 @@ function addMarker(event) {
     );
   }
 }
+
 //add event listeners for the map buttons, they will toggle the accessability of the addMarker function
 function visitedListener() {
   //if other buttons are active, make them inactive
+  removeToggle=false;
+  removeMarkerEl.setAttribute("class", "color-toggle");
   travelToggle = false;
   visitedToggle = !visitedToggle;
   //make this button active
@@ -242,13 +254,38 @@ function visitedListener() {
 }
 function travelListener() {
   //if other buttons are active, make them inactive
+  removeToggle=false;
+  removeMarkerEl.setAttribute("class", "color-toggle");
   visitedToggle = false;
   visitedMarkerEl.setAttribute("class", "color-toggle");
   //make this button active
   travelToggle = !travelToggle;
   travelMarkerEl.classList.toggle("active");
 }
-
+function removeListener () {
+  removeToggle = !removeToggle;
+  removeMarkerEl.classList.toggle("active");
+  visitedToggle = false;
+  travelToggle = false;
+  visitedMarkerEl.setAttribute("class", "color-toggle");
+  travelMarkerEl.setAttribute("class", "color-toggle");
+  //for every marker in the list, remove it
+  for (let d =0;d<markerList.length;d++){
+    markerList[d].remove();
+    //update to local Storage
+  }
+  visitedLocations = {
+    type: "FeatureCollection",
+    features: [],
+  };
+  
+  travelLocations = {
+    type: "FeatureCollection",
+    features: [],
+  };
+  window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
+  window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
+}
 // USER INTERACTIONS ===============================================================================
 //user can see today's date
 dateTimeEl.textContent = "Today, " + dayjs().format("dddd, MMMM D, YYYY");
@@ -292,6 +329,7 @@ const options = {
 //user can click on the map button's to add a marker
 visitedMarkerEl.addEventListener("click", visitedListener);
 travelMarkerEl.addEventListener("click", travelListener);
+removeMarkerEl.addEventListener("click", removeListener);
 map.on("click", addMarker);
 
 // INITIALIZATION ==================================================================================
@@ -306,20 +344,32 @@ if (localStorage.getItem("travelObject") !== null) {
   travelLocations = JSON.parse(localStorage.getItem("travelObject"));
 }
 
-//display the pins on the map
+//pins that are stored in the local storage, display them on the map
 for (const feature of visitedLocations.features) {
   // create a HTML element for each feature
   const el = document.createElement("div");
   el.className = "marker visited-marker";
+  let descriptionList = feature.locationDesc.split(",");
 
   // make a marker for each feature and add to the map
-  new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
+ let newMarker= new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).setPopup(
+    new mapboxgl.Popup({ offset: 25 }) // add popups
+  .setHTML(
+    `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+  )).addTo(map);
+  markerList.push(newMarker);
 }
 for (const feature of travelLocations.features) {
   // create a HTML element for each feature
   const el = document.createElement("div");
   el.className = "marker travel-marker";
+  let descriptionList = feature.locationDesc.split(",");
 
   // make a marker for each feature and add to the map
-  new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
+  let newMarker =new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).setPopup(
+    new mapboxgl.Popup({ offset: 25 }) // add popups
+  .setHTML(
+    `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+  )).addTo(map);
+  markerList.push(newMarker);
 }

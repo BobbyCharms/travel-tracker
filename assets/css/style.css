@@ -44,7 +44,7 @@
 }
 
 .visited-marker{
-  background-image: url('../images/visitedT.png');
+  background-image: url('../images/visitedred.png');
   background-size: cover;
 }
 
@@ -91,6 +91,16 @@ button {
   justify-content: center;
   align-items: center;
   display: flex;
+}
+
+/* pop ups for the pins */
+.mapboxgl-popup {
+  max-width: 200px;
+}
+
+.mapboxgl-popup-content {
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .location-button{
