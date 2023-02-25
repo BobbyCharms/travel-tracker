@@ -7,86 +7,145 @@
     <title>Travel Tracker</title>
     <!-- Uncomment this line to use the reset included  -->
     <!-- <link rel="stylesheet" href="./assets/css/reset.css" /> -->
-<link
-      rel="icon"
-      href="./assets/images/TT.png"
-      type="image/icon type"
-    />
-    
- 
+    <link rel="icon" href="./assets/images/TT.png" type="image/icon type" />
+
     <!-- Add CSS Framework Link Here  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css"  />
-    <link href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css"
+    />
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
 
     <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css"
-        integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm"
-        crossorigin="anonymous"
-      />
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css"
+      integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm"
+      crossorigin="anonymous"
+    />
 
     <link rel="stylesheet" href="./assets/css/style.css" />
-    <link href='https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css' rel='stylesheet' />
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
 
     <!-- Load fonts here -->
   </head>
-  <body class="has-backgroud-info" style="background-color:rgb(253, 235, 163)">
+  <body class="has-backgroud-info" style="background-color: rgb(253, 235, 163)">
     <hero class="hero is-primary is-small">
       <header class="hero-body">
-        <figure class="image is-128x128 mr-5 is-flex is-align-items-center is-flex-wrap-wrap" style="float:left">
-          <img class="is-rounded" src="assets/images/TT.png">
+        <figure
+          class="image is-128x128 mr-5 is-flex is-align-items-center is-flex-wrap-wrap"
+          style="float: left"
+        >
+          <img class="is-rounded" src="assets/images/TT.png" />
         </figure>
-        <p class="is-size-1 is-flex is-align-items-center is-flex-wrap-wrap" >
+        <p class="is-size-1 is-flex is-align-items-center is-flex-wrap-wrap">
           Travel Tracker
         </p>
-        <p class="subtitle" id="date-time">
-          Date & Time will go here
-        </p>
-        <nav class="navbar" role="navigation" aria-label="main navigation" style="float:right;">
-          <div class="navbar-brand " style="float:right" >
-            <a class="navbar-item" href="https://www.getyourguide.com/-l314?activeTab=base">Tour Guides</a>
+        <p class="subtitle" id="date-time">Date & Time will go here</p>
+        <nav
+          class="navbar"
+          role="navigation"
+          aria-label="main navigation"
+          
+        >
+          <div class="navbar-brand" >
+            <a
+              class="navbar-item"
+              href="https://www.getyourguide.com/-l314?activeTab=base"
+              >Tour Guides</a
+            >
             <a class="navbar-item" href="https://www.airbnb.com/">AirBnb</a>
           </div>
         </nav>
       </header>
     </hero>
-    <main class="section is-vcentered" >
+    <main class="section is-vcentered">
       <section id="main-level" class="columns">
-          <aside id="explainer-card" class="column mr-6 is-one-third" style="align-items:left ; border-radius: 7px; box-shadow: 10px 5px 5px rgb(26, 92, 112);background-color:rgb(239, 241, 241)">
-            <header class="card-header p-3 is-size-2">
-              <p class="card-header-title"> Welcome! </p>
-            </header>
-            <div clas="card-content has-background-light ">
-              <div class="content p-4 is-size-6 has-text-centered">
-                Travel Tracker is your first stop when planning or comemorating a trip. Take a look at the map to see where people have gone or marking where you have. Drop a pin where you've been or want to go and use the site to find guides, flights, and a place to stay for your next trip! <br> Happy Traveling! 
-              </div>
-              <form class="box" style="background-color: rgb(25, 25, 195)">
-                <div class="field">
-                  <label class="label" style="color:white">Pick a location</label>
-                  <div class="control">
-                    <input class="input" type="text" placeholder="for ex: 'Paris, France'">
-                  </div>
-                </div>
-                <button id="search-button" class="button is-primary">Begin your journey!</button>
-              </form>
+        <aside
+          id="explainer-card"
+          class="column mr-6 is-one-third"
+          style="
+            align-items: left;
+            border-radius: 7px;
+            box-shadow: 10px 5px 5px rgb(26, 92, 112);
+            background-color: rgb(239, 241, 241);
+          "
+        >
+          <header class="card-header p-3 is-size-2">
+            <p class="card-header-title">Welcome!</p>
+          </header>
+          <div clas="card-content has-background-light ">
+            <div class="content p-4 is-size-6 has-text-centered">
+              Travel Tracker is your first stop when planning or comemorating a
+              trip. Take a look at the map to see where people have gone or
+              marking where you have. Drop a pin where you've been or want to go
+              and use the site to find guides, flights, and a place to stay for
+              your next trip! <br />
+              Happy Traveling!
             </div>
+            <form class="box" style="background-color: rgb(25, 25, 195)">
+              <div class="field">
+                <label class="label" style="color: white"
+                  >Pick a location</label
+                >
+                <div class="control">
+                  <input
+                    class="input"
+                    type="text"
+                    placeholder="for ex: 'Paris, France'"
+                  />
+                </div>
+              </div>
+              <button id="search-button" class="button is-primary">
+                Begin your journey!
+              </button>
+            </form>
+          </div>
         </aside>
-         <!--take out border color when done styling-->
-         <!-- MAP added ID on line 70 and changed section on line 69 -->
-        <section class="column" id="maps-section" style="box-shadow: 10px 5px 5px rgb(26, 92, 112); border: solid 2px rgb(1, 11, 102); background-color:rgb(239, 241, 241)">
+        <!--take out border color when done styling-->
+        <!-- MAP added ID on line 70 and changed section on line 69 -->
+        <section
+          class="column"
+          id="maps-section"
+          style="
+            box-shadow: 10px 5px 5px rgb(26, 92, 112);
+            border: solid 2px rgb(1, 11, 102);
+            background-color: rgb(239, 241, 241);
+          "
+        >
           <div id="map"></div>
+
           <div id="button-container"style="position: relative; top: 10px; left: 10px;">
-            <button id="visited-marker" class="color-toggle">Visited</button>
-            <button id="travel-marker" class="color-toggle">Travel</button>
-            <button id="remove-marker" class="color-toggle">Remove Marker</button>
-            <button id="remove-all" class="color-toggle">Clear Map</button>
+            <button id="visited-marker" class="color-toggle">
+              <img src="./assets/images/visitedred.png" alt="Visited">
+            </button>
+            <button id="travel-marker" class="color-toggle">
+              <img src="./assets/images/travelT.png" alt="Travel">
+            </button>
+            <button id ="remove-marker" class="color-toggle">
+              <img src="./assets/images/trashT.png" alt="Trash">
+            </button>
+
           </div>
         </section>
       </section>
-      
+
       <!-- This is the Flights API Section -->
-       <section  id = "flights" class="section mt-5" style="display:none;  border-radius: 7px; box-shadow: 10px 5px 5px rgb(26, 92, 112); background-color:white">
-      </section>
+      <section
+        id="flights"
+        class="section mt-5"
+        style="
+          display: none;
+          border-radius: 7px;
+          box-shadow: 10px 5px 5px rgb(26, 92, 112);
+          background-color: white;
+        "
+      ></section>
     </main>
     <!-- Page Footer -->
     <footer class="footer">
@@ -96,7 +155,7 @@
         </p>
       </div>
     </footer>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js'></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
