@@ -93,35 +93,54 @@ button {
   display: flex;
 }
 
+.location-button{
+  background-image: url("../images/travelT.png");
+  background-size: contain;
+}
+
+.visited-button{
+  background-image: url("../images/visitedT.png");
+  background-size: contain;
+}
+
 .container{
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 20px; 
 }
 
 .row{
   display: flex;
   flex-direction: row;
+  justify-content: center; 
+  box-shadow: 7px;
+  
 }
 
-.travel-marker, .visited-marker{
+.travel-container, .visited-container{
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #eee;
+  background-color: white;
   padding: 30px;
   margin-right: 10px;
+  border-radius: 7px;
+  box-shadow: rgb(26, 92, 112) 10px 5px 5px;
+ 
 }
+
 .button-1 , .button-2{
   padding: 10px;
   background-color: transparent;
-  color: white;
+  color: rgb(34, 33, 33);
   border: 2px solid white;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 10px;
+
 }
 
 .button-1:hover{
@@ -137,3 +156,4 @@ button {
   margin-top: 1.5rem !important;
   margin-bottom: 1.5rem;
 }
+
