@@ -5,7 +5,35 @@
 
 #maps-section {
   height: 50vh;
-  padding-bottom: 40px ;
+  padding-bottom: 40px;
+}
+
+.navbar,
+.navbar-brand {
+  float: right;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 768px) {
+  #explainer-card {
+    margin-right: 0px !important;
+    margin-bottom: 5vh;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .navbar,
+  .navbar-brand {
+    float: none;
+    margin-left: auto;
+    
+  }
+  .navbar-brand {
+    justify-content: center;
+    width: 100%;
+  }
+  .subtitle {
+    text-align: center;
+  }
 }
 
 .marker {
@@ -16,21 +44,61 @@
 }
 
 .visited-marker{
-  background-image: url('../images/visited.png');
+  background-image: url('../images/visitedred.png');
   background-size: cover;
 }
 
 .travel-marker{
-  background-image: url('../images/travel.png');
+  background-image: url('../images/travelT.png');
   background-size: cover;
 }
 /* Map Toolbox Buttons */
+button {
+  padding:1px 1px;
+}
+
 .color-toggle {
-  background-color: #00d1b2;
+  background-color:#50d1e8;
   color: white;
+  height: 30px;
+  width: 30px;
+}
+
+.color-toggle img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
 
 .color-toggle.active {
-  background-color: rgb(184, 241, 28);
+  background-color: #f595e2;
   color: rgb(11, 0, 0);
+}
+
+/* Airport buttons */
+
+.section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.airport-button {
+  background-color: #f0590785;
+  margin: 12px;
+  width: 110px;
+  height: 70px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+/* pop ups for the pins */
+.mapboxgl-popup {
+  max-width: 200px;
+}
+
+.mapboxgl-popup-content {
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
 }
