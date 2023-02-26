@@ -177,9 +177,9 @@ function getCity(lon, lat, obj, elem, list) {
     cityNat = data[0].country;
     cityProp = cityName + ", " + cityState  + ", " + cityNat;
     obj.locationDesc= cityProp;
-    obj.caller =caller;
-    caller++;
-    window.setItem("caller",caller)
+    //obj.caller =caller;
+    //caller++;
+    //window.setItem("caller",caller)
     //update local storage 
     window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
     window.localStorage.setItem("travelObject", JSON.stringify(travelLocations)); 
@@ -192,14 +192,15 @@ function getCity(lon, lat, obj, elem, list) {
         )
     )
     .addTo(map);
-    elem.addEventListener("click",function(){
+    elem.addEventListener("click",function(newMarker){
       if (removeToggle){
-        console.log(list)
+        console.log(elem)
         elem.remove();
-        console.log(list)
-
-      }
-    })
+        console.log(list);
+        list.features.splice(i,1);
+        console.log(list);
+        newMarker.remove();
+    }})                             
     //apprend new marker to markerList
     markerList.push(newMarker);
     console.log(markerList)
@@ -222,6 +223,8 @@ function addMarker(event) {
     
     //push the object to the features array of the visitedLocations object
     visitedLocations.features.push(newObject);
+    let i = visitedLocations.findIndex(newObject);
+    console.log(i);
     //create anew div element for the pin
     let el = document.createElement("div");
     //create classes for the div element so it is styled correctly
@@ -420,13 +423,13 @@ if (localStorage.getItem("travelObject") !== null) {
 }
 
 //pins that are stored in the local storage, display them on the map
-for (const feature of visitedLocations.features) {
+for (let i = 0; i<visitedLocations.features.length;i++) {
   // create a HTML element for each feature
   const el = document.createElement("div");
   el.className = "marker visited-marker";
-  let descriptionList = feature.locationDesc.split(",");
+  let descriptionList = visitedLocations[i].locationDesc.split(",");
   // make a marker for each feature and add to the map
- let newMarker= new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).setPopup(
+ let newMarker= new mapboxgl.Marker(el).setLngLat(visitedLocations.features[i].geometry.coordinates).setPopup(
     new mapboxgl.Popup({ offset: 25 }) // add popups
   .setHTML(
     `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -434,43 +437,40 @@ for (const feature of visitedLocations.features) {
   el.addEventListener("click",function(){
     if (removeToggle){
       console.log(el)
-      console.log(visitedLocations)
-        el.remove();
-        console.log(visitedLocations)
+      console.log(visitedLocations);
+      el.remove();
+      visitedLocations.features.splice(i,1);
+      console.log(visitedLocations);
+      newMarker.remove();
     }})       
   markerList.push(newMarker);
   
 }
-for (const feature of travelLocations.features) {
+for (let i = 0; i<travelLocations.features.length;i++) {
   // create a HTML element for each feature
   const el = document.createElement("div");
   el.className = "marker travel-marker";
-  let descriptionList = feature.locationDesc.split(",");
-  el.addEventListener("click",function(){
-    if (removeToggle){
-      console.log(el)
-        el.remove();
-        console.log(travelLocations);
-    }})     
+  let descriptionList = travelLocations.features[i].locationDesc.split(",");
+         
   // make a marker for each feature and add to the map
   let newMarker =new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).setPopup(
     new mapboxgl.Popup({ offset: 25 }) // add popups
   .setHTML(
     `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
   )).addTo(map);   
-  el.addEventListener("click",function(feature, newMarker){
+  el.addEventListener("click",function(){
     if (removeToggle){
       console.log(el)
       el.remove();
       console.log(travelLocations);
-      delete feature;
-      console.log(travelLocations);}})
+      travelLocations.features.splice(i,1);
+      console.log(travelLocations);
       newMarker.remove();
-  }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+  }})                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
   markerList.push(newMarker);
   //el.addEventListener("dblclick",removeElement(el))
   console.log(markerList)
-
+}
 //separate functions between double click and single clickx
 //single click function: rem onex
   //caller set to 0 if no item in local storagex
