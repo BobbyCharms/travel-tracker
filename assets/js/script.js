@@ -303,9 +303,9 @@ function addDynamicButton(htmlElement, className, coordinateList){
   //when button is pressed, animate the mao to that location 
   dynamicButton.addEventListener('click', function(){
     map.flyTo({
-      center: coordinateList.geometry.coordinates,
+      center: coordinateList[coordinateList.length-1].geometry.coordinates,
       speed: 0.7,
-      zoom: 8,
+      zoom: 12,
     });
   });
   
