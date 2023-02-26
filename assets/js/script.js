@@ -183,6 +183,10 @@ function getCity(lon, lat, obj, elem, list,i) {
     //update local storage 
     window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
     window.localStorage.setItem("travelObject", JSON.stringify(travelLocations)); 
+    window.onbeforeunload = function (){
+      window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
+      window.localStorage.setItem("travelObject", JSON.stringify(travelLocations)); 
+    }
     //add element to the map now since we have the city name
     let newMarker=new mapboxgl.Marker(elem)
     .setLngLat(obj.geometry.coordinates).setPopup(
@@ -254,7 +258,7 @@ function addMarker(event) {
       },
     };
     travelLocations.features.push(newObject);
-    let i = visitedLocations.features.indexOf(newObject);
+    let i = travelLocations.features.indexOf(newObject);
     console.log(i);
     let el = document.createElement("div");
     el.className = "marker travel-marker";
