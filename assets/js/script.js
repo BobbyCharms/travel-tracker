@@ -158,7 +158,7 @@ function getCoor() {
 }
 
 //When a pin is dropped a property is added to the object with the city name, state, and country
-function getCity(lon, lat, obj, elem, list) {
+function getCity(lon, lat, obj, elem, list,i) {
   var baseUrl = "https://api.openweathermap.org/geo/1.0/reverse?";
   var longlatAdd = "lat=" + lat + "&lon=" + lon;
   var limitAdd = "&limi=" + 2;
@@ -192,7 +192,7 @@ function getCity(lon, lat, obj, elem, list) {
         )
     )
     .addTo(map);
-    elem.addEventListener("click",function(newMarker){
+    elem.addEventListener("click",function(){
       if (removeToggle){
         console.log(elem)
         elem.remove();
@@ -223,7 +223,7 @@ function addMarker(event) {
     
     //push the object to the features array of the visitedLocations object
     visitedLocations.features.push(newObject);
-    let i = visitedLocations.findIndex(newObject);
+    let i = visitedLocations.features.indexOf(newObject);
     console.log(i);
     //create anew div element for the pin
     let el = document.createElement("div");
@@ -232,7 +232,7 @@ function addMarker(event) {
    // el.addEventListener("click", removeElement(el))
     //idAssign(el);
     //add the new element to the map so it displays after we get the location name
-    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, visitedLocations);
+    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, visitedLocations,i);
     /*el.addEventListener("click",function(){
       if (removeToggle){
         console.log("hey")
@@ -254,7 +254,8 @@ function addMarker(event) {
       },
     };
     travelLocations.features.push(newObject);
-
+    let i = visitedLocations.features.indexOf(newObject);
+    console.log(i);
     let el = document.createElement("div");
     el.className = "marker travel-marker";
   
@@ -265,7 +266,7 @@ function addMarker(event) {
     }*/
     //el.addEventListener("click", removeElement(el))
     //add the new element to the map so it displays after we get the location name
-    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, travelLocations);
+    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, travelLocations,i);
 
     //save to local storage
     window.localStorage.setItem(
