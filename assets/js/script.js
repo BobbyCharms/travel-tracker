@@ -288,6 +288,29 @@ function removeListener () {
   window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
   window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
 }
+
+
+//given a html element, create a button and append it to that element
+function addDynamicButton(htmlElement, className, coordinateList){
+  //create button
+  let dynamicButton = document.createElement("button");
+  dynamicButton.setAttribute("class", className);
+  //give the button value the name of the location where the pin is located 
+  dynamicButton.value = coordinateList[(coordinateList.length)-1].locationDesc;
+  //when button is pressed, animate the mao to that location 
+  dynamicButton.addEventListener('click', function(){
+    map.flyTo({
+      center: coordinateList.geometry.coordinates,
+      speed: 0.7,
+      zoom: 8,
+    });
+  });
+  
+  //append the button the the html container 
+  htmlElement.append(dynamicButton);
+}
+
+
 // USER INTERACTIONS ========================================================================================================================================
 //user can see today's date
 dateTimeEl.textContent = "Today, " + dayjs().format("dddd, MMMM D, YYYY");
@@ -371,7 +394,7 @@ for (const feature of travelLocations.features) {
   let newMarker =new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).setPopup(
     new mapboxgl.Popup({ offset: 25 }) // add popups
   .setHTML(
-    `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` /
+    `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` 
   )).addTo(map);
   markerList.push(newMarker);
 }

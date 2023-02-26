@@ -124,8 +124,8 @@ button {
   box-shadow: rgb(26, 92, 112) 10px 5px 5px;
 }
 
-.button-1,
-.button-2 {
+.travel-button-list,
+.visited-button-list {
   padding: 10px;
   background-color: transparent;
   color: rgb(34, 33, 33);
