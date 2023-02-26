@@ -1,4 +1,4 @@
-// DEPENDENCIES (DOM Elements) ====================================================================
+// DEPENDENCIES (DOM Elements) ========================================================================================================================
 let dateTimeEl = document.querySelector("#date-time");
 let mapEl = document.querySelector("#map");
 let searchButtonEl = document.querySelector("#search-button");
@@ -9,9 +9,14 @@ let flightFieldEl = document.querySelector("#flights");
 let visitedMarkerEl = document.querySelector("#visited-marker");
 let travelMarkerEl = document.querySelector("#travel-marker");
 let buttonsColorEl = document.querySelectorAll(".color-toggle");
-let removeMarkerEl = document.querySelector("#remove-marker")
+let removeMarkerEl = document.querySelector("#remove-marker");
+let travelContainerEl = document.querySelector(".travel-container");
+let visitedContainerEl = document.querySelector(".visited-container");
+let travelDynamicButtonEl = document.querySelectorAll(".travel-button-list");
+let visitedDynamicButtonEl = document.querySelectorAll(".visited-button-list");
 
-// DATA / STATE / GLOBAL VARIABLES
+
+// DATA / STATE / GLOBAL VARIABLES =====================================================================================================================
 let currentLon;
 let currentLat;
 let userLocation;
@@ -40,7 +45,7 @@ let travelLocations = {
 let visitedToggle = false;
 let travelToggle = false;
 let removeToggle=false;
-//FUNCTIONS ========================================================================================
+//FUNCTIONS =========================================================================================================================================
 //when user clicks search, the button will redirect the map to the new location
 //airport section will be updated with the near by airports
 function searchButtonListener(event) {
@@ -149,7 +154,7 @@ function getCoor() {
 }
 
 //When a pin is dropped a property is added to the object with the city name, state, and country
-function getCity(lon, lat, obj, elem) {
+function getCity(lon, lat, obj, elem, buttonHtmlElem, buttonClassName) {
   var baseUrl = "https://api.openweathermap.org/geo/1.0/reverse?";
   var longlatAdd = "lat=" + lat + "&lon=" + lon;
   var limitAdd = "&limi=" + 2;
@@ -178,12 +183,15 @@ function getCity(lon, lat, obj, elem) {
     .setLngLat(obj.geometry.coordinates).setPopup(
       new mapboxgl.Popup({ offset: 25 }) // add popups
         .setHTML(
-          `<h3>${cityName}</h3><p>${cityState + ", " + cityNat}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+          `<h3>${cityName}</h3><p>${cityState + ", " + cityNat}</p>` 
         )
     )
     .addTo(map);
     //apprend new marker to markerList
     markerList.push(newMarker);
+    //dynamically add a new button to the html
+    addDynamicButton(buttonHtmlElem, buttonClassName, obj);
+
   })
 
 }
@@ -209,7 +217,7 @@ function addMarker(event) {
     el.className = "marker visited-marker";
 
     //add the new element to the map so it displays after we get the location name
-    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el);
+    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, visitedContainerEl, "visited-button-list");
 
     //save to local storage
     window.localStorage.setItem(
@@ -231,7 +239,7 @@ function addMarker(event) {
     el.className = "marker travel-marker";
 
     //add the new element to the map so it displays after we get the location name
-    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el);
+    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, travelContainerEl, "travel-button-list");
 
     //save to local storage
     window.localStorage.setItem(
@@ -285,8 +293,40 @@ function removeListener () {
   };
   window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
   window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
+  //update the dynamic button list
+  travelDynamicButtonEl = document.querySelectorAll(".travel-button-list");
+  visitedDynamicButtonEl = document.querySelectorAll(".visited-button-list");
+  travelDynamicButtonEl.forEach((element) => {
+    element.remove();
+  });
+  visitedDynamicButtonEl.forEach((element) => {
+    element.remove();
+  });
 }
-// USER INTERACTIONS ===============================================================================
+
+
+//given a html element, create a button and append it to that element
+function addDynamicButton(htmlElement, className, currentObject){
+  //create button
+  let dynamicButton = document.createElement("button");
+  dynamicButton.setAttribute("class", className);
+  //give the button value the name of the location where the pin is located 
+  dynamicButton.innerHTML = currentObject.locationDesc;
+  //when button is pressed, animate the mao to that location 
+  dynamicButton.addEventListener('click', function(){
+    map.flyTo({
+      center: currentObject.geometry.coordinates,
+      speed: 0.7,
+      zoom: 12,
+    });
+  });
+  
+  //append the button the the html container 
+  htmlElement.append(dynamicButton);
+}
+
+
+// USER INTERACTIONS ========================================================================================================================================
 //user can see today's date
 dateTimeEl.textContent = "Today, " + dayjs().format("dddd, MMMM D, YYYY");
 //user can search for a location
@@ -332,7 +372,7 @@ travelMarkerEl.addEventListener("click", travelListener);
 removeMarkerEl.addEventListener("click", removeListener);
 map.on("click", addMarker);
 
-// INITIALIZATION ==================================================================================
+// INITIALIZATION =============================================================================================================================================
 //finding users coordinates
 getCoor();
 
@@ -355,9 +395,14 @@ for (const feature of visitedLocations.features) {
  let newMarker= new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).setPopup(
     new mapboxgl.Popup({ offset: 25 }) // add popups
   .setHTML(
-    `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+    `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` 
   )).addTo(map);
+  //add the marker to the marker list
   markerList.push(newMarker);
+
+  //build the dynamic button list
+  addDynamicButton(visitedContainerEl, "visited-button-list", feature);
+
 }
 for (const feature of travelLocations.features) {
   // create a HTML element for each feature
@@ -369,7 +414,11 @@ for (const feature of travelLocations.features) {
   let newMarker =new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).setPopup(
     new mapboxgl.Popup({ offset: 25 }) // add popups
   .setHTML(
-    `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+    `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` 
   )).addTo(map);
+  //add the marker to the marker list
   markerList.push(newMarker);
+
+  //build the dynamic button list
+  addDynamicButton(travelContainerEl, "travel-button-list", feature);
 }
