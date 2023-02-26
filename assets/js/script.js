@@ -12,6 +12,9 @@ let buttonsColorEl = document.querySelectorAll(".color-toggle");
 let removeMarkerEl = document.querySelector("#remove-marker");
 let travelContainerEl = document.querySelector(".travel-container");
 let visitedContainerEl = document.querySelector(".visited-container");
+let travelDynamicButtonEl = document.querySelectorAll(".travel-button-list");
+let visitedDynamicButtonEl = document.querySelectorAll(".visited-button-list");
+
 
 // DATA / STATE / GLOBAL VARIABLES =====================================================================================================================
 let currentLon;
@@ -290,6 +293,15 @@ function removeListener () {
   };
   window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
   window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
+  //update the dynamic button list
+  travelDynamicButtonEl = document.querySelectorAll(".travel-button-list");
+  visitedDynamicButtonEl = document.querySelectorAll(".visited-button-list");
+  travelDynamicButtonEl.forEach((element) => {
+    element.remove();
+  });
+  visitedDynamicButtonEl.forEach((element) => {
+    element.remove();
+  });
 }
 
 
