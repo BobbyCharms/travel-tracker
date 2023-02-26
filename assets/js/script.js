@@ -320,8 +320,24 @@ function removeAllListener () {
   window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
   window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
   }
-function removeElement(event){
-  console.log(event.lngLat.lng, event.lngLat.lat)
+function removeElement(lowO, highO, lowA, highA){
+  //console.log(event.lngLat.lng, event.lngLat.lat)
+  //clickedC = event.lngLat.lng, event.lngLat.lat
+  let allVisitedCoor = [];
+  for (let a=0;a<visitedLocations.features.length;a++){
+    let visitCoor = visitedLocations.features[a].geometry.coordinates;
+    allVisitedCoor.push(visitCoor);
+  }
+  if ()
+  console.log(visitedLocations.features[0].geometry.coordinates)
+  console.log(travelLocations.features[0].geometry.coordinates)
+}
+function findRange (lon, lat){
+  let lowerLon = Math.floor(lon);
+  let higherLon = Math.ceil(lon);
+  let lowerLat = Math.floor(lat);
+  let higherLat = Math.ceil(lat);
+  removeElement(lowerLon,higherLon,lowerLat,higherLat)
 }
 console.log(markerList)
 // USER INTERACTIONS ===============================================================================
@@ -373,7 +389,7 @@ removeMarkerEl.addEventListener("click", removeListener);
 map.on("click", function(event){
   if (removeToggle){
    // console.log("hey")}
-   removeElement(event) }
+   findRange(event.lngLat.lng, event.lngLat.lat) }
   else{
     addMarker(event)
   }
