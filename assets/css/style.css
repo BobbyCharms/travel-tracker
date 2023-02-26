@@ -90,6 +90,10 @@ button {
 }
 
 /* Airport buttons */
+.mt-5 {
+  margin-top: 1.5rem !important;
+  margin-bottom: 1.5rem;
+}
 
 .section {
   display: flex;
@@ -176,18 +180,9 @@ button {
   color: #4caf50;
 }
 
-.mt-5 {
-  margin-top: 1.5rem !important;
-  margin-bottom: 1.5rem;
-}
-
 footer img {
   height: 2em;
   width: 2em;
-}
-
-#content-card {
-  font-family: "Spectral", serif;
 }
 
 #bottom-content {
