@@ -3,6 +3,28 @@
   float: right;
 }
 
+.navbar-item {
+  font-family: "DM Mono", monospace;
+  border-radius: 7px;
+  border: 2px solid white;
+  box-shadow: 5px 5px 5px;
+  background: rgb(227, 225, 225);
+}
+
+/* Body Tiltle and time */
+#travel-tracker {
+  font-family: "Rubik Moonrocks", cursive;
+}
+
+#date-time {
+  font-family: "DM Mono", monospace;
+}
+
+/* Welcome card */
+#content-card {
+  font-family: "Spectral", serif;
+}
+
 #map {
   height: 100%;
   width: 100%;
@@ -13,10 +35,6 @@
   padding-bottom: 40px;
 }
 
-.navbar,
-.navbar-brand {
-  float: right;
-}
 
 .marker {
   width: 50px;
@@ -34,7 +52,7 @@
   background-image: url("../images/travelT.png");
   background-size: cover;
 }
-/* Map Toolbox Buttons */
+/* Map Toolbox Buttons and color toggles */
 button {
   padding: 1px 1px;
 }
@@ -160,22 +178,6 @@ button {
 footer img {
   height: 2em;
   width: 2em;
-}
-
-#travel-tracker {
-  font-family: "Rubik Moonrocks", cursive;
-}
-
-#date-time {
-  font-family: "DM Mono", monospace;
-}
-
-.navbar-item {
-  font-family: "DM Mono", monospace;
-  border-radius: 7px;
-  border: 2px solid white;
-  box-shadow: 5px 5px 5px;
-  background: rgb(227, 225, 225);
 }
 
 .card-header-title {
