@@ -10,7 +10,7 @@ let visitedMarkerEl = document.querySelector("#visited-marker");
 let travelMarkerEl = document.querySelector("#travel-marker");
 let buttonsColorEl = document.querySelectorAll(".color-toggle");
 let removeMarkerEl = document.querySelector("#remove-marker");
-if (localStorage.getItem("caller") !== null) {
+/*if (localStorage.getItem("caller") !== null) {
   let caller = window.localStorage.getItem("caller");
 } else {
   window.localStorage.setItem("caller",0);
@@ -158,7 +158,7 @@ function getCoor() {
 }
 
 //When a pin is dropped a property is added to the object with the city name, state, and country
-function getCity(lon, lat, obj, elem) {
+function getCity(lon, lat, obj, elem, list) {
   var baseUrl = "https://api.openweathermap.org/geo/1.0/reverse?";
   var longlatAdd = "lat=" + lat + "&lon=" + lon;
   var limitAdd = "&limi=" + 2;
@@ -186,13 +186,18 @@ function getCity(lon, lat, obj, elem) {
     //add element to the map now since we have the city name
     let newMarker=new mapboxgl.Marker(elem)
     .setLngLat(obj.geometry.coordinates).setPopup(
-      new mapboxgl.Popup({ offset: 25 }) // add popups
+       new mapboxgl.Popup({ offset: 25 }) // add popups
         .setHTML(
           `<h3>${cityName}</h3><p>${cityState + ", " + cityNat}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
         )
-       
     )
     .addTo(map);
+    elem.addEventListener("click",function(){
+      if (removeToggle){
+        elem.remove();
+
+      }
+    })
     //apprend new marker to markerList
     markerList.push(newMarker);
     console.log(markerList)
@@ -222,8 +227,12 @@ function addMarker(event) {
    // el.addEventListener("click", removeElement(el))
     //idAssign(el);
     //add the new element to the map so it displays after we get the location name
-    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el);
-
+    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, visitedLocations);
+    /*el.addEventListener("click",function(){
+      if (removeToggle){
+        console.log("hey")
+      }
+    })*/
     //save to local storage
     window.localStorage.setItem(
       "visitedObject",
@@ -243,6 +252,7 @@ function addMarker(event) {
 
     let el = document.createElement("div");
     el.className = "marker travel-marker";
+  
     /*if (localStorage.getItem("caller") !== null) {
       let caller = localStorage.getItem("caller");
     } else {
@@ -250,7 +260,7 @@ function addMarker(event) {
     }*/
     //el.addEventListener("click", removeElement(el))
     //add the new element to the map so it displays after we get the location name
-    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el);
+    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, travelLocations);
 
     //save to local storage
     window.localStorage.setItem(
@@ -320,7 +330,7 @@ function removeAllListener () {
   window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
   window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
   }
-function removeElement(lowO, highO, lowA, highA){
+/*function removeElement(lowO, highO, lowA, highA){
   //console.log(event.lngLat.lng, event.lngLat.lat)
   //clickedC = event.lngLat.lng, event.lngLat.lat
   let allVisitedCoor = [];
@@ -332,13 +342,13 @@ function removeElement(lowO, highO, lowA, highA){
   console.log(visitedLocations.features[0].geometry.coordinates)
   console.log(travelLocations.features[0].geometry.coordinates)
 }
-function findRange (lon, lat){
+/*function findRange (lon, lat){
   let lowerLon = Math.floor(lon);
   let higherLon = Math.ceil(lon);
   let lowerLat = Math.floor(lat);
   let higherLat = Math.ceil(lat);
   removeElement(lowerLon,higherLon,lowerLat,higherLat)
-}
+}*/
 console.log(markerList)
 // USER INTERACTIONS ===============================================================================
 //user can see today's date
@@ -385,15 +395,15 @@ visitedMarkerEl.addEventListener("click", visitedListener);
 travelMarkerEl.addEventListener("click", travelListener);
 removeMarkerEl.addEventListener("dblclick", removeAllListener);
 removeMarkerEl.addEventListener("click", removeListener);
-//map.on("click", addMarker)
-map.on("click", function(event){
+map.on("click", addMarker)
+/*map.on("click", function(event){
   if (removeToggle){
    // console.log("hey")}
    findRange(event.lngLat.lng, event.lngLat.lat) }
   else{
     addMarker(event)
   }
-});
+});*/
 
 // INITIALIZATION ==================================================================================
 //finding users coordinates
@@ -419,6 +429,11 @@ for (const feature of visitedLocations.features) {
   .setHTML(
     `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
   )).addTo(map);
+  el.addEventListener("click",function(){
+    if (removeToggle){
+      el.remove();
+      return;
+    }})       
   markerList.push(newMarker);
   
 }
@@ -426,18 +441,27 @@ for (const feature of travelLocations.features) {
   // create a HTML element for each feature
   const el = document.createElement("div");
   el.className = "marker travel-marker";
+  /*el.addEventListener("click",function(){
+    if (removeToggle){
+      el.remove();
+    }*/
+  }
   let descriptionList = feature.locationDesc.split(",");
-
+  el.addEventListener("click",function(){
+    if (removeToggle){
+      el.remove();
+      return;
+    }})     
   // make a marker for each feature and add to the map
   let newMarker =new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).setPopup(
     new mapboxgl.Popup({ offset: 25 }) // add popups
   .setHTML(
     `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-  )).addTo(map);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+  )).addTo(map);   
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
   markerList.push(newMarker);
   //el.addEventListener("dblclick",removeElement(el))
   console.log(markerList)
-}
 
 //separate functions between double click and single clickx
 //single click function: rem onex
