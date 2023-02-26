@@ -1,4 +1,4 @@
-// DEPENDENCIES (DOM Elements) ====================================================================
+// DEPENDENCIES (DOM Elements) ========================================================================================================================
 let dateTimeEl = document.querySelector("#date-time");
 let mapEl = document.querySelector("#map");
 let searchButtonEl = document.querySelector("#search-button");
@@ -9,9 +9,11 @@ let flightFieldEl = document.querySelector("#flights");
 let visitedMarkerEl = document.querySelector("#visited-marker");
 let travelMarkerEl = document.querySelector("#travel-marker");
 let buttonsColorEl = document.querySelectorAll(".color-toggle");
-let removeMarkerEl = document.querySelector("#remove-marker")
+let removeMarkerEl = document.querySelector("#remove-marker");
+let travleContainerEl = document.querySelector(".travel-container");
+let visitedContainerEl = document.querySelector(".visited-container");
 
-// DATA / STATE / GLOBAL VARIABLES
+// DATA / STATE / GLOBAL VARIABLES =====================================================================================================================
 let currentLon;
 let currentLat;
 let userLocation;
@@ -40,7 +42,7 @@ let travelLocations = {
 let visitedToggle = false;
 let travelToggle = false;
 let removeToggle=false;
-//FUNCTIONS ========================================================================================
+//FUNCTIONS =========================================================================================================================================
 //when user clicks search, the button will redirect the map to the new location
 //airport section will be updated with the near by airports
 function searchButtonListener(event) {
@@ -178,7 +180,7 @@ function getCity(lon, lat, obj, elem) {
     .setLngLat(obj.geometry.coordinates).setPopup(
       new mapboxgl.Popup({ offset: 25 }) // add popups
         .setHTML(
-          `<h3>${cityName}</h3><p>${cityState + ", " + cityNat}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+          `<h3>${cityName}</h3><p>${cityState + ", " + cityNat}</p>` 
         )
     )
     .addTo(map);
@@ -286,7 +288,7 @@ function removeListener () {
   window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
   window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
 }
-// USER INTERACTIONS ===============================================================================
+// USER INTERACTIONS ========================================================================================================================================
 //user can see today's date
 dateTimeEl.textContent = "Today, " + dayjs().format("dddd, MMMM D, YYYY");
 //user can search for a location
@@ -332,7 +334,7 @@ travelMarkerEl.addEventListener("click", travelListener);
 removeMarkerEl.addEventListener("click", removeListener);
 map.on("click", addMarker);
 
-// INITIALIZATION ==================================================================================
+// INITIALIZATION =============================================================================================================================================
 //finding users coordinates
 getCoor();
 
@@ -355,7 +357,7 @@ for (const feature of visitedLocations.features) {
  let newMarker= new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).setPopup(
     new mapboxgl.Popup({ offset: 25 }) // add popups
   .setHTML(
-    `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+    `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` 
   )).addTo(map);
   markerList.push(newMarker);
 }
@@ -369,7 +371,7 @@ for (const feature of travelLocations.features) {
   let newMarker =new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).setPopup(
     new mapboxgl.Popup({ offset: 25 }) // add popups
   .setHTML(
-    `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+    `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` /
   )).addTo(map);
   markerList.push(newMarker);
 }
