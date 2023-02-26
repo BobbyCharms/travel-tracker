@@ -16,20 +16,13 @@ if (localStorage.getItem("caller") !== null) {
   window.localStorage.setItem("caller",0);
   let caller=0;}
 //console.log(caller)
-/*if (localStorage.getItem("caller") !== null) {
-  let caller = localStorage.getItem("caller");
-} else {
-  let caller=0;
+/*function idAssign(element){
+ // console.log(caller);
+ // element.setAttribute("id",caller);
+ // caller++;
+  //window.localStorage.setItem("caller",caller);
+  element.addEventListener("dblclick",removeListener);
 }*/
-function idAssign(element){
-  console.log(caller)
-  element.setAttribute("id",caller)
-  caller++;
-  window.localStorage.setItem("caller",caller);
-  element.addEventListener("dblclick",removeListener)
-}
-
-
 // DATA / STATE / GLOBAL VARIABLES
 let currentLon;
 let currentLat;
@@ -184,6 +177,9 @@ function getCity(lon, lat, obj, elem) {
     cityNat = data[0].country;
     cityProp = cityName + ", " + cityState  + ", " + cityNat;
     obj.locationDesc= cityProp;
+    obj.caller =caller;
+    caller++;
+    window.setItem("caller",caller)
     //update local storage 
     window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
     window.localStorage.setItem("travelObject", JSON.stringify(travelLocations)); 
@@ -194,6 +190,7 @@ function getCity(lon, lat, obj, elem) {
         .setHTML(
           `<h3>${cityName}</h3><p>${cityState + ", " + cityNat}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
         )
+       
     )
     .addTo(map);
     //apprend new marker to markerList
@@ -222,8 +219,8 @@ function addMarker(event) {
     let el = document.createElement("div");
     //create classes for the div element so it is styled correctly
     el.className = "marker visited-marker";
-    
-    idAssign(el);
+   // el.addEventListener("click", removeElement(el))
+    //idAssign(el);
     //add the new element to the map so it displays after we get the location name
     getCity(event.lngLat.lng, event.lngLat.lat, newObject, el);
 
@@ -251,7 +248,7 @@ function addMarker(event) {
     } else {
       let caller=0;
     }*/
-    idAssign(el);
+    //el.addEventListener("click", removeElement(el))
     //add the new element to the map so it displays after we get the location name
     getCity(event.lngLat.lng, event.lngLat.lat, newObject, el);
 
@@ -308,7 +305,8 @@ function removeAllListener () {
     features: [],
   };
 }
-  function removeListener () {
+  function removeListener(){
+    //console.log("hey")
     removeToggle = !removeToggle;
     removeMarkerEl.classList.toggle("active");
     visitedToggle = false;
@@ -316,13 +314,14 @@ function removeAllListener () {
     visitedMarkerEl.setAttribute("class", "color-toggle");
     travelMarkerEl.setAttribute("class", "color-toggle");
     //for every marker in the list, remove it
-    for (let d =0;d<markerList.length;d++){
-      markerList[d].remove();
      
       //update to local Storage
-    }
+    
   window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
   window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
+  }
+function removeElement(event){
+  console.log(event.lngLat.lng, event.lngLat.lat)
 }
 console.log(markerList)
 // USER INTERACTIONS ===============================================================================
@@ -370,7 +369,15 @@ visitedMarkerEl.addEventListener("click", visitedListener);
 travelMarkerEl.addEventListener("click", travelListener);
 removeMarkerEl.addEventListener("dblclick", removeAllListener);
 removeMarkerEl.addEventListener("click", removeListener);
-map.on("click", addMarker);
+//map.on("click", addMarker)
+map.on("click", function(event){
+  if (removeToggle){
+   // console.log("hey")}
+   removeElement(event) }
+  else{
+    addMarker(event)
+  }
+});
 
 // INITIALIZATION ==================================================================================
 //finding users coordinates
@@ -412,6 +419,7 @@ for (const feature of travelLocations.features) {
     `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
   )).addTo(map);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
   markerList.push(newMarker);
+  //el.addEventListener("dblclick",removeElement(el))
   console.log(markerList)
 }
 
