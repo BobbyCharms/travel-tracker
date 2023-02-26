@@ -10,7 +10,7 @@ let visitedMarkerEl = document.querySelector("#visited-marker");
 let travelMarkerEl = document.querySelector("#travel-marker");
 let buttonsColorEl = document.querySelectorAll(".color-toggle");
 let removeMarkerEl = document.querySelector("#remove-marker");
-let caller = window.localStorage.getItem("caller");
+
 
 // DATA / STATE / GLOBAL VARIABLES
 let currentLon;
@@ -204,8 +204,10 @@ function addMarker(event) {
     let el = document.createElement("div");
     //create classes for the div element so it is styled correctly
     el.className = "marker visited-marker";
-    caller = window.localStorage.getItem("caller");
     el.setAttribute("id",caller)
+    caller++;
+    window.localStorage.setItem("caller",caller);
+    el.addEventListener("click",removeListener)
     //add the new element to the map so it displays after we get the location name
     getCity(event.lngLat.lng, event.lngLat.lat, newObject, el);
 
@@ -284,6 +286,20 @@ function removeAllListener () {
     type: "FeatureCollection",
     features: [],
   };
+}
+  function removeListener () {
+    removeToggle = !removeToggle;
+    removeMarkerEl.classList.toggle("active");
+    visitedToggle = false;
+    travelToggle = false;
+    visitedMarkerEl.setAttribute("class", "color-toggle");
+    travelMarkerEl.setAttribute("class", "color-toggle");
+    //for every marker in the list, remove it
+    for (let d =0;d<markerList.length;d++){
+      markerList[d].remove();
+     
+      //update to local Storage
+    }
   window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
   window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
 }
@@ -332,6 +348,7 @@ const options = {
 visitedMarkerEl.addEventListener("click", visitedListener);
 travelMarkerEl.addEventListener("click", travelListener);
 removeMarkerEl.addEventListener("dblclick", removeAllListener);
+removeMarkerEl.addEventListener("click", removeListener);
 map.on("click", addMarker);
 
 // INITIALIZATION ==================================================================================
@@ -344,6 +361,11 @@ if (localStorage.getItem("visitedObject") !== null) {
 }
 if (localStorage.getItem("travelObject") !== null) {
   travelLocations = JSON.parse(localStorage.getItem("travelObject"));
+}
+if (localStorage.getItem("caller") !== null) {
+  let caller = localStorage.getItem("caller");
+} else {
+  let caller=0;
 }
 
 //pins that are stored in the local storage, display them on the map
@@ -378,12 +400,12 @@ for (const feature of travelLocations.features) {
   console.log(markerList)
 }
 
-//separate functions between double click and single click
-//single click function: rem one
-  //caller set to 0 if no item in local storage
-  //id of new marker is = caller
-  //when used--caller increases by one
-  //set it again in local storage after used
+//separate functions between double click and single clickx
+//single click function: rem onex
+  //caller set to 0 if no item in local storagex
+  //id of new marker is = callerx
+  //when used--caller increases by onex
+  //set it again in local storage after usedx
   //add event listener that  console.log coordinates
   //create an array of the coordinate of the markers
   //finds the coordinates within the array
