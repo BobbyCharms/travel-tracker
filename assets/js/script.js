@@ -10,6 +10,24 @@ let visitedMarkerEl = document.querySelector("#visited-marker");
 let travelMarkerEl = document.querySelector("#travel-marker");
 let buttonsColorEl = document.querySelectorAll(".color-toggle");
 let removeMarkerEl = document.querySelector("#remove-marker");
+if (localStorage.getItem("caller") !== null) {
+  let caller = window.localStorage.getItem("caller");
+} else {
+  window.localStorage.setItem("caller",0);
+  let caller=0;}
+//console.log(caller)
+/*if (localStorage.getItem("caller") !== null) {
+  let caller = localStorage.getItem("caller");
+} else {
+  let caller=0;
+}*/
+function idAssign(element){
+  console.log(caller)
+  element.setAttribute("id",caller)
+  caller++;
+  window.localStorage.setItem("caller",caller);
+  element.addEventListener("dblclick",removeListener)
+}
 
 
 // DATA / STATE / GLOBAL VARIABLES
@@ -204,10 +222,8 @@ function addMarker(event) {
     let el = document.createElement("div");
     //create classes for the div element so it is styled correctly
     el.className = "marker visited-marker";
-    el.setAttribute("id",caller)
-    caller++;
-    window.localStorage.setItem("caller",caller);
-    el.addEventListener("click",removeListener)
+    
+    idAssign(el);
     //add the new element to the map so it displays after we get the location name
     getCity(event.lngLat.lng, event.lngLat.lat, newObject, el);
 
@@ -230,10 +246,12 @@ function addMarker(event) {
 
     let el = document.createElement("div");
     el.className = "marker travel-marker";
-    el.setAttribute("id",caller)
-    caller++;
-    window.localStorage.setItem("caller",caller);
-    el.addEventListener("click",removeListener)
+    /*if (localStorage.getItem("caller") !== null) {
+      let caller = localStorage.getItem("caller");
+    } else {
+      let caller=0;
+    }*/
+    idAssign(el);
     //add the new element to the map so it displays after we get the location name
     getCity(event.lngLat.lng, event.lngLat.lat, newObject, el);
 
@@ -365,11 +383,6 @@ if (localStorage.getItem("visitedObject") !== null) {
 if (localStorage.getItem("travelObject") !== null) {
   travelLocations = JSON.parse(localStorage.getItem("travelObject"));
 }
-if (localStorage.getItem("caller") !== null) {
-  let caller = localStorage.getItem("caller");
-} else {
-  let caller=0;
-}
 
 //pins that are stored in the local storage, display them on the map
 for (const feature of visitedLocations.features) {
@@ -377,7 +390,6 @@ for (const feature of visitedLocations.features) {
   const el = document.createElement("div");
   el.className = "marker visited-marker";
   let descriptionList = feature.locationDesc.split(",");
-
   // make a marker for each feature and add to the map
  let newMarker= new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).setPopup(
     new mapboxgl.Popup({ offset: 25 }) // add popups
