@@ -9,7 +9,8 @@ let flightFieldEl = document.querySelector("#flights");
 let visitedMarkerEl = document.querySelector("#visited-marker");
 let travelMarkerEl = document.querySelector("#travel-marker");
 let buttonsColorEl = document.querySelectorAll(".color-toggle");
-let removeMarkerEl = document.querySelector("#remove-marker")
+let removeMarkerEl = document.querySelector("#remove-marker");
+let caller = window.localStorage.getItem("caller");
 
 // DATA / STATE / GLOBAL VARIABLES
 let currentLon;
@@ -35,11 +36,11 @@ let visitedLocations = {
 let travelLocations = {
   type: "FeatureCollection",
   features: [],
-};
+};*/
 //toggle variable to know which button is pressed
 let visitedToggle = false;
 let travelToggle = false;
-let removeToggle=false;
+let removeToggle=false;/*
 //FUNCTIONS ========================================================================================
 //when user clicks search, the button will redirect the map to the new location
 //airport section will be updated with the near by airports
@@ -164,9 +165,7 @@ function getCity(lon, lat, obj, elem) {
     cityState = data[0].state;
     cityNat = data[0].country;
     cityProp = cityName + ", " + cityState  + ", " + cityNat;
-    console.log(cityProp);
     obj.locationDesc= cityProp;
-    console.log(obj);
     //update local storage 
     window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
     window.localStorage.setItem("travelObject", JSON.stringify(travelLocations)); 
@@ -205,7 +204,8 @@ function addMarker(event) {
     let el = document.createElement("div");
     //create classes for the div element so it is styled correctly
     el.className = "marker visited-marker";
-
+    caller = window.localStorage.getItem("caller");
+    el.setAttribute("id",caller)
     //add the new element to the map so it displays after we get the location name
     getCity(event.lngLat.lng, event.lngLat.lat, newObject, el);
 
@@ -225,6 +225,7 @@ function addMarker(event) {
       },
     };
     travelLocations.features.push(newObject);
+
     let el = document.createElement("div");
     el.className = "marker travel-marker";
 
@@ -260,9 +261,9 @@ function travelListener() {
   travelToggle = !travelToggle;
   travelMarkerEl.classList.toggle("active");
 }
-function removeListener () {
-  removeToggle = !removeToggle;
-  removeMarkerEl.classList.toggle("active");
+function removeAllListener () {
+  //removeToggle = !removeToggle;
+  //removeMarkerEl.classList.toggle("active");
   visitedToggle = false;
   travelToggle = false;
   visitedMarkerEl.setAttribute("class", "color-toggle");
@@ -270,9 +271,10 @@ function removeListener () {
   //for every marker in the list, remove it
   for (let d =0;d<markerList.length;d++){
     markerList[d].remove();
-    console.log(markerList);
+   
     //update to local Storage
   }
+  console.log(markerList);
   visitedLocations = {
     type: "FeatureCollection",
     features: [],
@@ -285,6 +287,7 @@ function removeListener () {
   window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
   window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
 }
+console.log(markerList)
 // USER INTERACTIONS ===============================================================================
 //user can see today's date
 dateTimeEl.textContent = "Today, " + dayjs().format("dddd, MMMM D, YYYY");
@@ -328,7 +331,7 @@ const options = {
 //user can click on the map button's to add a marker
 visitedMarkerEl.addEventListener("click", visitedListener);
 travelMarkerEl.addEventListener("click", travelListener);
-removeMarkerEl.addEventListener("click", removeListener);
+removeMarkerEl.addEventListener("dblclick", removeAllListener);
 map.on("click", addMarker);
 
 // INITIALIZATION ==================================================================================
@@ -357,7 +360,7 @@ for (const feature of visitedLocations.features) {
     `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
   )).addTo(map);
   markerList.push(newMarker);
-  console.log(markerList)
+  
 }
 for (const feature of travelLocations.features) {
   // create a HTML element for each feature
@@ -370,7 +373,18 @@ for (const feature of travelLocations.features) {
     new mapboxgl.Popup({ offset: 25 }) // add popups
   .setHTML(
     `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
-  )).addTo(map);
+  )).addTo(map);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
   markerList.push(newMarker);
   console.log(markerList)
 }
+
+//separate functions between double click and single click
+//single click function: rem one
+  //caller set to 0 if no item in local storage
+  //id of new marker is = caller
+  //when used--caller increases by one
+  //set it again in local storage after used
+  //add event listener that  console.log coordinates
+  //create an array of the coordinate of the markers
+  //finds the coordinates within the array
+  //removes from the features
