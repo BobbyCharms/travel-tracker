@@ -10,7 +10,7 @@ let visitedMarkerEl = document.querySelector("#visited-marker");
 let travelMarkerEl = document.querySelector("#travel-marker");
 let buttonsColorEl = document.querySelectorAll(".color-toggle");
 let removeMarkerEl = document.querySelector("#remove-marker");
-let travleContainerEl = document.querySelector(".travel-container");
+let travelContainerEl = document.querySelector(".travel-container");
 let visitedContainerEl = document.querySelector(".visited-container");
 
 // DATA / STATE / GLOBAL VARIABLES =====================================================================================================================
@@ -151,7 +151,7 @@ function getCoor() {
 }
 
 //When a pin is dropped a property is added to the object with the city name, state, and country
-function getCity(lon, lat, obj, elem) {
+function getCity(lon, lat, obj, elem, buttonHtmlElem, buttonClassName, buttonCoordinateList) {
   var baseUrl = "https://api.openweathermap.org/geo/1.0/reverse?";
   var longlatAdd = "lat=" + lat + "&lon=" + lon;
   var limitAdd = "&limi=" + 2;
@@ -186,6 +186,9 @@ function getCity(lon, lat, obj, elem) {
     .addTo(map);
     //apprend new marker to markerList
     markerList.push(newMarker);
+    //dynamically add a new button to the html
+    addDynamicButton(buttonHtmlElem, buttonClassName, buttonCoordinateList);
+
   })
 
 }
@@ -211,7 +214,7 @@ function addMarker(event) {
     el.className = "marker visited-marker";
 
     //add the new element to the map so it displays after we get the location name
-    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el);
+    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, visitedContainerEl, "visited-button-list", visitedLocations.features);
 
     //save to local storage
     window.localStorage.setItem(
@@ -233,7 +236,7 @@ function addMarker(event) {
     el.className = "marker travel-marker";
 
     //add the new element to the map so it displays after we get the location name
-    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el);
+    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, travelContainerEl, "travel-button-list", travelLocations.features);
 
     //save to local storage
     window.localStorage.setItem(
@@ -296,7 +299,7 @@ function addDynamicButton(htmlElement, className, coordinateList){
   let dynamicButton = document.createElement("button");
   dynamicButton.setAttribute("class", className);
   //give the button value the name of the location where the pin is located 
-  dynamicButton.value = coordinateList[(coordinateList.length)-1].locationDesc;
+  dynamicButton.innerHTML = coordinateList[(coordinateList.length)-1].locationDesc;
   //when button is pressed, animate the mao to that location 
   dynamicButton.addEventListener('click', function(){
     map.flyTo({
