@@ -194,7 +194,9 @@ function getCity(lon, lat, obj, elem, list) {
     .addTo(map);
     elem.addEventListener("click",function(){
       if (removeToggle){
+        console.log(list)
         elem.remove();
+        console.log(list)
 
       }
     })
@@ -431,8 +433,10 @@ for (const feature of visitedLocations.features) {
   )).addTo(map);
   el.addEventListener("click",function(){
     if (removeToggle){
-      el.remove();
-      return;
+      console.log(el)
+      console.log(visitedLocations)
+        el.remove();
+        console.log(visitedLocations)
     }})       
   markerList.push(newMarker);
   
@@ -441,16 +445,12 @@ for (const feature of travelLocations.features) {
   // create a HTML element for each feature
   const el = document.createElement("div");
   el.className = "marker travel-marker";
-  /*el.addEventListener("click",function(){
-    if (removeToggle){
-      el.remove();
-    }*/
-  }
   let descriptionList = feature.locationDesc.split(",");
   el.addEventListener("click",function(){
     if (removeToggle){
-      el.remove();
-      return;
+      console.log(el)
+        el.remove();
+        console.log(travelLocations);
     }})     
   // make a marker for each feature and add to the map
   let newMarker =new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).setPopup(
@@ -458,7 +458,15 @@ for (const feature of travelLocations.features) {
   .setHTML(
     `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
   )).addTo(map);   
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+  el.addEventListener("click",function(feature, newMarker){
+    if (removeToggle){
+      console.log(el)
+      el.remove();
+      console.log(travelLocations);
+      delete feature;
+      console.log(travelLocations);}})
+      newMarker.remove();
+  }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
   markerList.push(newMarker);
   //el.addEventListener("dblclick",removeElement(el))
   console.log(markerList)
