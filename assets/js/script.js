@@ -230,7 +230,10 @@ function addMarker(event) {
 
     let el = document.createElement("div");
     el.className = "marker travel-marker";
-
+    el.setAttribute("id",caller)
+    caller++;
+    window.localStorage.setItem("caller",caller);
+    el.addEventListener("click",removeListener)
     //add the new element to the map so it displays after we get the location name
     getCity(event.lngLat.lng, event.lngLat.lat, newObject, el);
 
