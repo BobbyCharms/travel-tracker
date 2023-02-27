@@ -10,6 +10,7 @@ let visitedMarkerEl = document.querySelector("#visited-marker");
 let travelMarkerEl = document.querySelector("#travel-marker");
 let buttonsColorEl = document.querySelectorAll(".color-toggle");
 let removeMarkerEl = document.querySelector("#remove-marker");
+let caller = 0;
 /*if (localStorage.getItem("caller") !== null) {
   let caller = window.localStorage.getItem("caller");
 } else {
@@ -227,8 +228,7 @@ function addMarker(event) {
     
     //push the object to the features array of the visitedLocations object
     visitedLocations.features.push(newObject);
-    let i = visitedLocations.features.indexOf(newObject);
-    console.log(i);
+    
     //create anew div element for the pin
     let el = document.createElement("div");
     //create classes for the div element so it is styled correctly
@@ -433,6 +433,8 @@ for (let i = 0; i<visitedLocations.features.length;i++) {
   const el = document.createElement("div");
   el.className = "marker visited-marker";
   let descriptionList = visitedLocations[i].locationDesc.split(",");
+  visitedLocations.features[i].caller = caller;
+  caller++;
   // make a marker for each feature and add to the map
  let newMarker= new mapboxgl.Marker(el).setLngLat(visitedLocations.features[i].geometry.coordinates).setPopup(
     new mapboxgl.Popup({ offset: 25 }) // add popups
@@ -447,6 +449,7 @@ for (let i = 0; i<visitedLocations.features.length;i++) {
       visitedLocations.features.splice(i,1);
       console.log(visitedLocations);
       newMarker.remove();
+      console.log(markerList)
     }})       
   markerList.push(newMarker);
   
@@ -456,9 +459,9 @@ for (let i = 0; i<travelLocations.features.length;i++) {
   const el = document.createElement("div");
   el.className = "marker travel-marker";
   let descriptionList = travelLocations.features[i].locationDesc.split(",");
-         
+  travelLocations.features[i].caller = caller;
   // make a marker for each feature and add to the map
-  let newMarker =new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).setPopup(
+  let newMarker =new mapboxgl.Marker(el).setLngLat(travelLocations.features[i].geometry.coordinates).setPopup(
     new mapboxgl.Popup({ offset: 25 }) // add popups
   .setHTML(
     `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -466,12 +469,22 @@ for (let i = 0; i<travelLocations.features.length;i++) {
   el.addEventListener("click",function(){
     if (removeToggle){
       console.log(el)
-      el.remove();
+      let chosenCaller = travelLocations.features[i].caller
+      for (let a=0;a<visitedLocations.features.length;a++){
+        if (chosenCaller==visitedLocations.features[a].caller){
+          let callerIndex = a;
+          console.log("hey")
+        }
+      }
+      //let foundCaller = visitedLocations.features.caller.indexOf(chosenCaller);
+      //console.log(i);
+      console.log(caller)
       console.log(travelLocations);
-      travelLocations.features.splice(i,1);
+      travelLocations.features.splice(callerIndex,1);
       console.log(travelLocations);
       newMarker.remove();
-  }})                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+  }
+  caller++;})                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
   markerList.push(newMarker);
   //el.addEventListener("dblclick",removeElement(el))
   console.log(markerList)
