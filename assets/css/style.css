@@ -403,7 +403,6 @@ footer img {
 
 .wrapper{
   position: fixed;
-  justify-content: flex-end;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
