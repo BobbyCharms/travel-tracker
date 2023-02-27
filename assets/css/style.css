@@ -4,13 +4,43 @@
 }
 
 #maps-section {
+<<<<<<< HEAD
+  height: 50vh;
+=======
   height: 100%;
+>>>>>>> b44eb0f206d5137d1612d6647b66e96ae37a1f50
   padding-bottom: 40px;
 }
 
 .navbar,
 .navbar-brand {
   float: right;
+<<<<<<< HEAD
+}
+
+@media only screen and (min-width: 320px) and (max-width: 768px) {
+  #explainer-card {
+    margin-right: 0px !important;
+    margin-bottom: 5vh;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .navbar,
+  .navbar-brand {
+    float: none;
+    margin-left: auto;
+    
+  }
+  .navbar-brand {
+    justify-content: center;
+    width: 100%;
+  }
+  .subtitle {
+    text-align: center;
+  }
+=======
+>>>>>>> b44eb0f206d5137d1612d6647b66e96ae37a1f50
 }
 
 .marker {
@@ -20,6 +50,15 @@
   cursor: pointer;
 }
 
+<<<<<<< HEAD
+.visited-marker{
+  background-image: url('../images/visitedred.png');
+  background-size: cover;
+}
+
+.travel-marker{
+  background-image: url('../images/travelT.png');
+=======
 .visited-marker {
   background-image: url("../images/visitedred.png");
   background-size: cover;
@@ -27,10 +66,21 @@
 
 .travel-marker {
   background-image: url("../images/travelT.png");
+>>>>>>> b44eb0f206d5137d1612d6647b66e96ae37a1f50
   background-size: cover;
 }
 /* Map Toolbox Buttons */
 button {
+<<<<<<< HEAD
+  padding:1px 1px;
+}
+
+.color-toggle {
+  background-color:#50d1e8;
+  color: white;
+  height: 30px;
+  width: 30px;
+=======
   padding: 1px 1px;
 }
 
@@ -40,6 +90,7 @@ button {
   height: 30px;
   width: 30px;
   cursor: pointer;
+>>>>>>> b44eb0f206d5137d1612d6647b66e96ae37a1f50
 }
 
 .color-toggle img {
@@ -69,12 +120,15 @@ button {
   justify-content: center;
   align-items: center;
   display: flex;
+<<<<<<< HEAD
+=======
   cursor: pointer;
 }
 
 .airport-button:hover {
   background-color: white;
   color: #4caf50;
+>>>>>>> b44eb0f206d5137d1612d6647b66e96ae37a1f50
 }
 
 /* pop ups for the pins */
@@ -84,6 +138,10 @@ button {
 
 .mapboxgl-popup-content {
   text-align: center;
+<<<<<<< HEAD
+  font-family: 'Open Sans', sans-serif;
+}
+=======
   font-family: "Open Sans", sans-serif;
 }
 
@@ -226,3 +284,4 @@ footer img {
     padding-bottom: 40px;
   }
 }
+>>>>>>> b44eb0f206d5137d1612d6647b66e96ae37a1f50
