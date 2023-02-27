@@ -4,13 +4,18 @@
 }
 
 #maps-section {
+<<<<<<< HEAD
   height: 50vh;
+=======
+  height: 100%;
+>>>>>>> b44eb0f206d5137d1612d6647b66e96ae37a1f50
   padding-bottom: 40px;
 }
 
 .navbar,
 .navbar-brand {
   float: right;
+<<<<<<< HEAD
 }
 
 @media only screen and (min-width: 320px) and (max-width: 768px) {
@@ -34,6 +39,8 @@
   .subtitle {
     text-align: center;
   }
+=======
+>>>>>>> b44eb0f206d5137d1612d6647b66e96ae37a1f50
 }
 
 .marker {
@@ -43,6 +50,7 @@
   cursor: pointer;
 }
 
+<<<<<<< HEAD
 .visited-marker{
   background-image: url('../images/visitedred.png');
   background-size: cover;
@@ -50,10 +58,20 @@
 
 .travel-marker{
   background-image: url('../images/travelT.png');
+=======
+.visited-marker {
+  background-image: url("../images/visitedred.png");
+  background-size: cover;
+}
+
+.travel-marker {
+  background-image: url("../images/travelT.png");
+>>>>>>> b44eb0f206d5137d1612d6647b66e96ae37a1f50
   background-size: cover;
 }
 /* Map Toolbox Buttons */
 button {
+<<<<<<< HEAD
   padding:1px 1px;
 }
 
@@ -62,6 +80,17 @@ button {
   color: white;
   height: 30px;
   width: 30px;
+=======
+  padding: 1px 1px;
+}
+
+.color-toggle {
+  background-color: #50d1e8;
+  color: white;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+>>>>>>> b44eb0f206d5137d1612d6647b66e96ae37a1f50
 }
 
 .color-toggle img {
@@ -91,6 +120,15 @@ button {
   justify-content: center;
   align-items: center;
   display: flex;
+<<<<<<< HEAD
+=======
+  cursor: pointer;
+}
+
+.airport-button:hover {
+  background-color: white;
+  color: #4caf50;
+>>>>>>> b44eb0f206d5137d1612d6647b66e96ae37a1f50
 }
 
 /* pop ups for the pins */
@@ -100,5 +138,150 @@ button {
 
 .mapboxgl-popup-content {
   text-align: center;
+<<<<<<< HEAD
   font-family: 'Open Sans', sans-serif;
 }
+=======
+  font-family: "Open Sans", sans-serif;
+}
+
+.location-button {
+  background-image: url("../images/travelT.png");
+  background-size: contain;
+}
+
+.visited-button {
+  background-image: url("../images/visitedT.png");
+  background-size: contain;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  box-shadow: 7px;
+}
+
+.travel-container,
+.visited-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  padding: 30px;
+  margin-right: 10px;
+  border-radius: 7px;
+  box-shadow: rgb(26, 92, 112) 10px 5px 5px;
+}
+
+.travel-button-list,
+.visited-button-list {
+  padding: 10px;
+  background-color: transparent;
+  color: rgb(34, 33, 33);
+  border: 2px solid rgb(192, 190, 190);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  box-shadow: rgb(26, 92, 112) 10px 5px 5px;
+  width: 100%;
+}
+
+.button-1:hover {
+  background-color: white;
+  color: #4caf50;
+}
+.button-2:hover {
+  background-color: white;
+  color: #4caf50;
+}
+
+.mt-5 {
+  margin-top: 1.5rem !important;
+  margin-bottom: 1.5rem;
+}
+
+footer img {
+  height: 2em;
+  width: 2em;
+}
+
+#travel-tracker {
+  font-family: "Rubik Moonrocks", cursive;
+}
+
+#date-time {
+  font-family: "DM Mono", monospace;
+}
+
+.navbar-item {
+  font-family: "DM Mono", monospace;
+  border-radius: 7px;
+  border: 2px solid white;
+  box-shadow: 5px 5px 5px;
+  background: rgb(227, 225, 225);
+}
+
+.card-header-title {
+  font-family: "Audiowide", cursive;
+}
+
+#content-card {
+  font-family: "Spectral", serif;
+}
+
+#bottom-content {
+  align-items: flex-start;
+}
+
+.footer {
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 768px) {
+  #explainer-card {
+    margin-right: 0px !important;
+    margin-bottom: 5vh;
+  }
+  #bottom-content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .travel-container {
+    margin-bottom: 15px;
+  }
+  #maps-section {
+    height: 50vh;
+    padding-bottom: 40px;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .navbar,
+  .navbar-brand {
+    float: none;
+    margin-left: auto;
+  }
+  .navbar-brand {
+    justify-content: center;
+    width: 100%;
+  }
+  .subtitle {
+    text-align: center;
+  }
+  #maps-section {
+    height: 50vh;
+    padding-bottom: 40px;
+  }
+}
+>>>>>>> b44eb0f206d5137d1612d6647b66e96ae37a1f50

@@ -1,4 +1,4 @@
-// DEPENDENCIES (DOM Elements) ====================================================================
+// DEPENDENCIES (DOM Elements) ========================================================================================================================
 let dateTimeEl = document.querySelector("#date-time");
 let mapEl = document.querySelector("#map");
 let searchButtonEl = document.querySelector("#search-button");
@@ -10,6 +10,11 @@ let visitedMarkerEl = document.querySelector("#visited-marker");
 let travelMarkerEl = document.querySelector("#travel-marker");
 let buttonsColorEl = document.querySelectorAll(".color-toggle");
 let removeMarkerEl = document.querySelector("#remove-marker");
+let travelContainerEl = document.querySelector(".travel-container");
+let visitedContainerEl = document.querySelector(".visited-container");
+let travelDynamicButtonEl = document.querySelectorAll(".travel-button-list");
+let visitedDynamicButtonEl = document.querySelectorAll(".visited-button-list");
+
 
 // DATA / STATE / GLOBAL VARIABLES
 let currentLon;
@@ -147,7 +152,7 @@ function getCoor() {
 }
 
 //When a pin is dropped a property is added to the object with the city name, state, and country
-function getCity(lon, lat, obj, elem, list,i) {
+function getCity(lon, lat, obj, elem, buttonHtmlElem, buttonClassName,list,i) {
   var baseUrl = "https://api.openweathermap.org/geo/1.0/reverse?";
   var longlatAdd = "lat=" + lat + "&lon=" + lon;
   var limitAdd = "&limi=" + 2;
@@ -155,6 +160,7 @@ function getCity(lon, lat, obj, elem, list,i) {
   var requestUrl = baseUrl + longlatAdd + limitAdd + apiAdd;
   console.log(requestUrl);
   fetch(requestUrl)
+
   .then(function (response) {
     return response.json();
   })
@@ -178,6 +184,7 @@ function getCity(lon, lat, obj, elem, list,i) {
         )
     )
     .addTo(map);
+    addDynamicButton(buttonHtmlElem, buttonClassName, obj);
     //Removal function
     elem.addEventListener("click",function(){
       if (removeToggle){
@@ -230,8 +237,10 @@ function addMarker(event) {
     let el = document.createElement("div");
     //create classes for the div element so it is styled correctly
     el.className = "marker visited-marker";
+
     //add the new element to the map so it displays after we get the location name
-    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, visitedLocations,v);
+    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, visitedContainerEl, "visited-button-list");
+
     //save to local storage
     window.localStorage.setItem(
       "visitedObject",
@@ -254,7 +263,7 @@ function addMarker(event) {
     el.className = "marker travel-marker";
 
     //add the new element to the map so it displays after we get the location name
-    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, travelLocations,t);
+    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, travelContainerEl, "travel-button-list",list,i);
 
     //save to local storage
     window.localStorage.setItem(
@@ -307,6 +316,41 @@ function removeAllListener () {
   };
   window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
   window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
+  //update the dynamic button list
+  travelDynamicButtonEl = document.querySelectorAll(".travel-button-list");
+  visitedDynamicButtonEl = document.querySelectorAll(".visited-button-list");
+  travelDynamicButtonEl.forEach((element) => {
+    element.remove();
+  });
+  visitedDynamicButtonEl.forEach((element) => {
+    element.remove();
+  });
+}
+
+
+//given a html element, create a button and append it to that element
+function addDynamicButton(htmlElement, className, currentObject){
+  //create button
+  let dynamicButton = document.createElement("button");
+  dynamicButton.setAttribute("class", className);
+  //give the button value the name of the location where the pin is located 
+  dynamicButton.innerHTML = currentObject.locationDesc;
+  //when button is pressed, animate the mao to that location 
+  dynamicButton.addEventListener('click', function(){
+    map.flyTo({
+      center: currentObject.geometry.coordinates,
+      speed: 0.7,
+      zoom: 12,
+    });
+  });
+    travelLocations = {
+    type: "FeatureCollection",
+    features: [],
+  };
+  window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
+  window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
+  //append the button the the html container 
+  htmlElement.append(dynamicButton);
 }
   function removeListener(){
     //make the tash icon button "active" amd deactivate the other buttons when pressed
@@ -324,6 +368,7 @@ console.log(markerList)
 //user can see today's date
 dateTimeEl.textContent = "Today, " + dayjs().format("dddd, MMMM D, YYYY");
 //user can search for a location
+searchButtonEl.addEventListener("click", searchButtonListener);
 
 //when user views website on mobile the map will re-adjust
 console.log(map);
@@ -441,6 +486,7 @@ for (let l = 0; l<travelLocations.features.length;l++) {
   .setHTML(
     `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
   )).addTo(map);   
+  addDynamicButton(travelContainerEl, "travel-button-list", travelLocations.features[l]);
   el.addEventListener("click",function(){
     if (removeToggle){
       if (travelLocations.features.length<2){
