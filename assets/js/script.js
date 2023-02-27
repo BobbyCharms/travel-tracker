@@ -322,30 +322,6 @@ function removeAllListener () {
   };
   window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
   window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
-}
-function removeListener () {
-  removeToggle = !removeToggle;
-  removeMarkerEl.classList.toggle("active");
-  visitedToggle = false;
-  travelToggle = false;
-  visitedMarkerEl.setAttribute("class", "color-toggle");
-  travelMarkerEl.setAttribute("class", "color-toggle");
-  //for every marker in the list, remove it
-  for (let d =0;d<markerList.length;d++){
-    markerList[d].remove();
-    //update to local Storage
-  }
-  visitedLocations = {
-    type: "FeatureCollection",
-    features: [],
-  };
-  
-  travelLocations = {
-    type: "FeatureCollection",
-    features: [],
-  };
-  window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
-  window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
   //update the dynamic button list
   travelDynamicButtonEl = document.querySelectorAll(".travel-button-list");
   visitedDynamicButtonEl = document.querySelectorAll(".visited-button-list");
