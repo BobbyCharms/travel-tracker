@@ -428,10 +428,6 @@ const btn = document.querySelector('.btn-toggle');
 // Listen for a click on the button
 btn.addEventListener('click', function() {
   // Then toggle (add/remove) the .dark-theme class to the body
-  if(btn === 'click'){
   document.body.classList.toggle('has-background-dark');
-  document.body.classList.toggle('has-text-grey-light');}
-  else{document.span.classList.toggle('fa-solid fa-sun');
-
-  }
+  document.body.classList.toggle('has-text-grey-light');
 });
