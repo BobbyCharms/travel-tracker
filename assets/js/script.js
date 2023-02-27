@@ -429,24 +429,54 @@ window.onbeforeunload = function (){
 }
 
 //pins that are stored in the local storage, display them on the map
-for (const feature of visitedLocations.features) {
+for (let i = 0; i<visitedLocations.features.length;i++) {
   // create a HTML element for each feature
   const el = document.createElement("div");
   el.className = "marker visited-marker";
-  let descriptionList = feature.locationDesc.split(",");
-
+  let descriptionList = visitedLocations.features[i].locationDesc.split(",");
+  //window.localStorage.getItem("caller");
+  visitedLocations.features[i].caller = caller;
   // make a marker for each feature and add to the map
  let newMarker= new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).setPopup(
     new mapboxgl.Popup({ offset: 25 }) // add popups
   .setHTML(
     `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` 
   )).addTo(map);
+  el.addEventListener("click",function(){
+    if (removeToggle){//if trash icone active:
+      if (visitedLocations.features.length<2){
+        el.remove();
+        visitedLocations.features=[];
+        newMarker.remove();
+      }else{
+      console.log(el)
+      let callerIndex;
+      let chosenCaller = visitedLocations.features[i].caller;
+      for (let a=0;a<visitedLocations.features.length;a++){
+        let currentCaller=visitedLocations.features[a].caller;
+        if (chosenCaller==currentCaller){
+          callerIndex = a;
+        }
+      }
+      el.remove();
+      console.log(markerList);
+      console.log(caller)
+      console.log(visitedLocations.features);
+      visitedLocations.features.splice(callerIndex,1);
+      console.log(visitedLocations.features);
+      newMarker.remove();
+      console.log(markerList);
+      window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
+  } }
+}) 
+  caller++;
+  console.log(caller)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+  markerList.push(newMarker);
+  console.log(markerList);
   //add the marker to the marker list
   markerList.push(newMarker);
-
   //build the dynamic button list
   addDynamicButton(visitedContainerEl, "visited-button-list", feature);
-
 }
 for (const feature of travelLocations.features) {
   // create a HTML element for each feature
