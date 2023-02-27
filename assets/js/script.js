@@ -21,6 +21,10 @@ let currentLon;
 let currentLat;
 let userLocation;
 let markerList=[];
+let airportList = [];
+let caller=0;
+let currentLocation = [0, 0];
+
 mapboxgl.accessToken =
   "pk.eyJ1IjoibGFlcnQ5OCIsImEiOiJjbGVkNW1yM2UwMG43M3JwY2dsMjUxYjkyIn0.oODAD95bzzjfRE-Y4DhVLw";
 let map = new mapboxgl.Map({
@@ -29,8 +33,7 @@ let map = new mapboxgl.Map({
   center: [-74.5, 40], // starting position [lng, lat]
   zoom: 9, // starting zoom
 });
-let currentLocation = [0, 0];
-let airportList = [];
+
 //data for where the markers will be stored
 let visitedLocations = {
   type: "FeatureCollection",
@@ -138,10 +141,7 @@ function getCoor() {
   };
   function success(pos) {
     const crd = pos.coords;
-    console.log("Your current position is:");
-    console.log(`Latitude : ${crd.latitude}`);
     currentLat = crd.latitude;
-    console.log(`Longitude: ${crd.longitude}`);
     currentLon = crd.longitude;
     userLocation = [currentLon, currentLat];
     map.setCenter(userLocation);
