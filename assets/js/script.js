@@ -10,8 +10,8 @@ let visitedMarkerEl = document.querySelector("#visited-marker");
 let travelMarkerEl = document.querySelector("#travel-marker");
 let buttonsColorEl = document.querySelectorAll(".color-toggle");
 let removeMarkerEl = document.querySelector("#remove-marker");
-let caller = window.localStorage.getItem("caller")||0;
-console.log(caller)
+//let caller = window.localStorage.getItem("caller")||0;
+let caller=0;
 /*if (localStorage.getItem("caller") !== null) {
   let caller = window.localStorage.getItem("caller");
 } else {
@@ -179,11 +179,11 @@ function getCity(lon, lat, obj, elem, list,i) {
     cityNat = data[0].country;
     cityProp = cityName + ", " + cityState  + ", " + cityNat;
     obj.locationDesc= cityProp;
-    
-    caller = window.localStorage.getItem("caller");
-    obj.caller =caller;
-    window.localStorage.setItem("caller",caller)
-    //update local storage 
+    obj.fetures[i].caller =caller;
+    console.log(caller)
+    //caller = window.localStorage.getItem("caller");
+        //update local storage 
+    //window.localStorage.setItem("caller",caller)
     window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
     window.localStorage.setItem("travelObject", JSON.stringify(travelLocations)); 
     //add element to the map now since we have the city name
@@ -198,26 +198,27 @@ function getCity(lon, lat, obj, elem, list,i) {
     elem.addEventListener("click",function(){
       if (removeToggle){
         console.log(elem)
-        let chosenCaller = travelLocations.features[i].caller;
+        let chosenCaller = list.features[i].caller;
         let callerIndex;
-        for (let a=0;a<visitedLocations.features.length;a++){
-          let currentCaller = visitedLocations.features[a].caller
+        for (let a=0;a<list.features.length;a++){
+          let currentCaller = list.features[a].caller
           if (chosenCaller==currentCaller){
             callerIndex = a;
           }
         }
         console.log(markerList);
         console.log(caller)
-        console.log(travelLocations);
+        console.log(list);
         travelLocations.features.splice(callerIndex,1);
-        console.log(travelLocations);
+        console.log(list);
         newMarker.remove();
         console.log(markerList);
     } 
   }) 
     //apprend new marker to markerList
     caller++;
-    window.localStorage.setItem("caller",caller)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+    console.log(caller)
+    //window.localStorage.setItem("caller",caller)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
     markerList.push(newMarker);
     console.log(markerList)
   })
@@ -239,7 +240,7 @@ function addMarker(event) {
     
     //push the object to the features array of the visitedLocations object
     visitedLocations.features.push(newObject);
-    let i = visitedLocations.features.indexOf(newObject);
+    let v = visitedLocations.features.indexOf(newObject);
     //create anew div element for the pin
     let el = document.createElement("div");
     //create classes for the div element so it is styled correctly
@@ -247,7 +248,7 @@ function addMarker(event) {
    // el.addEventListener("click", removeElement(el))
     //idAssign(el);
     //add the new element to the map so it displays after we get the location name
-    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, visitedLocations,i);
+    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, visitedLocations,v);
     /*el.addEventListener("click",function(){
       if (removeToggle){
         console.log("hey")
@@ -269,8 +270,8 @@ function addMarker(event) {
       },
     };
     travelLocations.features.push(newObject);
-    let i = travelLocations.features.indexOf(newObject);
-    console.log(i);
+    let t = travelLocations.features.indexOf(newObject);
+    console.log(t);
     let el = document.createElement("div");
     el.className = "marker travel-marker";
   
@@ -281,7 +282,7 @@ function addMarker(event) {
     }*/
     //el.addEventListener("click", removeElement(el))
     //add the new element to the map so it displays after we get the location name
-    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, travelLocations,i);
+    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, travelLocations,t);
 
     //save to local storage
     window.localStorage.setItem(
@@ -335,7 +336,7 @@ function removeAllListener () {
     type: "FeatureCollection",
     features: [],
   };
-  window.localStorage.setItem("caller",0)
+ // window.localStorage.setItem("caller",0)
 }
   function removeListener(){
     //console.log("hey")
@@ -351,7 +352,7 @@ function removeAllListener () {
     
   window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
   window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
-  window.localStorage.setItem("caller",0);
+  //window.localStorage.setItem("caller",0);
   }
 /*function removeElement(lowO, highO, lowA, highA){
   //console.log(event.lngLat.lng, event.lngLat.lat)
@@ -449,9 +450,10 @@ for (let i = 0; i<visitedLocations.features.length;i++) {
   // create a HTML element for each feature
   const el = document.createElement("div");
   el.className = "marker visited-marker";
-  let descriptionList = visitedLocations[i].locationDesc.split(",");
-  window.localStorage.getItem("caller");
+  let descriptionList = visitedLocations.features[i].locationDesc.split(",");
+  //window.localStorage.getItem("caller");
   visitedLocations.features[i].caller = caller;
+  console.log(caller)
   // make a marker for each feature and add to the map
  let newMarker= new mapboxgl.Marker(el).setLngLat(visitedLocations.features[i].geometry.coordinates).setPopup(
     new mapboxgl.Popup({ offset: 25 }) // add popups
@@ -460,17 +462,26 @@ for (let i = 0; i<visitedLocations.features.length;i++) {
   )).addTo(map);
   el.addEventListener("click",function(){
     if (removeToggle){
+      let callerIndex;
+      let chosenCaller = visitedLocations.features[i].caller;
+      for (let a=0;a<visitedLocations.features.length;a++){
+        let currentCaller = visitedLocations.features[a].caller
+        if (chosenCaller==currentCaller){
+          callerIndex = a;
+        }
+      }
       console.log(el)
       console.log(visitedLocations);
       el.remove();
-      visitedLocations.features.splice(i,1);
+      visitedLocations.features.splice(callerIndex,1);
       console.log(visitedLocations);
       newMarker.remove();
       console.log(markerList)
     }
   })
   caller++;
-  window.localStorage.setItem("caller",caller)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+  console.log(caller)
+  //window.localStorage.setItem("caller",caller);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
   markerList.push(newMarker);
   console.log(markerList);
 }
@@ -479,8 +490,9 @@ for (let i = 0; i<travelLocations.features.length;i++) {
   const el = document.createElement("div");
   el.className = "marker travel-marker";
   let descriptionList = travelLocations.features[i].locationDesc.split(",");
- // window.localStorage.getItem("caller");
+  //window.localStorage.getItem("caller");
   travelLocations.features[i].caller = caller;
+  console.log(caller)
   // make a marker for each feature and add to the map
   let newMarker =new mapboxgl.Marker(el).setLngLat(travelLocations.features[i].geometry.coordinates).setPopup(
     new mapboxgl.Popup({ offset: 25 }) // add popups
@@ -491,9 +503,11 @@ for (let i = 0; i<travelLocations.features.length;i++) {
     if (removeToggle){
       console.log(el)
       let callerIndex;
+      
       let chosenCaller = travelLocations.features[i].caller;
       for (let a=0;a<travelLocations.features.length;a++){
-        if (chosenCaller==travelLocations.features[a].caller){
+        let currentCaller=travelLocations.features[a].caller;
+        if (chosenCaller==currentCaller){
           callerIndex = a;
         }
       }
@@ -507,7 +521,8 @@ for (let i = 0; i<travelLocations.features.length;i++) {
   } 
 }) 
   caller++;
-  window.localStorage.setItem("caller",caller)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+  console.log(caller)
+ // window.localStorage.setItem("caller",caller)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
   markerList.push(newMarker);
   console.log(markerList)
 }
