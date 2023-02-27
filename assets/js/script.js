@@ -179,7 +179,9 @@ function getCity(lon, lat, obj, elem, list,i) {
     cityNat = data[0].country;
     cityProp = cityName + ", " + cityState  + ", " + cityNat;
     obj.locationDesc= cityProp;
-    obj.fetures[i].caller =caller;
+    list.features[i].caller = caller;
+    console.log(obj)
+    console.log(obj.features)
     console.log(caller)
     //caller = window.localStorage.getItem("caller");
         //update local storage 
@@ -197,11 +199,13 @@ function getCity(lon, lat, obj, elem, list,i) {
     .addTo(map);
     elem.addEventListener("click",function(){
       if (removeToggle){
-        console.log(elem)
+        //console.log(elem)
         let chosenCaller = list.features[i].caller;
+        console.log(chosenCaller)
         let callerIndex;
         for (let a=0;a<list.features.length;a++){
           let currentCaller = list.features[a].caller
+          console.log(currentCaller)
           if (chosenCaller==currentCaller){
             callerIndex = a;
           }
@@ -209,7 +213,7 @@ function getCity(lon, lat, obj, elem, list,i) {
         console.log(markerList);
         console.log(caller)
         console.log(list);
-        travelLocations.features.splice(callerIndex,1);
+        list.features.splice(callerIndex,1);
         console.log(list);
         newMarker.remove();
         console.log(markerList);
@@ -464,8 +468,10 @@ for (let i = 0; i<visitedLocations.features.length;i++) {
     if (removeToggle){
       let callerIndex;
       let chosenCaller = visitedLocations.features[i].caller;
+      console.log(chosenCaller)
       for (let a=0;a<visitedLocations.features.length;a++){
         let currentCaller = visitedLocations.features[a].caller
+        console.log(currentCaller)
         if (chosenCaller==currentCaller){
           callerIndex = a;
         }
@@ -503,7 +509,6 @@ for (let i = 0; i<travelLocations.features.length;i++) {
     if (removeToggle){
       console.log(el)
       let callerIndex;
-      
       let chosenCaller = travelLocations.features[i].caller;
       for (let a=0;a<travelLocations.features.length;a++){
         let currentCaller=travelLocations.features[a].caller;
