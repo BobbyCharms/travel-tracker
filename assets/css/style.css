@@ -410,15 +410,15 @@ footer img {
 
 h1{
   display: block;
-  width: 200px;
-  height: 40px;
-  line-height: 40px;
-  font-size: 18px;
+  width: 100px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 9px;
   font-family: sans-serif;
   text-decoration: none;
   color: #333;
-  border: 2px solid #333;
-  letter-spacing: 2px;
+  border: 1px solid #333;
+  letter-spacing: 1px;
   text-align: center;
   position: relative;
   transition: all .35s;
