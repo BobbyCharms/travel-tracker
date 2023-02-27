@@ -200,6 +200,12 @@ function getCity(lon, lat, obj, elem, list,i) {
     elem.addEventListener("click",function(){
       if (removeToggle){
         //console.log(elem)
+        if (list.features<2){
+          elem.remove();
+          list.features.remove();
+          newMarker.remove();
+        }else{
+        if (list=visitedLocations){}
         let chosenCaller = list.features[i].caller;
         console.log(chosenCaller)
         let callerIndex;
@@ -210,14 +216,17 @@ function getCity(lon, lat, obj, elem, list,i) {
             callerIndex = a;
           }
         }
+        elem.remove();
         console.log(markerList);
         console.log(caller)
         console.log(list);
+        console.log(list.features)
         list.features.splice(callerIndex,1);
+        console.log(list.features)
         console.log(list);
         newMarker.remove();
         console.log(markerList);
-    } 
+    } }
   }) 
     //apprend new marker to markerList
     caller++;
@@ -225,6 +234,8 @@ function getCity(lon, lat, obj, elem, list,i) {
     //window.localStorage.setItem("caller",caller)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
     markerList.push(newMarker);
     console.log(markerList)
+    window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
+    window.localStorage.setItem("travelObject", JSON.stringify(travelLocations)); 
   })
 
 }
@@ -327,7 +338,6 @@ function removeAllListener () {
   //for every marker in the list, remove it
   for (let d =0;d<markerList.length;d++){
     markerList[d].remove();
-   
     //update to local Storage
   }
   console.log(markerList);
@@ -341,6 +351,8 @@ function removeAllListener () {
     features: [],
   };
  // window.localStorage.setItem("caller",0)
+  window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
+  window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
 }
   function removeListener(){
     //console.log("hey")
@@ -466,6 +478,11 @@ for (let i = 0; i<visitedLocations.features.length;i++) {
   )).addTo(map);
   el.addEventListener("click",function(){
     if (removeToggle){
+      if (visitedLocations.features==1){
+        el.remove();
+        list.features.remove();
+        newMarker.remove();
+      }else{
       let callerIndex;
       let chosenCaller = visitedLocations.features[i].caller;
       console.log(chosenCaller)
@@ -479,11 +496,13 @@ for (let i = 0; i<visitedLocations.features.length;i++) {
       console.log(el)
       console.log(visitedLocations);
       el.remove();
+      console.log(visitedLocations.features)
       visitedLocations.features.splice(callerIndex,1);
-      console.log(visitedLocations);
+      console.log(visitedLocations.features);
       newMarker.remove();
       console.log(markerList)
-    }
+      window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
+    }}
   })
   caller++;
   console.log(caller)
@@ -507,6 +526,11 @@ for (let i = 0; i<travelLocations.features.length;i++) {
   )).addTo(map);   
   el.addEventListener("click",function(){
     if (removeToggle){
+      if (travelLocations.features<2){
+        el.remove();
+        list.features.remove();
+        newMarker.remove();
+      }else{
       console.log(el)
       let callerIndex;
       let chosenCaller = travelLocations.features[i].caller;
@@ -516,14 +540,16 @@ for (let i = 0; i<travelLocations.features.length;i++) {
           callerIndex = a;
         }
       }
+      el.remove();
       console.log(markerList);
       console.log(caller)
-      console.log(travelLocations);
+      console.log(travelLocations.features);
       travelLocations.features.splice(callerIndex,1);
-      console.log(travelLocations);
+      console.log(travelLocations.features);
       newMarker.remove();
       console.log(markerList);
-  } 
+      window.localStorage.setItem("travelObject", JSON.stringify(travelLocations));
+  } }
 }) 
   caller++;
   console.log(caller)
