@@ -10,7 +10,8 @@ let visitedMarkerEl = document.querySelector("#visited-marker");
 let travelMarkerEl = document.querySelector("#travel-marker");
 let buttonsColorEl = document.querySelectorAll(".color-toggle");
 let removeMarkerEl = document.querySelector("#remove-marker");
-let caller = 0;
+let caller = window.localStorage.getItem("caller");
+console.log(caller)
 /*if (localStorage.getItem("caller") !== null) {
   let caller = window.localStorage.getItem("caller");
 } else {
@@ -178,9 +179,9 @@ function getCity(lon, lat, obj, elem, list,i) {
     cityNat = data[0].country;
     cityProp = cityName + ", " + cityState  + ", " + cityNat;
     obj.locationDesc= cityProp;
-    //obj.caller =caller;
-    //caller++;
-    //window.setItem("caller",caller)
+    caller = window.localStorage.getItem("caller");
+    obj.caller =caller;
+    window.setItem("caller",caller)
     //update local storage 
     window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
     window.localStorage.setItem("travelObject", JSON.stringify(travelLocations)); 
@@ -433,8 +434,8 @@ for (let i = 0; i<visitedLocations.features.length;i++) {
   const el = document.createElement("div");
   el.className = "marker visited-marker";
   let descriptionList = visitedLocations[i].locationDesc.split(",");
+  window.localStorage.getItem("caller");
   visitedLocations.features[i].caller = caller;
-  caller++;
   // make a marker for each feature and add to the map
  let newMarker= new mapboxgl.Marker(el).setLngLat(visitedLocations.features[i].geometry.coordinates).setPopup(
     new mapboxgl.Popup({ offset: 25 }) // add popups
@@ -450,15 +451,19 @@ for (let i = 0; i<visitedLocations.features.length;i++) {
       console.log(visitedLocations);
       newMarker.remove();
       console.log(markerList)
-    }})       
+    }
+  })
+  caller++;
+  window.localStorage.setItem("caller",caller)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
   markerList.push(newMarker);
-  
+  console.log(markerList);
 }
 for (let i = 0; i<travelLocations.features.length;i++) {
   // create a HTML element for each feature
   const el = document.createElement("div");
   el.className = "marker travel-marker";
   let descriptionList = travelLocations.features[i].locationDesc.split(",");
+  window.localStorage.getItem("caller");
   travelLocations.features[i].caller = caller;
   // make a marker for each feature and add to the map
   let newMarker =new mapboxgl.Marker(el).setLngLat(travelLocations.features[i].geometry.coordinates).setPopup(
@@ -473,20 +478,20 @@ for (let i = 0; i<travelLocations.features.length;i++) {
       for (let a=0;a<visitedLocations.features.length;a++){
         if (chosenCaller==visitedLocations.features[a].caller){
           let callerIndex = a;
-          console.log("hey")
         }
       }
-      //let foundCaller = visitedLocations.features.caller.indexOf(chosenCaller);
-      //console.log(i);
+      console.log(markerList);
       console.log(caller)
       console.log(travelLocations);
       travelLocations.features.splice(callerIndex,1);
       console.log(travelLocations);
       newMarker.remove();
-  }
-  caller++;})                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+      console.log(markerList);
+  } 
+}) 
+  caller++;
+  window.localStorage.setItem("caller",caller)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
   markerList.push(newMarker);
-  //el.addEventListener("dblclick",removeElement(el))
   console.log(markerList)
 }
 //separate functions between double click and single clickx
