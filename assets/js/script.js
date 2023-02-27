@@ -133,7 +133,7 @@ function airportButtonListener(event) {
   });
 }
 
-function getCoor() {
+function getCoor() {//uses data from geolocation within browser
   const optionsLoc = {
     enableHighAccuracy: true,
     timeout: 5000,
@@ -148,13 +148,13 @@ function getCoor() {
     return userLocation;
   }
   function error(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
+    console.warn(`ERROR(${err.code}): ${err.message}`);//will return error message if unsuccessful
   }
   navigator.geolocation.getCurrentPosition(success, error, optionsLoc);
 }
 
 //When a pin is dropped a property is added to the object with the city name, state, and country
-function getCity(lon, lat, obj, elem, buttonHtmlElem, buttonClassName) {
+function getCity(lon, lat, obj, elem, buttonHtmlElem, buttonClassName, list, i) {
   var baseUrl = "https://api.openweathermap.org/geo/1.0/reverse?";
   var longlatAdd = "lat=" + lat + "&lon=" + lon;
   var limitAdd = "&limi=" + 2;
@@ -187,13 +187,40 @@ function getCity(lon, lat, obj, elem, buttonHtmlElem, buttonClassName) {
         )
     )
     .addTo(map);
+     //Removal function
+     elem.addEventListener("click",function(){
+      if (removeToggle){
+        if (list.features.length<2){//clear array if only one element left
+          elem.remove();
+          list.features=[];
+          newMarker.remove();
+        }else{
+        let callerIndex;
+        let chosenCaller = list.features[i].caller;//caller of marker being made
+        for (let a=0;a<list.features.length;a++){//check callers of all existing markers to find index of current
+          let currentCaller=list.features[a].caller;
+          if (chosenCaller==currentCaller){
+            callerIndex = a;
+          }
+        }
+        elem.remove();//remove the element
+        console.log(markerList);
+        console.log(list.features);
+        list.features.splice(callerIndex,1);//remove feauture of marker being removed
+        console.log(list.features);
+        newMarker.remove();
+        console.log(markerList);
+        //add any possible updates to objects in local storage
+        window.localStorage.setItem("travelObject", JSON.stringify(travelLocations));
+        window.localStorage.setItem("visitObject", JSON.stringify(visitedLocations));
+    } }
+  }) 
+    caller++;//make sure caller function is different for each marker to be able to ID them            
     //apprend new marker to markerList
     markerList.push(newMarker);
     //dynamically add a new button to the html
     addDynamicButton(buttonHtmlElem, buttonClassName, obj);
-
   })
-
 }
 //adding a marker in the map
 function addMarker(event) {
@@ -217,7 +244,7 @@ function addMarker(event) {
     el.className = "marker visited-marker";
 
     //add the new element to the map so it displays after we get the location name
-    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, visitedContainerEl, "visited-button-list");
+    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, visitedContainerEl, "visited-button-list",visitedLocations, v);
 
     //save to local storage
     window.localStorage.setItem(
@@ -239,7 +266,7 @@ function addMarker(event) {
     el.className = "marker travel-marker";
 
     //add the new element to the map so it displays after we get the location name
-    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, travelContainerEl, "travel-button-list");
+    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, travelContainerEl, "travel-button-list",travelLocations, v);
 
     //save to local storage
     window.localStorage.setItem(
