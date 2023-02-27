@@ -269,7 +269,7 @@ function addMarker(event) {
     el.className = "marker travel-marker";
 
     //add the new element to the map so it displays after we get the location name
-    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, travelContainerEl, "travel-button-list",travelLocations, v);
+    getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, travelContainerEl, "travel-button-list",travelLocations, t);
 
     //save to local storage
     window.localStorage.setItem(
@@ -437,7 +437,7 @@ for (let i = 0; i<visitedLocations.features.length;i++) {
   //window.localStorage.getItem("caller");
   visitedLocations.features[i].caller = caller;
   // make a marker for each feature and add to the map
- let newMarker= new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).setPopup(
+ let newMarker= new mapboxgl.Marker(el).setLngLat(visitedLocations.features[i].geometry.coordinates).setPopup(
     new mapboxgl.Popup({ offset: 25 }) // add popups
   .setHTML(
     `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` 
@@ -476,8 +476,9 @@ for (let i = 0; i<visitedLocations.features.length;i++) {
   //add the marker to the marker list
   markerList.push(newMarker);
   //build the dynamic button list
-  addDynamicButton(visitedContainerEl, "visited-button-list", feature);
+  addDynamicButton(visitedContainerEl, "visited-button-list", visitedLocations.features[i]);
 }
+
 for (let l = 0; l<travelLocations.features.length;l++) {
   // create a HTML element for each feature
   const el = document.createElement("div");
@@ -519,5 +520,5 @@ for (let l = 0; l<travelLocations.features.length;l++) {
   caller++;                                  
   markerList.push(newMarker);
   //build the dynamic button list
-  addDynamicButton(travelContainerEl, "travel-button-list", feature);
+  addDynamicButton(travelContainerEl, "travel-button-list", travelLocations.features[l].caller);
 }
