@@ -408,7 +408,7 @@ footer img {
   transform: translate(-50%, -50%);
 }
 
-a{
+h1{
   display: block;
   width: 200px;
   height: 40px;
@@ -424,12 +424,12 @@ a{
   transition: all .35s;
 }
 
-a span{
+h1 span{
   position: relative;
   z-index: 2;
 }
 
-a:after{
+h1:after{
   position: absolute;
   content: "";
   top: 0;
@@ -440,10 +440,10 @@ a:after{
   transition: all .35s;
 }
 
-a:hover{
+h1:hover{
   color: #9ea60b;
 }
 
-a:hover:after{
+h1:hover:after{
   width: 100%;
 }
