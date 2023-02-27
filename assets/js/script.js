@@ -430,5 +430,4 @@ btn.addEventListener('click', function() {
   // Then toggle (add/remove) the .dark-theme class to the body
   document.body.classList.toggle('has-background-dark');
   document.body.classList.toggle('has-text-grey-light');
-
 });
