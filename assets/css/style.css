@@ -237,3 +237,222 @@ footer img {
     padding-bottom: 40px;
   }
 }
+
+/* Airport buttons */
+
+.section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.airport-button {
+  background-color: #f0590785;
+  margin: 12px;
+  width: 110px;
+  height: 70px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  cursor: pointer;
+}
+
+.airport-button:hover {
+  background-color: white;
+  color: #4caf50;
+}
+
+/* pop ups for the pins */
+.mapboxgl-popup {
+  max-width: 200px;
+}
+
+.mapboxgl-popup-content {
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+}
+
+.location-button {
+  background-image: url("../images/travelT.png");
+  background-size: contain;
+}
+
+.visited-button {
+  background-image: url("../images/visitedT.png");
+  background-size: contain;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  box-shadow: 7px;
+}
+
+.travel-container,
+.visited-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  padding: 30px;
+  margin-right: 10px;
+  border-radius: 7px;
+  box-shadow: rgb(26, 92, 112) 10px 5px 5px;
+}
+
+.travel-button-list,
+.visited-button-list {
+  padding: 10px;
+  background-color: transparent;
+  color: rgb(34, 33, 33);
+  border: 2px solid rgb(192, 190, 190);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  box-shadow: rgb(26, 92, 112) 10px 5px 5px;
+  width: 100%;
+}
+
+.button-1:hover {
+  background-color: white;
+  color: #4caf50;
+}
+.button-2:hover {
+  background-color: white;
+  color: #4caf50;
+}
+
+.mt-5 {
+  margin-top: 1.5rem !important;
+  margin-bottom: 1.5rem;
+}
+
+footer img {
+  height: 2em;
+  width: 2em;
+}
+
+#travel-tracker {
+  font-family: "Rubik Moonrocks", cursive;
+}
+
+#date-time {
+  font-family: "DM Mono", monospace;
+}
+
+.navbar-item {
+  font-family: "DM Mono", monospace;
+  border-radius: 7px;
+  border: 2px solid white;
+  box-shadow: 5px 5px 5px;
+  background: rgb(227, 225, 225);
+}
+
+.card-header-title {
+  font-family: "Audiowide", cursive;
+}
+
+#content-card {
+  font-family: "Spectral", serif;
+}
+
+#bottom-content {
+  align-items: flex-start;
+}
+
+.footer {
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 768px) {
+  #explainer-card {
+    margin-right: 0px !important;
+    margin-bottom: 5vh;
+  }
+  #bottom-content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .travel-container {
+    margin-bottom: 15px;
+  }
+  #maps-section {
+    height: 50vh;
+    padding-bottom: 40px;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .navbar,
+  .navbar-brand {
+    float: none;
+    margin-left: auto;
+  }
+  .navbar-brand {
+    justify-content: center;
+    width: 100%;
+  }
+  .subtitle {
+    text-align: center;
+  }
+  #maps-section {
+    height: 50vh;
+    padding-bottom: 40px;
+  }
+}
+
+.wrapper{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+h1{
+  display: block;
+  width: 50px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 14px;
+  color: #333;
+  border: 1px solid #9fce1e;
+  letter-spacing: 1px;
+  text-align: center;
+  position: relative;
+  transition: all .35s;
+}
+
+h1 span{
+  position: relative;
+  z-index: 2;
+}
+
+h1:after{
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: #393c4a;
+  transition: all .35s;
+}
+
+h1:hover{
+  color: #9ea60b;
+}
+
+h1:hover:after{
+  width: 100%;
+}
