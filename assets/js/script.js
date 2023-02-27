@@ -333,17 +333,17 @@ function removeAllListener () {
   });
 }
 
-function removeListener(){
-  //make the tash icon button "active" amd deactivate the other buttons when pressed
-  removeToggle = !removeToggle;
-  removeMarkerEl.classList.toggle("active");
-  visitedToggle = false;
-  travelToggle = false;
-  visitedMarkerEl.setAttribute("class", "color-toggle");
-  travelMarkerEl.setAttribute("class", "color-toggle");
-window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
-window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
-}
+ function removeListener(){
+    //make the tash icon button "active" amd deactivate the other buttons when pressed
+    removeToggle = !removeToggle;
+    removeMarkerEl.classList.toggle("active");
+    visitedToggle = false;
+    travelToggle = false;
+    visitedMarkerEl.setAttribute("class", "color-toggle");
+    travelMarkerEl.setAttribute("class", "color-toggle");
+  window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
+  window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
+  }
 //given a html element, create a button and append it to that element
 function addDynamicButton(htmlElement, className, currentObject){
   //create button
@@ -408,6 +408,7 @@ const options = {
 //user can click on the map button's to add a marker
 visitedMarkerEl.addEventListener("click", visitedListener);
 travelMarkerEl.addEventListener("click", travelListener);
+removeMarkerEl.addEventListener("dblclick", removeAllListener);
 removeMarkerEl.addEventListener("click", removeListener);
 map.on("click", addMarker);
 
@@ -421,6 +422,10 @@ if (localStorage.getItem("visitedObject") !== null) {
 }
 if (localStorage.getItem("travelObject") !== null) {
   travelLocations = JSON.parse(localStorage.getItem("travelObject"));
+}
+window.onbeforeunload = function (){
+  window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
+  window.localStorage.setItem("travelObject", JSON.stringify(travelLocations)); 
 }
 
 //pins that are stored in the local storage, display them on the map
