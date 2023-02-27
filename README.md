@@ -18,11 +18,11 @@ No Installation required, website can be found at https://bobbycharms.github.io/
 
 
 ## Credits
-https://github.com/SteviRoy
-https://github.com/LaertXh
-https://github.com/ShannyaN
-https://github.com/BobbyCharms
-https://github.com/Dev-Devin
-https://github.com/Leunamotirb
+- https://github.com/SteviRoy
+- https://github.com/LaertXh
+- https://github.com/ShannyaN
+- https://github.com/BobbyCharms
+- https://github.com/Dev-Devin
+- https://github.com/Leunamotirb
 
 
