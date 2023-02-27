@@ -478,21 +478,46 @@ for (let i = 0; i<visitedLocations.features.length;i++) {
   //build the dynamic button list
   addDynamicButton(visitedContainerEl, "visited-button-list", feature);
 }
-for (const feature of travelLocations.features) {
+for (let l = 0; l<travelLocations.features.length;l++) {
   // create a HTML element for each feature
   const el = document.createElement("div");
   el.className = "marker travel-marker";
-  let descriptionList = feature.locationDesc.split(",");
-
+  let descriptionList = travelLocations.features[l].locationDesc.split(",");
+  travelLocations.features[l].caller = caller;
   // make a marker for each feature and add to the map
-  let newMarker =new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).setPopup(
+  let newMarker =new mapboxgl.Marker(el).setLngLat(travelLocations.features[l].geometry.coordinates).setPopup(
     new mapboxgl.Popup({ offset: 25 }) // add popups
   .setHTML(
-    `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` 
-  )).addTo(map);
-  //add the marker to the marker list
+    `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+  )).addTo(map);   
+  el.addEventListener("click",function(){
+    if (removeToggle){
+      if (travelLocations.features.length<2){
+        el.remove();
+        travelLocations.features=[];
+        newMarker.remove();
+      }else{
+      console.log(el)
+      let callerIndex;
+      let chosenCaller = travelLocations.features[l].caller;
+      for (let a=0;a<travelLocations.features.length;a++){
+        let currentCaller=travelLocations.features[a].caller;
+        if (chosenCaller==currentCaller){
+          callerIndex = a;
+        }
+      }
+      el.remove();
+      console.log(markerList);
+      console.log(travelLocations.features);
+      travelLocations.features.splice(callerIndex,1);
+      console.log(travelLocations.features);
+      newMarker.remove();
+      console.log(markerList);
+      window.localStorage.setItem("travelObject", JSON.stringify(travelLocations));
+  } }
+}) 
+  caller++;                                  
   markerList.push(newMarker);
-
   //build the dynamic button list
   addDynamicButton(travelContainerEl, "travel-button-list", feature);
 }
