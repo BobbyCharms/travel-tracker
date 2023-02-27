@@ -195,76 +195,41 @@ function getCity(lon, lat, obj, elem, list,i) {
           `<h3>${cityName}</h3><p>${cityState + ", " + cityNat}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
         )
     )
-        })
     .addTo(map);
     elem.addEventListener("click",function(){
       if (removeToggle){
-        if (list==visitedLocations){
-        //console.log(elem)
-          if (visitedLocations.features.legnth<2){
-            elem.remove();
-            list.features.remove();
-            newMarker.remove();
-          }else{
-          let chosenCaller = visitedLocations.features[i].caller;
-          console.log(chosenCaller)
-          let callerIndex;
-          for (let a=0;a<visitedLocations.features.length;a++){
-            let currentCaller = visitedLocations.features[a].caller
-            console.log(currentCaller)
-            if (chosenCaller==currentCaller){
-              callerIndex = a;
-            }
-          }
+        if (list.features.length<2){
           elem.remove();
-          console.log(markerList);
-          console.log(caller)
-          console.log(visitedLocations);
-          console.log(visitedLocations.features)
-          visitedLocations.features.splice(callerIndex,1);
-          console.log(visitedLocations.features)
-          console.log(visitedLocations);
+          list.features=[];
           newMarker.remove();
-          console.log(markerList);
-    } }else{
-      if (travelLocations.features.length<2){
-        elem.remove();
-        travelLocations.features=[];
-        newMarker.remove();
-      }else{
-      let chosenCaller = travelLocations.features[i].caller;
-      console.log(chosenCaller)
-      let callerIndex;
-      for (let a=0;a<travelLocations.features.length;a++){
-        let currentCaller = travelLocations.features[a].caller
-        console.log(currentCaller)
-        if (chosenCaller==currentCaller){
-          callerIndex = a;
+        }else{
+        console.log(elem)
+        let callerIndex;
+        let chosenCaller = list.features[i].caller;
+        for (let a=0;a<list.features.length;a++){
+          let currentCaller=list.features[a].caller;
+          if (chosenCaller==currentCaller){
+            callerIndex = a;
+          }
         }
-      }
-      elem.remove();
-      console.log(markerList);
-      console.log(caller)
-      console.log(travelLocations);
-      console.log(travelLocations.features)
-      travelLocations.features.splice(callerIndex,1);
-      console.log(travelLocations.features)
-      console.log(travelLocations);
-      newMarker.remove();
-      console.log(markerList);
-    }}
-  }})
-    //apprend new marker to markerList
+        elem.remove();
+        console.log(markerList);
+        console.log(caller)
+        console.log(list.features);
+        list.features.splice(callerIndex,1);
+        console.log(list.features);
+        newMarker.remove();
+        console.log(markerList);
+        window.localStorage.setItem("travelObject", JSON.stringify(travelLocations));
+        window.localStorage.setItem("visitObject", JSON.stringify(visitedLocations));
+    } }
+  }) 
     caller++;
     console.log(caller)
-    //window.localStorage.setItem("caller",caller)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+   // window.localStorage.setItem("caller",caller)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
     markerList.push(newMarker);
     console.log(markerList)
-    window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
-    window.localStorage.setItem("travelObject", JSON.stringify(travelLocations)); 
-
-  }
-
+  })}
 //adding a marker in the map
 function addMarker(event) {
   event.preventDefault();
@@ -504,32 +469,31 @@ for (let i = 0; i<visitedLocations.features.length;i++) {
   )).addTo(map);
   el.addEventListener("click",function(){
     if (removeToggle){
-      if (visitedLocations.features==1){
+      if (visitedLocations.features.length<2){
         el.remove();
-        list.features.remove();
+        visitedLocations.features=[];
         newMarker.remove();
       }else{
+      console.log(el)
       let callerIndex;
       let chosenCaller = visitedLocations.features[i].caller;
-      console.log(chosenCaller)
       for (let a=0;a<visitedLocations.features.length;a++){
-        let currentCaller = visitedLocations.features[a].caller
-        console.log(currentCaller)
+        let currentCaller=visitedLocations.features[a].caller;
         if (chosenCaller==currentCaller){
           callerIndex = a;
         }
       }
-      console.log(el)
-      console.log(visitedLocations);
       el.remove();
-      console.log(visitedLocations.features)
+      console.log(markerList);
+      console.log(caller)
+      console.log(visitedLocations.features);
       visitedLocations.features.splice(callerIndex,1);
       console.log(visitedLocations.features);
       newMarker.remove();
-      console.log(markerList)
+      console.log(markerList);
       window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
-    }}
-  })
+  } }
+}) 
   caller++;
   console.log(caller)
   //window.localStorage.setItem("caller",caller);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
