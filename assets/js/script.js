@@ -10,26 +10,13 @@ let visitedMarkerEl = document.querySelector("#visited-marker");
 let travelMarkerEl = document.querySelector("#travel-marker");
 let buttonsColorEl = document.querySelectorAll(".color-toggle");
 let removeMarkerEl = document.querySelector("#remove-marker");
-//let caller = window.localStorage.getItem("caller")||0;
-let caller=0;
-/*if (localStorage.getItem("caller") !== null) {
-  let caller = window.localStorage.getItem("caller");
-} else {
-  window.localStorage.setItem("caller",0);
-  let caller=0;}
-//console.log(caller)
-/*function idAssign(element){
- // console.log(caller);
- // element.setAttribute("id",caller);
- // caller++;
-  //window.localStorage.setItem("caller",caller);
-  element.addEventListener("dblclick",removeListener);
-}*/
+
 // DATA / STATE / GLOBAL VARIABLES
 let currentLon;
 let currentLat;
 let userLocation;
 let markerList=[];
+let caller=0;
 mapboxgl.accessToken =
   "pk.eyJ1IjoibGFlcnQ5OCIsImEiOiJjbGVkNW1yM2UwMG43M3JwY2dsMjUxYjkyIn0.oODAD95bzzjfRE-Y4DhVLw";
 let map = new mapboxgl.Map({
@@ -39,7 +26,7 @@ let map = new mapboxgl.Map({
   zoom: 9, // starting zoom
 });
 let currentLocation = [0, 0];
-/*let airportList = [];
+let airportList = [];
 //data for where the markers will be stored
 let visitedLocations = {
   type: "FeatureCollection",
@@ -49,11 +36,11 @@ let visitedLocations = {
 let travelLocations = {
   type: "FeatureCollection",
   features: [],
-};*/
+};
 //toggle variable to know which button is pressed
 let visitedToggle = false;
 let travelToggle = false;
-let removeToggle=false;/*
+let removeToggle=false;
 //FUNCTIONS ========================================================================================
 //when user clicks search, the button will redirect the map to the new location
 //airport section will be updated with the near by airports
@@ -179,12 +166,6 @@ function getCity(lon, lat, obj, elem, list,i) {
     cityProp = cityName + ", " + cityState  + ", " + cityNat;
     obj.locationDesc= cityProp;
     list.features[i].caller = caller;
-    console.log(obj)
-    console.log(obj.features)
-    console.log(caller)
-    //caller = window.localStorage.getItem("caller");
-        //update local storage 
-    //window.localStorage.setItem("caller",caller)
     window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
     window.localStorage.setItem("travelObject", JSON.stringify(travelLocations)); 
     //add element to the map now since we have the city name
@@ -196,14 +177,14 @@ function getCity(lon, lat, obj, elem, list,i) {
         )
     )
     .addTo(map);
+    //Removal function
     elem.addEventListener("click",function(){
       if (removeToggle){
-        if (list.features.length<2){
+        if (list.features.length<2){//clear array if only one element left
           elem.remove();
           list.features=[];
           newMarker.remove();
         }else{
-        console.log(elem)
         let callerIndex;
         let chosenCaller = list.features[i].caller;
         for (let a=0;a<list.features.length;a++){
@@ -214,7 +195,6 @@ function getCity(lon, lat, obj, elem, list,i) {
         }
         elem.remove();
         console.log(markerList);
-        console.log(caller)
         console.log(list.features);
         list.features.splice(callerIndex,1);
         console.log(list.features);
@@ -224,11 +204,8 @@ function getCity(lon, lat, obj, elem, list,i) {
         window.localStorage.setItem("visitObject", JSON.stringify(visitedLocations));
     } }
   }) 
-    caller++;
-    console.log(caller)
-   // window.localStorage.setItem("caller",caller)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+    caller++;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
     markerList.push(newMarker);
-    console.log(markerList)
   })}
 //adding a marker in the map
 function addMarker(event) {
@@ -251,15 +228,8 @@ function addMarker(event) {
     let el = document.createElement("div");
     //create classes for the div element so it is styled correctly
     el.className = "marker visited-marker";
-   // el.addEventListener("click", removeElement(el))
-    //idAssign(el);
     //add the new element to the map so it displays after we get the location name
     getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, visitedLocations,v);
-    /*el.addEventListener("click",function(){
-      if (removeToggle){
-        console.log("hey")
-      }
-    })*/
     //save to local storage
     window.localStorage.setItem(
       "visitedObject",
@@ -280,13 +250,7 @@ function addMarker(event) {
     console.log(t);
     let el = document.createElement("div");
     el.className = "marker travel-marker";
-  
-    /*if (localStorage.getItem("caller") !== null) {
-      let caller = localStorage.getItem("caller");
-    } else {
-      let caller=0;
-    }*/
-    //el.addEventListener("click", removeElement(el))
+
     //add the new element to the map so it displays after we get the location name
     getCity(event.lngLat.lng, event.lngLat.lat, newObject, el, travelLocations,t);
 
@@ -320,8 +284,6 @@ function travelListener() {
   travelMarkerEl.classList.toggle("active");
 }
 function removeAllListener () {
-  //removeToggle = !removeToggle;
-  //removeMarkerEl.classList.toggle("active");
   visitedToggle = false;
   travelToggle = false;
   visitedMarkerEl.setAttribute("class", "color-toggle");
@@ -341,12 +303,10 @@ function removeAllListener () {
     type: "FeatureCollection",
     features: [],
   };
- // window.localStorage.setItem("caller",0)
   window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
   window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
 }
   function removeListener(){
-    //console.log("hey")
     removeToggle = !removeToggle;
     removeMarkerEl.classList.toggle("active");
     visitedToggle = false;
@@ -359,33 +319,12 @@ function removeAllListener () {
     
   window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
   window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
-  //window.localStorage.setItem("caller",0);
   }
-/*function removeElement(lowO, highO, lowA, highA){
-  //console.log(event.lngLat.lng, event.lngLat.lat)
-  //clickedC = event.lngLat.lng, event.lngLat.lat
-  let allVisitedCoor = [];
-  for (let a=0;a<visitedLocations.features.length;a++){
-    let visitCoor = visitedLocations.features[a].geometry.coordinates;
-    allVisitedCoor.push(visitCoor);
-  }
-  if ()
-  console.log(visitedLocations.features[0].geometry.coordinates)
-  console.log(travelLocations.features[0].geometry.coordinates)
-}
-/*function findRange (lon, lat){
-  let lowerLon = Math.floor(lon);
-  let higherLon = Math.ceil(lon);
-  let lowerLat = Math.floor(lat);
-  let higherLat = Math.ceil(lat);
-  removeElement(lowerLon,higherLon,lowerLat,higherLat)
-}*/
 console.log(markerList)
 // USER INTERACTIONS ===============================================================================
 //user can see today's date
 dateTimeEl.textContent = "Today, " + dayjs().format("dddd, MMMM D, YYYY");
 //user can search for a location
-//searchButtonEl.addEventListener("click", searchButtonListener);
 
 //when user views website on mobile the map will re-adjust
 console.log(map);
@@ -427,14 +366,6 @@ travelMarkerEl.addEventListener("click", travelListener);
 removeMarkerEl.addEventListener("dblclick", removeAllListener);
 removeMarkerEl.addEventListener("click", removeListener);
 map.on("click", addMarker)
-/*map.on("click", function(event){
-  if (removeToggle){
-   // console.log("hey")}
-   findRange(event.lngLat.lng, event.lngLat.lat) }
-  else{
-    addMarker(event)
-  }
-});*/
 
 // INITIALIZATION ==================================================================================
 //finding users coordinates
@@ -495,8 +426,7 @@ for (let i = 0; i<visitedLocations.features.length;i++) {
   } }
 }) 
   caller++;
-  console.log(caller)
-  //window.localStorage.setItem("caller",caller);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+  console.log(caller)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
   markerList.push(newMarker);
   console.log(markerList);
 }
@@ -505,9 +435,7 @@ for (let l = 0; l<travelLocations.features.length;l++) {
   const el = document.createElement("div");
   el.className = "marker travel-marker";
   let descriptionList = travelLocations.features[l].locationDesc.split(",");
-  //window.localStorage.getItem("caller");
   travelLocations.features[l].caller = caller;
-  console.log(caller)
   // make a marker for each feature and add to the map
   let newMarker =new mapboxgl.Marker(el).setLngLat(travelLocations.features[l].geometry.coordinates).setPopup(
     new mapboxgl.Popup({ offset: 25 }) // add popups
@@ -532,7 +460,6 @@ for (let l = 0; l<travelLocations.features.length;l++) {
       }
       el.remove();
       console.log(markerList);
-      console.log(caller)
       console.log(travelLocations.features);
       travelLocations.features.splice(callerIndex,1);
       console.log(travelLocations.features);
@@ -541,19 +468,6 @@ for (let l = 0; l<travelLocations.features.length;l++) {
       window.localStorage.setItem("travelObject", JSON.stringify(travelLocations));
   } }
 }) 
-  caller++;
-  console.log(caller)
- // window.localStorage.setItem("caller",caller)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+  caller++;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
   markerList.push(newMarker);
-  console.log(markerList)
 }
-//separate functions between double click and single clickx
-//single click function: rem onex
-  //caller set to 0 if no item in local storagex
-  //id of new marker is = callerx
-  //when used--caller increases by onex
-  //set it again in local storage after usedx
-  //add event listener that  console.log coordinates
-  //create an array of the coordinate of the markers
-  //finds the coordinates within the array
-  //removes from the features
