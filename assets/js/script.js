@@ -238,6 +238,8 @@ function addMarker(event) {
     
     //push the object to the features array of the visitedLocations object
     visitedLocations.features.push(newObject);
+    //find index of object just pushed
+    let v = visitedLocations.features.indexOf(newObject);
     //create anew div element for the pin
     let el = document.createElement("div");
     //create classes for the div element so it is styled correctly
@@ -262,6 +264,7 @@ function addMarker(event) {
       },
     };
     travelLocations.features.push(newObject);
+    let t = travelLocations.features.indexOf(newObject);
     let el = document.createElement("div");
     el.className = "marker travel-marker";
 
