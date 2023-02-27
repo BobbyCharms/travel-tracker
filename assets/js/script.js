@@ -125,7 +125,7 @@ function airportButtonListener(event) {
     zoom: 12,
   });
 }
-*/
+
 function getCoor() {
   const optionsLoc = {
     enableHighAccuracy: true,
@@ -141,7 +141,7 @@ function getCoor() {
     return userLocation;
   }
   function error(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
+    console.warn(`ERROR(${err.code}): ${err.message}`);//will return error message if unsuccessful
   }
   navigator.geolocation.getCurrentPosition(success, error, optionsLoc);
 }
@@ -166,6 +166,7 @@ function getCity(lon, lat, obj, elem, list,i) {
     cityProp = cityName + ", " + cityState  + ", " + cityNat;
     obj.locationDesc= cityProp;
     list.features[i].caller = caller;
+    //add desciption data to object in local storage
     window.localStorage.setItem("visitedObject", JSON.stringify(visitedLocations));
     window.localStorage.setItem("travelObject", JSON.stringify(travelLocations)); 
     //add element to the map now since we have the city name
@@ -186,25 +187,26 @@ function getCity(lon, lat, obj, elem, list,i) {
           newMarker.remove();
         }else{
         let callerIndex;
-        let chosenCaller = list.features[i].caller;
-        for (let a=0;a<list.features.length;a++){
+        let chosenCaller = list.features[i].caller;//caller of marker being made
+        for (let a=0;a<list.features.length;a++){//check callers of all existing markers to find index of current
           let currentCaller=list.features[a].caller;
           if (chosenCaller==currentCaller){
             callerIndex = a;
           }
         }
-        elem.remove();
+        elem.remove();//remove the element
         console.log(markerList);
         console.log(list.features);
-        list.features.splice(callerIndex,1);
+        list.features.splice(callerIndex,1);//remove feauture of marker being removed
         console.log(list.features);
         newMarker.remove();
         console.log(markerList);
+        //add any possible updates to objects in local storage
         window.localStorage.setItem("travelObject", JSON.stringify(travelLocations));
         window.localStorage.setItem("visitObject", JSON.stringify(visitedLocations));
     } }
   }) 
-    caller++;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+    caller++;//make sure caller function is different for each marker to be able to ID them                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
     markerList.push(newMarker);
   })}
 //adding a marker in the map
@@ -307,16 +309,13 @@ function removeAllListener () {
   window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
 }
   function removeListener(){
+    //make the tash icon button "active" amd deactivate the other buttons when pressed
     removeToggle = !removeToggle;
     removeMarkerEl.classList.toggle("active");
     visitedToggle = false;
     travelToggle = false;
     visitedMarkerEl.setAttribute("class", "color-toggle");
     travelMarkerEl.setAttribute("class", "color-toggle");
-    //for every marker in the list, remove it
-     
-      //update to local Storage
-    
   window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
   window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
   }
@@ -399,7 +398,7 @@ for (let i = 0; i<visitedLocations.features.length;i++) {
     `<h3>${descriptionList[0]}</h3><p>${descriptionList[1] + ", " + descriptionList[2]}</p>` //-------------------------------------------------------------------------------------------------------------------------------------------------------------
   )).addTo(map);
   el.addEventListener("click",function(){
-    if (removeToggle){
+    if (removeToggle){//if trash icone active:
       if (visitedLocations.features.length<2){
         el.remove();
         visitedLocations.features=[];
