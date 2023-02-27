@@ -300,6 +300,29 @@ function travelListener() {
   travelToggle = !travelToggle;
   travelMarkerEl.classList.toggle("active");
 }
+function removeAllListener () {
+  visitedToggle = false;
+  travelToggle = false;
+  visitedMarkerEl.setAttribute("class", "color-toggle");
+  travelMarkerEl.setAttribute("class", "color-toggle");
+  //for every marker in the list, remove it
+  for (let d =0;d<markerList.length;d++){
+    markerList[d].remove();
+    //update to local Storage
+  }
+  console.log(markerList);
+  visitedLocations = {
+    type: "FeatureCollection",
+    features: [],
+  };
+  
+  travelLocations = {
+    type: "FeatureCollection",
+    features: [],
+  };
+  window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
+  window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
+}
 function removeListener () {
   removeToggle = !removeToggle;
   removeMarkerEl.classList.toggle("active");
