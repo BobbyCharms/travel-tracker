@@ -333,7 +333,17 @@ function removeAllListener () {
   });
 }
 
-
+function removeListener(){
+  //make the tash icon button "active" amd deactivate the other buttons when pressed
+  removeToggle = !removeToggle;
+  removeMarkerEl.classList.toggle("active");
+  visitedToggle = false;
+  travelToggle = false;
+  visitedMarkerEl.setAttribute("class", "color-toggle");
+  travelMarkerEl.setAttribute("class", "color-toggle");
+window.localStorage.setItem("visitedObject",JSON.stringify(visitedLocations));
+window.localStorage.setItem("travelObject",JSON.stringify(travelLocations));
+}
 //given a html element, create a button and append it to that element
 function addDynamicButton(htmlElement, className, currentObject){
   //create button
