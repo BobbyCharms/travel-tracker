@@ -4,6 +4,7 @@
   float: right;
 }
 
+
 .navbar-item {
   font-family: "DM Mono", monospace;
   border-radius: 7px;
@@ -28,6 +29,12 @@
 
 .card-header-title {
   font-family: "Audiowide", cursive;
+}
+
+#big-box{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Map section */
@@ -151,7 +158,6 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   background-color: white;
   padding: 30px;
   margin-right: 10px;
@@ -195,7 +201,11 @@ footer img {
 }
 
 #bottom-content {
+  display: flex;
   align-items: flex-start;
+  flex-grow: 1;
+  width: 100%;
+  
 }
 
 
